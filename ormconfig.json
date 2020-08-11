@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Prod",
+        "type": "mysql",
+        "host": "squint-db-1.cluster-cofw7ea3iwao.us-east-1.rds.amazonaws.com",
+        "port": 3306,
+        "username": "adb_graph_user",
+        "password": "AuroraSquint2020#",
+        "database": "squint_dwh",
+        "synchronize": false,
+        "logging": false,
+        "entities": [
+            "app/models/**/*.ts"
+        ],
+        "cli": {
+            "entitiesDir": "app/models"
+        },
+        "autoSchemaSync": true
+    }
+]

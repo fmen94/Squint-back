@@ -1,0 +1,45 @@
+{
+  "name": "inteligent-api-graphql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon app/index.ts dotenv_config_path=app/env/dev.env"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/teamknowlogy-squint/intelligent-api-graph"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/teamknowlogy-squint/intelligent-api-graph/issues"
+  },
+  "homepage": "https://gitlab.com/teamknowlogy-squint/intelligent-api-graph#readme",
+  "dependencies": {
+    "apollo-server": "^2.16.1",
+    "env-cmd": "^10.1.0",
+    "graphql": "^15.3.0",
+    "moment": "^2.27.0",
+    "nodemon": "^2.0.4",
+    "ts-node": "^8.1.0",
+    "type-graphql": "^1.0.0-rc.3",
+    "typeorm": "^0.2.25"
+  },
+  "devDependencies": {
+    "typescript": "^3.4.5"
+  },
+  "compilerOptions": {
+    "paths": {
+      "@App/*": [
+        "app/*"
+      ]
+    }
+  },
+  "config": {},
+  "standard-version": {
+    "skip": {
+      "tag": true
+    }
+  }
+}
