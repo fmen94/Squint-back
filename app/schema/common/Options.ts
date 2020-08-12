@@ -10,9 +10,10 @@ export const PeriodOptions ={
 //Date startend
 export const DateEndOptions ={
     nullable: true, 
-    defaultValue: moment().format('DD MM YYYY hh:mm:ss'),
-    description: `It receives the final date of which the information is displayed in format DD MM YYYY hh: mm: ss 
-    and the default is: ${moment().format('DD MM YYYY hh:mm:ss')} `, 
+    defaultValue: { date: moment().format('DD-MM-YYYYThh:mm:ss'), period: "DL" },
+    description: `It receives the final date of which the information is displayed in format DD-MM-YYYYThh:mm:ss and 
+    Receive an Enum Period and the default is DL
+    and the default date is: ${moment().format('DD-MM-YYYYThh:mm:ss')} `
 }
 
 //Card id

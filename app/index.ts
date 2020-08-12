@@ -4,6 +4,7 @@ import { buildSchema, Int } from "type-graphql"
 import { createConnection, Connection } from 'typeorm';
 
 import {  } from './resolvers/index'
+import BadRequestException from "./exceptions/bad-request.exception";
 const init = async (port:any) =>{
 console.log(`Loading schemas`)
   const schema = await buildSchema({
@@ -11,7 +12,7 @@ console.log(`Loading schemas`)
   })
   
   console.log(`Connectiong databases`)
-  let conection
+  let conection: Connection
   //Pendig
    /*createConnection(process.env.MYSQL_API_DWH|| "Prod")
    .then(e=>{
@@ -27,7 +28,10 @@ console.log(`Loading schemas`)
     schema,
     playground: true,
     context: ({ req }) => {
-      return {id:req.headers.id,conection}
+      if(!req.headers.page_id){
+        throw new BadRequestException("Page_id is Invalid");
+      }
+      return {id:req.headers.page_id,conection}
     }
   })  
   
