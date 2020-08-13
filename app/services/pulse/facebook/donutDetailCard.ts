@@ -21,7 +21,7 @@ const kindValue = (num=7)=>{
     for (let index = 0; index < num; index++) {
         arr.push({
             kind: faker.lorem.word(),
-            value: faker.random.number
+            value: faker.random.number()
         })
         
     }

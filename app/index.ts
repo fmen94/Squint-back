@@ -40,4 +40,4 @@ console.log(`Loading schemas`)
 
   return server;
 }
-init(process.env.PORT_GRAPHQL||3000)
+init(process.env.PORT_GRAPHQL)

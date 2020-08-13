@@ -1,4 +1,4 @@
-import { ObjectType, Field, Float } from 'type-graphql';
+import { ObjectType, Field, createUnionType } from 'type-graphql';
 import { IsNull } from './Options';
 
 
@@ -78,4 +78,69 @@ import { IsNull } from './Options';
          value: Number
         @Field(IsNull)
          diff: Number
+    }
+    @ObjectType()
+    export class kindDateValue{
+        @Field(IsNull)
+         kind: String
+        @Field(IsNull)
+         date: String
+        @Field(IsNull)
+         value: Number
+    }
+    @ObjectType()
+    export class kindNameValue {
+        @Field(IsNull)
+         kind: String
+         @Field(IsNull)
+         name: String
+         @Field(IsNull)
+         value: Number
+    }
+    @ObjectType()
+    export class postFB{
+        @Field(IsNull)
+         performance: String
+        @Field(IsNull)
+         pageName: String
+         @Field(IsNull)
+         pageImage: String
+         @Field(IsNull)
+         date: String
+         @Field(IsNull)
+         type: String
+         @Field(IsNull)
+         text: String
+         @Field(IsNull)
+         mediaUrl: String
+         @Field(IsNull)
+         postUrl: String
+         @Field(IsNull)
+         impressions: Number
+         @Field(IsNull)
+         reach: Number 
+         @Field(IsNull)
+         interactions: Number
+         @Field(IsNull)
+         like: Number
+         @Field(IsNull)
+         love: Number
+         @Field(IsNull)
+         care: Number
+         @Field(IsNull)
+         haha: Number
+         @Field(IsNull)
+         wow: Number
+         @Field(IsNull)
+         sad: Number
+         @Field(IsNull)
+         angry: Number
+         @Field(IsNull)
+         comments: Number
+         @Field(IsNull)
+         clicks: Number
+         @Field(IsNull)
+         shares: Number
+         @Field(IsNull)
+         feedbacks: Number
     }

@@ -1,6 +1,6 @@
 import { ObjectType, Field } from 'type-graphql';
 import { IsNull } from '../../common/Options';
-import { valueDiff, kindIntValues, smailCard, compCard, donutDetail, nameValueDiff, kindValue } from '../../common/Common'
+import { valueDiff, kindIntValues, smailCard, compCard, donutDetail, nameValueDiff, kindValue, kindDateValue, kindNameValue, postFB } from '../../common/Common'
 
 @ObjectType()
 export class Facebook {
@@ -14,7 +14,7 @@ export class Facebook {
     smallCard: smailCard
     @Field(type => compCard,IsNull)
     compCard: compCard
-    @Field(type => kindIntValues,IsNull)
+    @Field(type => [kindIntValues],IsNull)
     barCard: [kindIntValues]
     @Field(type => donutDetail,IsNull)
     donutDetailCard: donutDetail
@@ -22,4 +22,10 @@ export class Facebook {
     listPrevCard: [nameValueDiff]
     @Field(type => [kindValue],IsNull)
     listCard: [kindValue]
+    @Field(type => [[[kindNameValue]]],IsNull)
+    tableCard: [[[kindNameValue]]]
+    @Field(type => [kindDateValue],IsNull)
+    bubblesCard: [kindDateValue] 
+    @Field(type => [postFB],IsNull)
+    postCard: [postFB] 
    }
