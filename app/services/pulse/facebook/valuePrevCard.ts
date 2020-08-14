@@ -5,7 +5,7 @@ import { DateRange } from '../../../schema/common/Arguments'
 
 
 //El uso de Faker es temportal hasta conectar a base de datos
-export const valuePrevCardService = (ctx, dateRange:DateRange, cardId) => {
+export const valuePrevCardService = (ctx, dateRange: DateRange, cardId: String): valueDiffIn => {
     return {
         value: faker.random.number(),
         diff: faker.random.number()

@@ -4,7 +4,7 @@ import moment from "moment";
  * xlabels es una funcion que decibe una fecha y un periodo y regresa un arraglo de strings que representan cada uno un valor dependiendo del periodo de tiempo la cantidad y el dia el punto de partida para moverse en el tiempo.
  * @param dateRange   { date , period }
  */
-export const xlabels = (dateRange:DateRange )=>{
+export const xlabels = (dateRange:DateRange ) : string[] =>{
     let response = []
     if(dateRange.period=="DL"){
         for (let index = 0; index < 24; index++) {

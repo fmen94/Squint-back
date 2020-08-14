@@ -35,13 +35,15 @@ export enum PeriodType {
     `
   });
   export enum CardIdStringFbType {
-    generalString01= "generalString01"
+    generalString01= "generalString01",
+    conversationString01 = "conversationString01",
   };
   registerEnumType(CardIdStringFbType, {
     name: "CardIdString",
     description: `
     Represents the id of the specific metric that you want to see:
     generalString01 = Sentiment,
+    conversationString01 = Best Format,
     `
   });
   export enum CardIdValuePrevFbType {
@@ -87,6 +89,8 @@ export enum PeriodType {
     affinitySmall06 = "affinitySmall06",
     affinitySmall07 = "affinitySmall07",
     affinitySmall08 = "affinitySmall08",
+    conversationSmall01 = "conversationSmall01",
+    conversationSmall02 = "conversationSmall02"
   };
   registerEnumType(CardIdSmallFbType, {
     name: "CardIdSmall",
@@ -110,6 +114,8 @@ export enum PeriodType {
     affinitySmall06 = Shares,
     affinitySmall07 = Comments,
     affinitySmall08 = Clicks,
+    conversationSmall01 = Comments,
+    conversationSmall01 = Inbox Messages,
     `
   });
   export enum CardIdCompFbType {
@@ -136,7 +142,8 @@ export enum PeriodType {
     communityBar01= "communityBar01",
     affinityBar01 = "affinityBar01",
     affinityBar02 = "affinityBar02",
-    affinityBar03 = "affinityBar03" 
+    affinityBar03 = "affinityBar03",
+    conversationBar01 = "conversationBar01"
   };
   registerEnumType(CardIdBarFbType, {
     name: "CardIdBar",
@@ -146,6 +153,7 @@ export enum PeriodType {
     affinityBar01 = Reactions,
     affinityBar02 = Interactions,
     affinityBar03 = Video Views,
+    conversationBar01 = Sentiment Evolution,
     `
   });
   export enum CardIdDonutFbType {
@@ -175,6 +183,8 @@ export enum PeriodType {
     communityList02 = "communityList02",
     affinityList01 = "affinityList01",
     contentList01 = "contentList01",
+    conversationList01 = "conversationList01",
+    conversationList02 = "conversationList02",
 
   };
   registerEnumType(CardIdListFbType, {
@@ -184,8 +194,9 @@ export enum PeriodType {
     communityList01 = External Sourse,
     communityList02 = Insternal Sourse,
     affinityList01 = Post by Spend,
-    contentList01 = ,
-
+    contentList01 = Keywods,
+    conversationList01= Keywods,
+    conversationList02 = Current Sentiment,
     `
   });
  
@@ -219,6 +230,24 @@ export enum PeriodType {
     name: "CardIdPost",
     description: `
     Represents the id of the specific metric that you want to see:
-    contentPost01 = contentPost01,
+    contentPost01 = Post,
+    `
+  });
+  export enum CardIdTitleTextFbType {
+    conversationTitleText01= "conversationTitleText01",
+    conversationTitleText02 = "conversationTitleText02",
+    conversationTitleText03 = "conversationTitleText03",
+    conversationTitleText04 = "conversationTitleText04",
+    conversationTitleText05 = "conversationTitleText05",
+  };
+  registerEnumType(CardIdTitleTextFbType, {
+    name: "CardIdTitleText",
+    description: `
+    Represents the id of the specific metric that you want to see:
+    conversationTitleText01 = Response Rate,
+    conversationTitleText02 = Response Time,
+    conversationTitleText03 = Best moment to interactions,
+    conversationTitleText04 = Best time to stories,
+    conversationTitleText05 = Best response time,
     `
   });

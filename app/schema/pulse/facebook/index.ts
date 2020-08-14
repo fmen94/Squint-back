@@ -1,31 +1,33 @@
 import { ObjectType, Field } from 'type-graphql';
 import { IsNull } from '../../common/Options';
-import { valueDiff, kindIntValues, smailCard, compCard, donutDetail, nameValueDiff, kindValue, kindDateValue, kindNameValue, postFB } from '../../common/Common'
+import { valueDiff, kindIntValues, smailCard, donutDetail, nameValueDiff, kindValue, kindDateValue, kindNameValue, postFB, titleText } from '../../common/Common'
 
 @ObjectType()
-export class Facebook {
+export class Facebook implements facebookIn {
     @Field(IsNull)
     intCard: Number
     @Field(IsNull)
     stringCard: String
-    @Field(type => valueDiff,IsNull)
+    @Field(type => valueDiff, IsNull)
     valuePrevCard: valueDiff
-    @Field(type => smailCard,IsNull)
+    @Field(type => smailCard, IsNull)
     smallCard: smailCard
-    @Field(type => compCard,IsNull)
-    compCard: compCard
-    @Field(type => [kindIntValues],IsNull)
+    @Field(type => [nameValueDiff], IsNull)
+    compCard: [nameValueDiff]
+    @Field(type => [kindIntValues], IsNull)
     barCard: [kindIntValues]
-    @Field(type => donutDetail,IsNull)
+    @Field(type => donutDetail, IsNull)
     donutDetailCard: donutDetail
-    @Field(type => [nameValueDiff],IsNull)
+    @Field(type => [nameValueDiff], IsNull)
     listPrevCard: [nameValueDiff]
-    @Field(type => [kindValue],IsNull)
+    @Field(type => [kindValue], IsNull)
     listCard: [kindValue]
-    @Field(type => [[[kindNameValue]]],IsNull)
+    @Field(type => [[[kindNameValue]]], IsNull)
     tableCard: [[[kindNameValue]]]
-    @Field(type => [kindDateValue],IsNull)
-    bubblesCard: [kindDateValue] 
-    @Field(type => [postFB],IsNull)
-    postCard: [postFB] 
-   }
+    @Field(type => [kindDateValue], IsNull)
+    bubblesCard: [kindDateValue]
+    @Field(type => [postFB], IsNull)
+    postCard: [postFB]
+    @Field(type => titleText, IsNull)
+    titleTextCard: titleText
+}
