@@ -5,12 +5,16 @@ import { createConnection, Connection } from 'typeorm';
 
 import {  } from './resolvers/index'
 import BadRequestException from "./exceptions/bad-request.exception";
+
+
+//Funcion principal del proyecto
 const init = async (port:any) =>{
 console.log(`Loading schemas`)
+  //lee todos los schemas importados de ./resolvers/index.ts
   const schema = await buildSchema({
     resolvers: [__dirname + "/resolvers/index.ts"]
   })
-  
+  //La coneccion a bas esta pendiente
   console.log(`Connectiong databases`)
   let conection: Connection
   //Pendig
@@ -23,10 +27,12 @@ console.log(`Loading schemas`)
     console.log("Conection DWH failed", e) 
   })
   */
+  //Se Crea el server
   console.log(`Initializing server`)
   const server = new ApolloServer({
     schema,
     playground: true,
+    //Se crea el context
     context: ({ req }) => {
       if(!req.headers.page_id){
         throw new BadRequestException("Page_id is Invalid");
@@ -40,4 +46,6 @@ console.log(`Loading schemas`)
 
   return server;
 }
+
+//Se inicializa el server
 init(process.env.PORT_GRAPHQL)

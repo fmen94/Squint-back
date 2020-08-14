@@ -17,7 +17,9 @@ import { bubblesService } from "../../../services/pulse/facebook/bubbleCards";
 import { tableCardService } from "../../../services/pulse/facebook/tableCard";
 import { postCardService } from "../../../services/pulse/facebook/postCard";
 
-
+/**
+ * Este Resolver Contiene todos los todos que se puden usar para Facebook pulse.
+ */
 @Resolver(of => Facebook)
 export class PulseFacebookResolver {
     @FieldResolver()

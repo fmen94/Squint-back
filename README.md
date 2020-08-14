@@ -2,6 +2,18 @@
 
 Intelligent Api graphql
 
+## Install Proyect
+### Clone the proyect 
+```
+    npm i
+```
+```
+    nano .env
+```
+```
+    PORT_GRAPHQL=3000
+```
+
 ## Run app modes
 
 ### run project in dev
@@ -19,7 +31,7 @@ Intelligent Api graphql
 
 ## Commits format
 
-### add log change
+###- Add log change
 
 run after commit and before push
 ```
