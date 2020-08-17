@@ -2,9 +2,13 @@ import BadRequestException from '../../../exceptions/bad-request.exception'
 import faker from 'faker'
 import moment = require("moment");
 import { DateRange } from '../../../schema/common/Arguments';
+import { postFbIn } from '../../../interfaces/common';
+import logger from '../../../helpers/logins/login.helper';
+import { CardIdPostFbType } from '../../../schema/common/Enums';
 
 //El uso de Faker es temportal hasta conectar a base de datos
-export const postCardService = (ctx, dateRange: DateRange, cardId: string): postFbIn[] => {
+export const postCardService = (ctx, dateRange: DateRange, cardId: CardIdPostFbType): postFbIn[] => {
+    logger.info(`Getting values ​​for: ${cardId}`)
     let response: postFbIn[] = []
     for (let index = 0; index < 2; index++) {
         response.push({
@@ -32,6 +36,7 @@ export const postCardService = (ctx, dateRange: DateRange, cardId: string): post
             feedbacks: faker.random.number(),
         })
     }
+    logger.info(`Successfully obtained: ${cardId}`)
     return response
 
 }

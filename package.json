@@ -24,9 +24,11 @@
     "env-cmd": "^10.1.0",
     "faker": "^4.1.0",
     "graphql": "^15.3.0",
+    "log4js": "^6.3.0",
     "moment": "^2.27.0",
     "nodemon": "^2.0.4",
     "ts-node": "^8.1.0",
+    "tsyringe": "^4.3.0",
     "type-graphql": "^1.0.0-rc.3",
     "typeorm": "^0.2.25"
   },

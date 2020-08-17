@@ -1,0 +1,22 @@
+ {
+    "communitySmall01": "call_SP : {{status}}",
+    "communitySmall02": "call_SP1 : {{status}}",
+    "activitySmall01" : "call_SP2 : {{status}}",
+    "activitySmall02" : "call_SP3 : {{status}}",
+    "activitySmall03" : "call_SP4 : {{status}}",
+    "activitySmall04" : "call_SP5 : {{status}}",
+    "activitySmall05" : "call_SP6 : {{status}}",
+    "activitySmall06" : "call_SP7 : {{status}}",
+    "activitySmall07" : "call_SP8 : {{status}}",
+    "activitySmall08" : "call_SP9 : {{status}}",
+    "affinitySmall01" : "call_SP10 : {{status}}",
+    "affinitySmall02" : "call_SP11 : {{status}}",
+    "affinitySmall03" : "call_SP12 : {{status}}",
+    "affinitySmall04" : "call_SP13 : {{status}}",
+    "affinitySmall05" : "call_SP14 : {{status}}",
+    "affinitySmall06" : "call_SP15 : {{status}}",
+    "affinitySmall07" : "call_SP16 : {{status}}",
+    "affinitySmall08" : "call_SP17 : {{status}}",
+    "conversationSmall01" : "call_SP18 : {{status}}",
+    "conversationSmall02" : "call_SP19 : {{status}}"
+ }

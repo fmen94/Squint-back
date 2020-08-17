@@ -18,20 +18,37 @@ import { tableCardService } from "../../../services/pulse/facebook/tableCard";
 import { postCardService } from "../../../services/pulse/facebook/postCard";
 import { titleTextCardService } from "../../../services/pulse/facebook/titleTextCard";
 import { kindIntValues } from "../../../schema/common/Common";
+import { donutDetailIn, kindDateValueIn, kindIntValuesIn, kindNameValueIn, kindValueIn, nameValueDiffIn, postFbIn, smailCardIn, titleTextIn, valueDiffIn } from "../../../interfaces/common";
 
 /**
- * Este Resolver Contiene todos los todos que se puden usar para Facebook pulse.
+ * Este Resolver Contiene todos los resolutores que se puden usar para Facebook pulse.
  */
 @Resolver(of => Facebook)
 export class PulseFacebookResolver {
+    /**
+     * Resolver de este tipo de card de solo un valor
+     * @param ctx 
+     * @param dateRange 
+     * @param cardId 
+     * @returns Number
+     */
     @FieldResolver()
     intCard(
         @Ctx() ctx: any,
         @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
         @Arg("cardId", type => CardIdIntFbType, CardIdIntOptions) cardId?: CardIdIntFbType,
     ): Number {
+        console.log(ctx);
+        
         return intCardService(ctx, dateRange, cardId)
     }
+    /**
+     * Resolver de este tipo de card de solo un valor en texto
+     * @param ctx 
+     * @param dateRange 
+     * @param cardId 
+     * @returns String
+     */
     @FieldResolver()
     stringCard(
         @Ctx() ctx: any,
@@ -40,6 +57,13 @@ export class PulseFacebookResolver {
     ): String {
         return stringCardService(ctx, dateRange, cardId)
     }
+    /**
+     * Resolver de este tipo de card retorna un valor y su diferencia contra el periodo de tiempo enterior
+     * @param ctx 
+     * @param dateRange 
+     * @param cardId 
+     * @returns valueDiffIn
+     */
     @FieldResolver()
     valuePrevCard(
         @Ctx() ctx: any,
@@ -48,6 +72,13 @@ export class PulseFacebookResolver {
     ): valueDiffIn {
         return valuePrevCardService(ctx, dateRange, cardId)
     }
+    /**
+     * Resolver de este tipo de card retorna un valor y su diferencia contra el periodo de tiempo enterior ademas de un arreglo de fecha valor
+     * @param ctx 
+     * @param dateRange 
+     * @param cardId 
+     * @returns smailCardIn
+     */
     @FieldResolver()
     smallCard(
         @Ctx() ctx: any,
@@ -56,22 +87,43 @@ export class PulseFacebookResolver {
     ): smailCardIn {
         return smallCardService(ctx, dateRange, cardId)
     }
+    /**
+     * Resolver de este tipo de card retorna un arreglo de valor y su diferencia contra el periodo de tiempo enterior y su nombre
+     * @param ctx 
+     * @param dateRange 
+     * @param cardId 
+     * @returns nameValueDiffIn []
+     */
     @FieldResolver()
     compCard(
         @Ctx() ctx: any,
         @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
         @Arg("cardId", type => CardIdCompFbType, CardIdCompOptions) cardId?: CardIdCompFbType
-    ): nameValueDiffIn[] {
+    ): nameValueDiffIn [] {
         return compCardService(ctx, dateRange, cardId)
     }
+    /**
+     * Resolver de este tipo de card retorna un arreglo de kind y un valuesArray que es un arreglo de numeros
+     * @param ctx 
+     * @param dateRange 
+     * @param cardId 
+     * @returns kindIntValuesIn []
+     */
     @FieldResolver()
     barCard(
         @Ctx() ctx: any,
         @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
         @Arg("cardId", type => CardIdBarFbType, CardIdBarOptions) cardId?: CardIdBarFbType
-    ): kindIntValuesIn[] {
+    ): kindIntValuesIn [] {
         return barCardService(ctx, dateRange, cardId)
     }
+    /**
+     * Resolver de este tipo de card retorna un titulo , subtitulo, texto y un arreglo  de Kind values
+     * @param ctx 
+     * @param dateRange 
+     * @param cardId 
+     * @returns donutDetailIn
+     */
     @FieldResolver()
     donutDetailCard(
         @Ctx() ctx: any,
@@ -80,22 +132,43 @@ export class PulseFacebookResolver {
     ): donutDetailIn {
         return donutDetailCardService(ctx, dateRange, cardId)
     }
+    /**
+     * Resolver de este tipo de card retorna un arreglo de nombre valor y la deferencia
+     * @param ctx 
+     * @param dateRange 
+     * @param cardId 
+     * @returns nameValueDiffIn []
+     */
     @FieldResolver()
     listPrevCard(
         @Ctx() ctx: any,
         @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
         @Arg("cardId", type => CardIdListPrevFbType, CardIdListPrevOptions) cardId?: CardIdListPrevFbType
-    ): nameValueDiffIn[] {
+    ): nameValueDiffIn [] {
         return listPrevCardService(ctx, dateRange, cardId)
     }
+    /**
+     * Resolver de este tipo de card retorna un arreglo de nombre valor 
+     * @param ctx 
+     * @param dateRange 
+     * @param cardId 
+     * @returns kindValueIn []
+     */
     @FieldResolver()
     listCard(
         @Ctx() ctx: any,
         @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
         @Arg("cardId", type => CardIdListFbType, CardIdListOptions) cardId?: CardIdListFbType
-    ): kindValueIn[] {
+    ): kindValueIn [] {
         return listCardService(ctx, dateRange, cardId)
     }
+    /**
+     * Resolver de este tipo de card retorna un arreglo en 3 dimenciones de nombre valor y kind
+     * @param ctx 
+     * @param dateRange 
+     * @param cardId 
+     * @returns kindNameValueIn [][][]
+     */
     @FieldResolver()
     tableCard(
         @Ctx() ctx: any,
@@ -104,6 +177,13 @@ export class PulseFacebookResolver {
     ): kindNameValueIn[][][] {
         return tableCardService(ctx, dateRange, cardId)
     }
+    /**
+     * Resolver de este tipo de card retorna un arreglo en 3 dimenciones de nombre valor y kind
+     * @param ctx 
+     * @param dateRange 
+     * @param cardId 
+     * @returns kindDateValueIn []
+     */
     @FieldResolver()
     bubblesCard(
         @Ctx() ctx: any,
@@ -112,6 +192,13 @@ export class PulseFacebookResolver {
     ): kindDateValueIn[] {
         return bubblesService(ctx, dateRange, cardId)
     }
+    /**
+     * Resolver de este tipo de card retorna un arreglo de Post
+     * @param ctx  
+     * @param dateRange 
+     * @param cardId 
+     * @returns postFbIn []
+     */
     @FieldResolver()
     postCard(
         @Ctx() ctx: any,
@@ -120,6 +207,13 @@ export class PulseFacebookResolver {
     ): postFbIn[] {
         return postCardService(ctx, dateRange, cardId)
     }
+    /**
+     * Resolver de este tipo de card retorna un title text
+     * @param ctx  
+     * @param dateRange 
+     * @param cardId 
+     * @returns titleTextIn 
+     */
     @FieldResolver()
     titleTextCard(
         @Ctx() ctx: any,

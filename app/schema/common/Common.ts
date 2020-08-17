@@ -1,4 +1,5 @@
 import { ObjectType, Field, createUnionType } from 'type-graphql';
+import { dateValueIn, donutDetailIn, kindDateValueIn, kindIntValuesIn, kindNameValueIn, kindValueIn, postFbIn, smailCardIn, titleTextIn, valueDiffIn } from '../../interfaces/common';
 import { IsNull } from './Options';
 
 

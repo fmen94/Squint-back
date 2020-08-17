@@ -1,7 +1,7 @@
 import { ObjectType, Field } from 'type-graphql';
 import { IsNull } from '../../common/Options';
 import { valueDiff, kindIntValues, smailCard, donutDetail, nameValueDiff, kindValue, kindDateValue, kindNameValue, postFB, titleText } from '../../common/Common'
-
+import { facebookIn } from '../../../interfaces/pulse/facebook/index'
 @ObjectType()
 export class Facebook implements facebookIn {
     @Field(IsNull)

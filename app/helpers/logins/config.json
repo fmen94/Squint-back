@@ -1,0 +1,23 @@
+{
+    "appenders": {
+        "fileAppender": {
+            "type": "dateFile",
+            "filename": "./logs/t04_logging.log",
+            "layout": {
+                "type": "pattern",
+                "pattern": "%d - %c:[%p]: %m"
+            },
+            "flags": "w",
+            "pattern": ".yyyy-MM-dd-hh-mm-ss", 
+            "compress": true,
+            "alwaysIncludePattern": true,
+            "numToKeep": 3
+        }
+    },
+    "categories": {
+        "default": {
+            "appenders": ["fileAppender"],
+            "level": "info"
+        }
+    }
+}

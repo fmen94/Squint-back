@@ -2,20 +2,19 @@
 import { ApolloServer } from "apollo-server"
 import { buildSchema, Int } from "type-graphql"
 import { createConnection, Connection } from 'typeorm';
-
-import {  } from './resolvers/index'
+import logger from './helpers/logins/login.helper'
 import BadRequestException from "./exceptions/bad-request.exception";
 
 
 //Funcion principal del proyecto
 const init = async (port:any) =>{
-console.log(`Loading schemas`)
+  logger.info(`Loading schemas`)
   //lee todos los schemas importados de ./resolvers/index.ts
   const schema = await buildSchema({
     resolvers: [__dirname + "/resolvers/index.ts"]
   })
   //La coneccion a bas esta pendiente
-  console.log(`Connectiong databases`)
+  logger.info(`Connectiong databases`)
   let conection: Connection
   //Pendig
    /*createConnection(process.env.MYSQL_API_DWH|| "Prod")
@@ -28,7 +27,7 @@ console.log(`Loading schemas`)
   })
   */
   //Se Crea el server
-  console.log(`Initializing server`)
+  logger.info(`Initializing server`)
   const server = new ApolloServer({
     schema,
     playground: true,
@@ -42,8 +41,7 @@ console.log(`Loading schemas`)
   })  
   
   const { url } = await server.listen(port)
-  console.log(`Server is running, GraphQL Playground available at ${url}`)
-
+  logger.info(`Server is running, GraphQL Playground available at ${url}`)
   return server;
 }
 

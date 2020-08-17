@@ -2,7 +2,8 @@ import { DateRange } from "../schema/common/Arguments";
 import moment from "moment";
 /**
  * xlabels es una funcion que decibe una fecha y un periodo y regresa un arraglo de strings que representan cada uno un valor dependiendo del periodo de tiempo la cantidad y el dia el punto de partida para moverse en el tiempo.
- * @param dateRange   { date , period }
+ * @param dateRange
+ * @returns string[] Dates in various formats
  */
 export const xlabels = (dateRange:DateRange ) : string[] =>{
     let response = []

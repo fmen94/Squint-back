@@ -1,47 +1,47 @@
 
-interface valueDiffIn {
+export interface valueDiffIn {
     value: Number
     diff: Number
 }
-interface dateValueIn {
+export interface dateValueIn {
     date: String
     value: Number
 }
-interface smailCardIn {
+export interface smailCardIn {
     valuesArray: dateValueIn[]
     valueInt: number
     diff: number
 }
-interface kindIntValuesIn {
+export interface kindIntValuesIn {
     valuesArray: Number[]
     kind: String
 }
-interface kindValueIn {
+export interface kindValueIn {
     value: Number
     kind: String
 }
-interface donutDetailIn {
+export interface donutDetailIn {
     title: string
     subtitle: string
     text: string
     valuesArray: kindValueIn[]
 }
-interface nameValueDiffIn {
+export interface nameValueDiffIn {
     name: String
     value: Number
     diff: Number
 }
-interface kindDateValueIn {
+export interface kindDateValueIn {
     kind: String
     date: String
     value: Number
 }
-interface kindNameValueIn {
+export interface kindNameValueIn {
     kind: String
     name: String
     value: Number
 }
-interface postFbIn {
+export interface postFbIn {
     performance: String
     pageName: String
     pageImage: String
@@ -65,7 +65,7 @@ interface postFbIn {
     shares: Number
     feedbacks: Number
 }
-interface titleTextIn {
+export interface titleTextIn {
     title: String
     text: String
 }

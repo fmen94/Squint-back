@@ -1,5 +1,5 @@
 
-interface DateRangeIn {
+export interface DateRangeIn {
     date : String
     period : String
 }

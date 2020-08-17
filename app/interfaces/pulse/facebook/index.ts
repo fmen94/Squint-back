@@ -1,4 +1,6 @@
-interface facebookIn {
+import { donutDetailIn, kindDateValueIn, kindIntValuesIn, kindNameValueIn, kindValueIn, nameValueDiffIn, postFbIn, smailCardIn, titleTextIn, valueDiffIn } from "../../common";
+
+export interface facebookIn {
     intCard: Number
     stringCard: String
     valuePrevCard: valueDiffIn

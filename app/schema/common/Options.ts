@@ -1,6 +1,8 @@
 import moment = require("moment");
 
-//period
+/**
+ * 
+ */
 export const PeriodOptions = {
     nullable: true,
     defaultValue: "DL",
@@ -85,5 +87,9 @@ export const CardIdtitleTextOptions = {
 //IsNull
 export const IsNull = {
     nullable: true
+}
+
+export const NotNull ={
+    nullable : false
 }
 

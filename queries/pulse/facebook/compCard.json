@@ -1,0 +1,8 @@
+ {
+    "communityComp01" : "call_SP = {{status}}",
+    "activityComp01" : "call_SP1 = {{status}}",
+    "affinityComp01" : "call_SP2 = {{status}}",
+    "affinityComp02" : "call_SP3 = {{status}}",
+    "affinityComp03" : "call_SP4 = {{status}}",
+    "affinityComp04" : "call_SP5 = {{status}}"
+ }

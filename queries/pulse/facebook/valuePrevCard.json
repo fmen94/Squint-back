@@ -1,0 +1,10 @@
+ {
+    "generalValuePrev01": "call_SP = {{status}}",
+    "generalValuePrev02": "call_SP2 = {{status}}",
+    "generalValuePrev03": "call_SP3 = {{status}}",
+    "generalValuePrev04" : "call_SP4 = {{status}}",
+    "communityValuePrev01" : "call_SP5 = {{status}}",
+    "communityValuePrev02" : "call_SP6 = {{status}}",
+    "communityValuePrev03" : "call_SP7 = {{status}}",
+    "communityValuePrev04" : "call_SP8 = {{status}}"
+ }
