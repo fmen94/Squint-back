@@ -3,6 +3,11 @@
  */
 
 //Pulse
-export { PulseFieldResolver,PulseResolver } from './pulse/index'
+import { PulseFieldResolver, PulseResolver } from "./pulse/index";
 //facebook
-export { PulseFacebookResolver } from './pulse/facebook/index'
+import { PulseFacebookResolver } from "./pulse/facebook/index";
+import { BuildSchemaOptions } from "type-graphql";
+
+export const SchemaOptions: BuildSchemaOptions = {
+  resolvers: [PulseFieldResolver, PulseResolver, PulseFacebookResolver],
+};
