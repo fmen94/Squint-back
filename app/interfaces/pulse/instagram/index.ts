@@ -1,3 +1,4 @@
+import { geoCard } from "./../../../schema/common/Common";
 import {
   donutDetailIn,
   kindDateValueIn,
@@ -10,9 +11,11 @@ import {
   titleTextIn,
   valueDiffIn,
   geoCardIn,
+  postIGIn,
+  topPeopleIn,
 } from "../../common";
 
-export interface facebookIn {
+export interface instagramIn {
   intCard: Number;
   stringCard: String;
   valuePrevCard: valueDiffIn;
@@ -24,7 +27,8 @@ export interface facebookIn {
   listCard: [kindValueIn];
   tableCard: [[[kindNameValueIn]]];
   bubblesCard: [kindDateValueIn];
-  postCard: [postFbIn];
+  postCard: [postIGIn];
   titleTextCard: titleTextIn;
   geoCard: [geoCardIn];
+  topPeople: [topPeopleIn];
 }

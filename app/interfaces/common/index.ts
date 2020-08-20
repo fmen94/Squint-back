@@ -88,3 +88,28 @@ export interface geoCardIn {
   value?: Number;
   cities?: cityIn;
 }
+export interface postIGIn {
+  performance: String;
+  pageName: String;
+  pageImage: String;
+  date: String;
+  type: String;
+  text: String;
+  mediaUrl: String;
+  postUrl: String;
+  impressions: Number;
+  reach: Number;
+  engagementRate: Number;
+  interactions: Number;
+  views: Number;
+  clicks: Number;
+  shares: Number;
+  saved: Number;
+}
+export interface topPeopleIn {
+  position?: Number;
+  image?: String;
+  name?: String;
+  followers?: Number;
+  likes?: Number;
+}

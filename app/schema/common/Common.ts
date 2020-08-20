@@ -12,6 +12,8 @@ import {
   valueDiffIn,
   geoCardIn,
   cityIn,
+  postIGIn,
+  topPeopleIn,
 } from "../../interfaces/common";
 import { IsNull } from "./Options";
 
@@ -186,4 +188,52 @@ export class geoCard implements geoCardIn {
   value: Number;
   @Field(IsNull)
   cities: city;
+}
+@ObjectType()
+export class postIG implements postIGIn {
+  @Field(IsNull)
+  performance: String;
+  @Field(IsNull)
+  pageName: String;
+  @Field(IsNull)
+  pageImage: String;
+  @Field(IsNull)
+  date: String;
+  @Field(IsNull)
+  type: String;
+  @Field(IsNull)
+  text: String;
+  @Field(IsNull)
+  mediaUrl: String;
+  @Field(IsNull)
+  postUrl: String;
+  @Field(IsNull)
+  impressions: Number;
+  @Field(IsNull)
+  reach: Number;
+  @Field(IsNull)
+  engagementRate: Number;
+  @Field(IsNull)
+  interactions: Number;
+  @Field(IsNull)
+  views: Number;
+  @Field(IsNull)
+  clicks: Number;
+  @Field(IsNull)
+  shares: Number;
+  @Field(IsNull)
+  saved: Number;
+}
+@ObjectType()
+export class topPeople implements topPeopleIn {
+  @Field(IsNull)
+  position?: Number;
+  @Field(IsNull)
+  image?: String;
+  @Field(IsNull)
+  name?: String;
+  @Field(IsNull)
+  followers?: Number;
+  @Field(IsNull)
+  likes?: Number;
 }
