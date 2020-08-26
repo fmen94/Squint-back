@@ -86,7 +86,7 @@ export interface geoCardIn {
   name?: String;
   diff?: Number;
   value?: Number;
-  cities?: cityIn;
+  cities?: [cityIn];
 }
 export interface postIGIn {
   performance: String;

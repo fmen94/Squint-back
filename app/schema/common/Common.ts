@@ -186,8 +186,8 @@ export class geoCard implements geoCardIn {
   diff: Number;
   @Field(IsNull)
   value: Number;
-  @Field(IsNull)
-  cities: city;
+  @Field((type) => [city], IsNull)
+  cities: [city];
 }
 @ObjectType()
 export class postIG implements postIGIn {

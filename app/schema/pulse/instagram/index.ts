@@ -15,7 +15,7 @@ import {
 } from "../../common/Common";
 import { instagramIn } from "../../../interfaces/pulse/instagram";
 @ObjectType()
-export class instagram implements instagramIn {
+export class Instagram implements instagramIn {
   @Field(IsNull)
   intCard: Number;
   @Field(IsNull)

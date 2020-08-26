@@ -83,6 +83,8 @@ export class PulseFacebookResolver {
     @Arg("cardId", (type) => CardIdIntFbType, CardIdIntOptions)
     cardId?: CardIdIntFbType
   ): Number {
+    console.log(ctx);
+
     return intCardService(ctx, dateRange, cardId);
   }
   /**

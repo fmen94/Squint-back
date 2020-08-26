@@ -24,15 +24,18 @@ export const geoCardService = (
       name: faker.address.country(),
       diff: faker.random.number(),
       value: faker.random.number(),
-      cities: {
-        id: faker.random.uuid(),
-        diff: faker.random.number(),
-        value: faker.random.number(),
-        country: faker.address.country(),
-        name: faker.address.city(),
-        lat: faker.address.latitude(),
-        lng: faker.address.longitude(),
-      },
+      cities: [
+        {
+          id: faker.random.uuid(),
+          diff: faker.random.number(),
+          value: faker.random.number(),
+          position: 1,
+          country: faker.address.country(),
+          name: faker.address.city(),
+          lat: faker.address.latitude(),
+          lng: faker.address.longitude(),
+        },
+      ],
     });
   }
   logger.info(`Successfully obtained: ${cardId}`);
