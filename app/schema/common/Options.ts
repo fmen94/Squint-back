@@ -3,6 +3,11 @@ import moment = require("moment");
 /**
  *
  */
+export const OrderOptions = {
+  nullable: true,
+  defaultValue: "ASC",
+  description: "Receive an Enum ORder and the default is ASC",
+};
 export const PeriodOptions = {
   nullable: true,
   defaultValue: "DL",

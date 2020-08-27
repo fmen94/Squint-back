@@ -16,6 +16,7 @@ import {
   CardIdPostFbType,
   CardIdTitleTextFbType,
   CardIdGeoFbType,
+  OrderType,
 } from "../../../schema/common/Enums";
 import {
   DateEndOptions,
@@ -33,6 +34,7 @@ import {
   CardIdPostOptions,
   CardIdtitleTextOptions,
   CardIdGeoOptions,
+  OrderOptions,
 } from "../../../schema/common/Options";
 import { intCardService } from "../../../services/pulse/facebook/intCard";
 import { DateRange } from "../../../schema/common/Arguments";
@@ -191,11 +193,12 @@ export class PulseFacebookResolver {
   @FieldResolver()
   listPrevCard(
     @Ctx() ctx: any,
+    @Arg("order", (type) => OrderType, OrderOptions) order?: OrderType,
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
     @Arg("cardId", (type) => CardIdListPrevFbType, CardIdListPrevOptions)
     cardId?: CardIdListPrevFbType
   ): nameValueDiffIn[] {
-    return listPrevCardService(ctx, dateRange, cardId);
+    return listPrevCardService(ctx, dateRange, cardId, order);
   }
   /**
    * Resolver de este tipo de card retorna un arreglo de nombre valor
@@ -207,11 +210,12 @@ export class PulseFacebookResolver {
   @FieldResolver()
   listCard(
     @Ctx() ctx: any,
+    @Arg("order", (type) => OrderType, OrderOptions) order?: OrderType,
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
     @Arg("cardId", (type) => CardIdListFbType, CardIdListOptions)
     cardId?: CardIdListFbType
   ): kindValueIn[] {
-    return listCardService(ctx, dateRange, cardId);
+    return listCardService(ctx, dateRange, cardId, order);
   }
   /**
    * Resolver de este tipo de card retorna un arreglo en 3 dimenciones de nombre valor y kind

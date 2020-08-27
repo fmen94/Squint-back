@@ -4,13 +4,14 @@ import moment = require("moment");
 import { DateRange } from "../../../schema/common/Arguments";
 import { nameValueDiffIn } from "../../../interfaces/common";
 import logger from "../../../helpers/logins/login.helper";
-import { CardIdListPrevFbType } from "../../../schema/common/Enums";
+import { CardIdListPrevFbType, OrderType } from "../../../schema/common/Enums";
 
 //El uso de Faker es temportal hasta conectar a base de datos
 export const listPrevCardService = (
   ctx,
   dateRange: DateRange,
-  cardId: CardIdListPrevFbType
+  cardId: CardIdListPrevFbType,
+  order: OrderType
 ): nameValueDiffIn[] => {
   logger.info(`Getting values ​​for: ${cardId}`);
   let response: nameValueDiffIn[] = [];
@@ -22,5 +23,10 @@ export const listPrevCardService = (
     });
   }
   logger.info(`Successfully obtained: ${cardId}`);
+  if (order == "DESC") {
+    response = response.sort((a, b) => (a.value > b.value ? -1 : 1));
+  } else if (order == "ASC") {
+    response = response.sort((a, b) => (a.value < b.value ? -1 : 1));
+  }
   return response;
 };

@@ -20,7 +20,20 @@ registerEnumType(PeriodType, {
     HY: History
     `,
 });
+export enum OrderType {
+  DESC = "DESC",
+  ASC = "ASC",
+}
 
+registerEnumType(OrderType, {
+  name: "Order",
+  description: `
+    the order receives the following 
+    parameters:
+    DESC = falling,
+    ASC = upward,
+    `,
+});
 export enum CardIdIntFbType {
   generalInt01 = "generalInt01",
   generalInt02 = "generalInt02",
