@@ -1,7 +1,6 @@
-import { topPeople } from "./../../../schema/common/Common";
-import { Instagram } from "./../../../schema/pulse/instagram/index";
 import "reflect-metadata";
 import { Resolver, FieldResolver, Ctx, Arg } from "type-graphql";
+import { Youtube } from "../../../schema/pulse/youtube/index";
 import {
   CardIdIntFbType,
   CardIdStringFbType,
@@ -18,7 +17,7 @@ import {
   CardIdTitleTextFbType,
   CardIdGeoFbType,
   OrderType,
-  topPeopleFbType,
+  desktopYtType,
 } from "../../../schema/common/Enums";
 import {
   DateEndOptions,
@@ -37,7 +36,7 @@ import {
   CardIdtitleTextOptions,
   CardIdGeoOptions,
   OrderOptions,
-  topPeopleOptions,
+  desktopOptions,
 } from "../../../schema/common/Options";
 import { intCardService } from "../../../services/pulse/facebook/intCard";
 import { DateRange } from "../../../schema/common/Arguments";
@@ -51,8 +50,9 @@ import { listPrevCardService } from "../../../services/pulse/facebook/listPrevCa
 import { listCardService } from "../../../services/pulse/facebook/listCard";
 import { bubblesService } from "../../../services/pulse/facebook/bubbleCards";
 import { tableCardService } from "../../../services/pulse/facebook/tableCard";
-import { postCardService } from "../../../services/pulse/instagram/postCard";
+import { postCardService } from "../../../services/pulse/youtube/postCard";
 import { titleTextCardService } from "../../../services/pulse/facebook/titleTextCard";
+import { kindIntValues } from "../../../schema/common/Common";
 import {
   donutDetailIn,
   kindDateValueIn,
@@ -65,17 +65,17 @@ import {
   titleTextIn,
   valueDiffIn,
   geoCardIn,
-  topPeopleIn,
-  postIGIn,
+  desktopIn,
+  postYtIn,
 } from "../../../interfaces/common";
 import { geoCardService } from "../../../services/pulse/facebook/geoCard";
-import { topPeopleService } from "../../../services/pulse/instagram/topPeopleCrd";
+import { desktopService } from "../../../services/pulse/youtube/desktopCard";
 
 /**
- * Este Resolver Contiene todos los resolutores que se puden usar para Instagram pulse.
+ * Este Resolver Contiene todos los resolutores que se puden usar para Facebook pulse.
  */
-@Resolver((of) => Instagram)
-export class PulseInstagramResolver {
+@Resolver((of) => Youtube)
+export class PulseYoutubeResolver {
   /**
    * Resolver de este tipo de card de solo un valor
    * @param ctx
@@ -267,7 +267,7 @@ export class PulseInstagramResolver {
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
     @Arg("cardId", (type) => CardIdPostFbType, CardIdPostOptions)
     cardId?: CardIdPostFbType
-  ): postIGIn[] {
+  ): postYtIn[] {
     return postCardService(ctx, dateRange, cardId);
   }
   /**
@@ -296,12 +296,12 @@ export class PulseInstagramResolver {
     return geoCardService(ctx, dateRange, cardId);
   }
   @FieldResolver()
-  topPeople(
+  desktopCard(
     @Ctx() ctx: any,
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
-    @Arg("cardId", (type) => topPeopleFbType, topPeopleOptions)
-    cardId?: topPeopleFbType
-  ): topPeopleIn[] {
-    return topPeopleService(ctx, dateRange, cardId);
+    @Arg("cardId", (type) => desktopYtType, desktopOptions)
+    cardId?: desktopYtType
+  ): desktopIn[] {
+    return desktopService(ctx, dateRange, cardId);
   }
 }

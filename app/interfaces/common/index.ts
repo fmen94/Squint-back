@@ -113,3 +113,25 @@ export interface topPeopleIn {
   followers?: Number;
   likes?: Number;
 }
+export interface desktopIn {
+  percent?: Number;
+  label?: String;
+  value?: Number;
+  diff?: Number;
+}
+export interface postYtIn {
+  performance: String;
+  pageName: String;
+  pageImage: String;
+  date: String;
+  type: String;
+  title: String;
+  text: String;
+  mediaUrl: String;
+  postUrl: String;
+  favorites: Number;
+  like: Number;
+  comments: Number;
+  shares: Number;
+  unlikes: Number;
+}

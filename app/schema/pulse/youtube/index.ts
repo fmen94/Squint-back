@@ -9,14 +9,15 @@ import {
   kindValue,
   kindDateValue,
   kindNameValue,
+  postFB,
   titleText,
   geoCard,
-  postIG,
-  topPeople,
+  desktopCard,
+  postYt,
 } from "../../common/Common";
-import { instagramIn } from "../../../interfaces/pulse/instagram";
+import { youtubeIn } from "../../../interfaces/pulse/youtube/index";
 @ObjectType()
-export class Instagram implements instagramIn {
+export class Youtube implements youtubeIn {
   @Field(IsNull)
   intCard: Number;
   @Field(IsNull)
@@ -39,12 +40,12 @@ export class Instagram implements instagramIn {
   tableCard: [[[kindNameValue]]];
   @Field((type) => [kindDateValue], IsNull)
   bubblesCard: [kindDateValue];
-  @Field((type) => [postIG], IsNull)
-  postCard: [postIG];
+  @Field((type) => [postYt], IsNull)
+  postCard: [postYt];
   @Field((type) => titleText, IsNull)
   titleTextCard: titleText;
   @Field((type) => [geoCard], IsNull)
   geoCard: [geoCard];
-  @Field((type) => [topPeople], IsNull)
-  topPeople: [topPeople];
+  @Field((type) => [desktopCard], IsNull)
+  desktopCard: [desktopCard];
 }

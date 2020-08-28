@@ -92,7 +92,17 @@ export const CardIdtitleTextOptions = {
 export const CardIdGeoOptions = {
   nullable: true,
   defaultValue: "communityGeo01",
-  description: `represents the id of the card that you want to show and the default value is: conversationTitleText01`,
+  description: `represents the id of the card that you want to show and the default value is: communityGeo01`,
+};
+export const topPeopleOptions = {
+  nullable: true,
+  defaultValue: "communityTop01",
+  description: `represents the id of the card that you want to show and the default value is: communityTop01`,
+};
+export const desktopOptions = {
+  nullable: true,
+  defaultValue: "communityDesktop01",
+  description: `represents the id of the card that you want to show and the default value is: communityDesktop01`,
 };
 //IsNull
 export const IsNull = {

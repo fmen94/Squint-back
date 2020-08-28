@@ -272,3 +272,23 @@ registerEnumType(CardIdGeoFbType, {
     communityGeo01 = Mapa de FB,
     `,
 });
+export enum topPeopleFbType {
+  communityTop01 = "communityTop01",
+}
+registerEnumType(topPeopleFbType, {
+  name: "CardIdtopPeople",
+  description: `
+    Represents the id of the specific metric that you want to see:
+    communityTop01 = People top ,
+    `,
+});
+export enum desktopYtType {
+  communityDesktop01 = "communityDesktop01",
+}
+registerEnumType(desktopYtType, {
+  name: "CardIdDesktop",
+  description: `
+    Represents the id of the specific metric that you want to see:
+    communityDesktop01 = Views by desktop ,
+    `,
+});

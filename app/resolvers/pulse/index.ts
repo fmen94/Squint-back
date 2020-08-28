@@ -24,4 +24,8 @@ export class PulseFieldResolver {
   instagram() {
     return {};
   }
+  @FieldResolver()
+  youtube() {
+    return {};
+  }
 }

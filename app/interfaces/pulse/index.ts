@@ -1,5 +1,9 @@
+import { youtubeIn } from "./youtube/index";
+import { instagramIn } from "./instagram/index";
 import { facebookIn } from "./facebook";
 
 export interface pulseIn {
-    facebook : facebookIn
+  facebook: facebookIn;
+  instagram: instagramIn;
+  youtube: youtubeIn;
 }

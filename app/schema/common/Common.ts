@@ -14,6 +14,8 @@ import {
   cityIn,
   postIGIn,
   topPeopleIn,
+  desktopIn,
+  postYtIn,
 } from "../../interfaces/common";
 import { IsNull } from "./Options";
 
@@ -236,4 +238,46 @@ export class topPeople implements topPeopleIn {
   followers?: Number;
   @Field(IsNull)
   likes?: Number;
+}
+@ObjectType()
+export class desktopCard implements desktopIn {
+  @Field(IsNull)
+  percent?: Number;
+  @Field(IsNull)
+  label?: String;
+  @Field(IsNull)
+  value?: Number;
+  @Field(IsNull)
+  diff?: Number;
+}
+@ObjectType()
+export class postYt implements postYtIn {
+  @Field(IsNull)
+  performance: String;
+  @Field(IsNull)
+  pageName: String;
+  @Field(IsNull)
+  pageImage: String;
+  @Field(IsNull)
+  date: String;
+  @Field(IsNull)
+  type: String;
+  @Field(IsNull)
+  title: String;
+  @Field(IsNull)
+  text: String;
+  @Field(IsNull)
+  mediaUrl: String;
+  @Field(IsNull)
+  postUrl: String;
+  @Field(IsNull)
+  favorites: Number;
+  @Field(IsNull)
+  like: Number;
+  @Field(IsNull)
+  comments: Number;
+  @Field(IsNull)
+  shares: Number;
+  @Field(IsNull)
+  unlikes: Number;
 }
