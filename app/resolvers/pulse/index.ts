@@ -28,4 +28,8 @@ export class PulseFieldResolver {
   youtube() {
     return {};
   }
+  @FieldResolver()
+  trends() {
+    return {};
+  }
 }

@@ -292,3 +292,81 @@ registerEnumType(desktopYtType, {
     communityDesktop01 = Views by desktop ,
     `,
 });
+
+//Enums By Trends
+
+export enum CardIdIntTrType {
+  generalInt01 = "generalInt01",
+  generalInt02 = "generalInt02",
+}
+registerEnumType(CardIdIntTrType, {
+  name: "CardIdIntTr",
+  description: `
+    Represents the id of the specific metric that you want to see:
+    generalInt01 = Varage monthly searches,
+    generalInt02 = Numbers of google search,
+    `,
+});
+export enum CardIdSmallTrType {
+  generalSmail01 = "generalSmail01",
+  generalSmail02 = "generalSmail02",
+  generalSmail03 = "generalSmail03",
+  generalSmail04 = "generalSmail04",
+}
+registerEnumType(CardIdSmallTrType, {
+  name: "CardIdSmallTr",
+  description: `
+    Represents the id of the specific metric that you want to see:
+    generalSmail01 = "Web serches",
+    generalSmail02 = "Image search",
+    generalSmail03 = "News search",
+    generalSmail04 = "Youtube Search",
+    `,
+});
+export enum CardIdCompTrType {
+  geenralComp01 = "geenralComp01",
+  geenralComp02 = "geenralComp02",
+}
+registerEnumType(CardIdCompTrType, {
+  name: "CardIdCompTr",
+  description: `
+    Represents the id of the specific metric that you want to see:
+    communityComp01 = Comparation chart of Community,
+    geenralComp01 = interest overtime,
+    geenralComp02 = keywords comparation,
+    `,
+});
+export enum CardIdListPrevTrType {
+  generalListPrev01 = "generalListPrev01",
+  generalListPrev02 = "generalListPrev02",
+}
+registerEnumType(CardIdListPrevTrType, {
+  name: "CardIdListPrevTr",
+  description: `
+    Represents the id of the specific metric that you want to see:
+    generalListPrev01 = search by conuntries,
+    generalListPrev02 = keywords list,
+    `,
+});
+export enum CardIdListTrType {
+  generalList01 = "generalList01",
+  generalList02 = "generalList02",
+}
+registerEnumType(CardIdListTrType, {
+  name: "CardIdListTr",
+  description: `
+    Represents the id of the specific metric that you want to see:
+    generalList01 = related topics,
+    generalList02 = related search,
+    `,
+});
+export enum CardIdGeoTrType {
+  generalGeo01 = "generalGeo01",
+}
+registerEnumType(CardIdGeoTrType, {
+  name: "CardIdGeoTr",
+  description: `
+    Represents the id of the specific metric that you want to see:
+    generalGeo01 = Mapa de Trends,
+    `,
+});

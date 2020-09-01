@@ -9,6 +9,7 @@ import { PulseFacebookResolver } from "./pulse/facebook/index";
 import { BuildSchemaOptions } from "type-graphql";
 import { PulseInstagramResolver } from "./pulse/instagram/index";
 import { PulseYoutubeResolver } from "./pulse/youtube";
+import { PulseTrendsResolver } from "./pulse/trends";
 export const SchemaOptions: BuildSchemaOptions = {
   resolvers: [
     PulseFieldResolver,
@@ -16,5 +17,6 @@ export const SchemaOptions: BuildSchemaOptions = {
     PulseFacebookResolver,
     PulseInstagramResolver,
     PulseYoutubeResolver,
+    PulseTrendsResolver,
   ],
 };

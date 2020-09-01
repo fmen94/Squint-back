@@ -104,11 +104,38 @@ export const desktopOptions = {
   defaultValue: "communityDesktop01",
   description: `represents the id of the card that you want to show and the default value is: communityDesktop01`,
 };
+//Options trends
+
+export const CardIdSmallTrOptions = {
+  nullable: true,
+  defaultValue: "generalSmail01",
+  description: `represents the id of the card that you want to show and the default value is: generalSmail01`,
+};
+export const CardIdCompTrOptions = {
+  nullable: true,
+  defaultValue: "geenralComp01",
+  description: `represents the id of the card that you want to show and the default value is: geenralComp01`,
+};
+export const CardIdListPrevTrOptions = {
+  nullable: true,
+  defaultValue: "generalListPrev01",
+  description: `represents the id of the card that you want to show and the default value is: generalListPrev01`,
+};
+export const CardIdListTrOptions = {
+  nullable: true,
+  defaultValue: "generalList01",
+  description: `represents the id of the card that you want to show and the default value is: generalList01`,
+};
+export const CardIdGeoTrOptions = {
+  nullable: true,
+  defaultValue: "generalGeo01",
+  description: `represents the id of the card that you want to show and the default value is: generalGeo01`,
+};
 //IsNull
 export const IsNull = {
   nullable: true,
 };
-
+//not null
 export const NotNull = {
   nullable: false,
 };

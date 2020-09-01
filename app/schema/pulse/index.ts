@@ -4,6 +4,7 @@ import { Facebook } from "./facebook/index";
 import { IsNull } from "../common/Options";
 import { pulseIn } from "../../interfaces/pulse";
 import { Youtube } from "./youtube/index";
+import { Trends } from "./trends";
 @ObjectType()
 export class Pulse implements pulseIn {
   @Field((type) => Facebook, IsNull)
@@ -12,4 +13,6 @@ export class Pulse implements pulseIn {
   instagram: Instagram;
   @Field((type) => Youtube, IsNull)
   youtube: Youtube;
+  @Field((type) => Trends, IsNull)
+  trends: Trends;
 }
