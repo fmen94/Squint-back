@@ -16,6 +16,7 @@ import {
   topPeopleIn,
   desktopIn,
   postYtIn,
+  postNwIn,
 } from "../../interfaces/common";
 import { IsNull } from "./Options";
 
@@ -280,4 +281,25 @@ export class postYt implements postYtIn {
   shares: Number;
   @Field(IsNull)
   unlikes: Number;
+}
+@ObjectType()
+export class postNw implements postNwIn {
+  @Field(IsNull)
+  sourseName: String;
+  @Field(IsNull)
+  sourseImage: String;
+  @Field(IsNull)
+  date: String;
+  @Field(IsNull)
+  title: String;
+  @Field(IsNull)
+  text: String;
+  @Field(IsNull)
+  imageUrl: String;
+  @Field(IsNull)
+  postUrl: String;
+  @Field(IsNull)
+  autor: String;
+  @Field(IsNull)
+  category: String;
 }

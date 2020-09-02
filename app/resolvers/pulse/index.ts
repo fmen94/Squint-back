@@ -32,4 +32,8 @@ export class PulseFieldResolver {
   trends() {
     return {};
   }
+  @FieldResolver()
+  news() {
+    return {};
+  }
 }

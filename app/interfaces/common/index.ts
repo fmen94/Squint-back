@@ -135,3 +135,14 @@ export interface postYtIn {
   shares: Number;
   unlikes: Number;
 }
+export interface postNwIn {
+  sourseName: String;
+  sourseImage: String;
+  date: String;
+  title: String;
+  text: String;
+  imageUrl: String;
+  postUrl: String;
+  autor: String;
+  category: String;
+}

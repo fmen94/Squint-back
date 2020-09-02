@@ -131,6 +131,17 @@ export const CardIdGeoTrOptions = {
   defaultValue: "generalGeo01",
   description: `represents the id of the card that you want to show and the default value is: generalGeo01`,
 };
+//options para Nw
+export const CardIdStringNwOptions = {
+  nullable: true,
+  defaultValue: "generalString01",
+  description: `represents the id of the card that you want to show and the default value is: generalString01`,
+};
+export const CardIdPostNwOptions = {
+  nullable: true,
+  defaultValue: "geenralPost01",
+  description: `represents the id of the card that you want to show and the default value is: geenralPost01`,
+};
 //IsNull
 export const IsNull = {
   nullable: true,

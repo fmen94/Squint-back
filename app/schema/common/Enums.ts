@@ -364,9 +364,30 @@ export enum CardIdGeoTrType {
   generalGeo01 = "generalGeo01",
 }
 registerEnumType(CardIdGeoTrType, {
-  name: "CardIdGeoTr",
+  name: "CardIdNwGeoTr",
   description: `
     Represents the id of the specific metric that you want to see:
     generalGeo01 = Mapa de Trends,
+    `,
+});
+//enums News
+export enum CardIdStringNwType {
+  generalString01 = "generalString01",
+}
+registerEnumType(CardIdStringNwType, {
+  name: "CardIdNwString",
+  description: `
+    Represents the id of the specific metric that you want to see:
+    generalString01 = Name of Brand,
+    `,
+});
+export enum CardIdPostNwType {
+  geenralPost01 = "geenralPost01",
+}
+registerEnumType(CardIdPostNwType, {
+  name: "CardIdNwPost",
+  description: `
+    Represents the id of the specific metric that you want to see:
+     geenralPost01 = Post,
     `,
 });
