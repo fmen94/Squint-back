@@ -89,7 +89,7 @@ export class PulseYoutubeResolver {
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
     @Arg("cardId", (type) => CardIdIntFbType, CardIdIntOptions)
     cardId?: CardIdIntFbType
-  ): Number {
+  ): Promise<number> {
     return intCardService(ctx, dateRange, cardId);
   }
   /**
@@ -121,7 +121,7 @@ export class PulseYoutubeResolver {
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
     @Arg("cardId", (type) => CardIdValuePrevFbType, CardIdValuePrevOptions)
     cardId?: CardIdValuePrevFbType
-  ): valueDiffIn {
+  ): Promise<valueDiffIn> {
     return valuePrevCardService(ctx, dateRange, cardId);
   }
   /**

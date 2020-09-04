@@ -1,20 +1,18 @@
 [
-    {
-        "name": "Prod",
-        "type": "mysql",
-        "host": "squint-db-1.cluster-cofw7ea3iwao.us-east-1.rds.amazonaws.com",
-        "port": 3306,
-        "username": "adb_graph_user",
-        "password": "AuroraSquint2020#",
-        "database": "squint_dwh",
-        "synchronize": false,
-        "logging": false,
-        "entities": [
-            "app/models/**/*.ts"
-        ],
-        "cli": {
-            "entitiesDir": "app/models"
-        },
-        "autoSchemaSync": true
-    }
+  {
+    "name": "Prod",
+    "type": "postgres",
+    "host": "redshift-cluster-prod.c9y1vuaimcxw.us-east-1.redshift.amazonaws.com",
+    "port": 5439,
+    "username": "awsuser",
+    "password": "awsUser!58",
+    "database": "tmknow",
+    "synchronize": false,
+    "logging": false,
+    "entities": ["app/models/**/*.ts"],
+    "cli": {
+      "entitiesDir": "app/models"
+    },
+    "autoSchemaSync": true
+  }
 ]

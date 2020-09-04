@@ -1,28 +1,36 @@
 import { ApolloServer } from "apollo-server";
 import { buildSchema, Int } from "type-graphql";
-import { createConnection, Connection } from "typeorm";
 import logger from "./helpers/logins/login.helper";
 import BadRequestException from "./exceptions/bad-request.exception";
 import { SchemaOptions } from "./resolvers";
+
+import { Pool } from "pg";
+const client = new Pool({
+  user: process.env.db_user,
+  database: process.env.db_database,
+  port: process.env.db_port,
+  password: process.env.db_password,
+  host: process.env.db_host,
+});
 
 //Funcion principal del proyecto
 const init = async (port: any) => {
   logger.info(`Loading schemas`);
   //lee todos los schemas importados de ./resolvers/index.ts
   const schema = await buildSchema(SchemaOptions);
-  //La coneccion a bas esta pendiente
+  //La coneccion a base
   logger.info(`Connectiong databases`);
-  let conection: Connection;
-  //Pendig
-  /*createConnection(process.env.MYSQL_API_DWH|| "Prod")
-   .then(e=>{
-    console.log(`Connectiong Exist`)
-     conection= e
-   })
-  .catch(e=>{
-    console.log("Conection DWH failed", e) 
-  })
-  */
+  let conection: Pool;
+
+  await client
+    .connect()
+    .then((e) => {
+      logger.info(`Connectiong Exist to Redshift`);
+      conection = e;
+    })
+    .catch((e) => {
+      logger.error("Conection DWH failed", e);
+    });
   //Se Crea el server
   logger.info(`Initializing server`);
   const server = new ApolloServer({
