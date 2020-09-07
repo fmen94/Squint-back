@@ -5,6 +5,7 @@ import BadRequestException from "./exceptions/bad-request.exception";
 import { SchemaOptions } from "./resolvers";
 
 import { Pool } from "pg";
+import { ExpirationStrategy, MemoryStorage } from "node-ts-cache";
 const client = new Pool({
   user: process.env.db_user,
   database: process.env.db_database,
@@ -12,7 +13,7 @@ const client = new Pool({
   password: process.env.db_password,
   host: process.env.db_host,
 });
-
+const myCache = new ExpirationStrategy(new MemoryStorage());
 //Funcion principal del proyecto
 const init = async (port: any) => {
   logger.info(`Loading schemas`);
@@ -42,7 +43,7 @@ const init = async (port: any) => {
       // if (!req.headers.page_id) {
       //   throw new BadRequestException("Page_id is Invalid");
       // }
-      return { id: req.headers.page_id, conection };
+      return { id: req.headers.page_id, conection, myCache };
     },
   });
 

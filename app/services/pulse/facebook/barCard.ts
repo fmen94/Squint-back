@@ -4,28 +4,22 @@ import { DateRange } from "../../../schema/common/Arguments";
 import { kindIntValuesIn } from "../../../interfaces/common";
 import logger from "../../../helpers/logins/login.helper";
 import { CardIdBarFbType } from "../../../schema/common/Enums";
+import { communityGenderCall } from "./communityGender";
 
 //El uso de Faker es temportal hasta conectar a base de datos
-export const barCardService = (
+export const barCardService = async (
   ctx,
   dateRange: DateRange,
   cardId: CardIdBarFbType
-): kindIntValuesIn[] => {
+): Promise<kindIntValuesIn[]> => {
   logger.info(`Getting values ​​for: ${cardId}`);
-  let response: kindIntValuesIn[] = [];
-  for (let index = 0; index < 2; index++) {
-    response.push({
-      valuesArray: ValuesArray(7),
-      kind: faker.lorem.word(),
-    });
+  let data = await ctx.myCache.getItem(`${ctx.id}_communityGender`);
+  if (data) {
+    logger.info(`Successfully obtained of cache: ${cardId}`);
+    return data[cardId];
+  } else {
+    data = await communityGenderCall(dateRange.date, ctx);
+    logger.info(`Successfully obtained: ${cardId}`);
+    return data[cardId];
   }
-  logger.info(`Successfully obtained: ${cardId}`);
-  return response;
-};
-const ValuesArray = (num = 7): Number[] => {
-  let arr = [];
-  for (let index = 0; index < num; index++) {
-    arr.push(faker.random.number());
-  }
-  return arr;
 };

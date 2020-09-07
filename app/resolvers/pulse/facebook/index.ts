@@ -100,7 +100,7 @@ export class PulseFacebookResolver {
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
     @Arg("cardId", (type) => CardIdStringFbType, CardIdStringOptions)
     cardId?: CardIdStringFbType
-  ): String {
+  ): Promise<String> {
     return stringCardService(ctx, dateRange, cardId);
   }
   /**
@@ -124,7 +124,7 @@ export class PulseFacebookResolver {
    * @param ctx
    * @param dateRange
    * @param cardId
-   * @returns smailCardIn
+   * @returns Promise<smailCardIn>
    */
   @FieldResolver()
   smallCard(
@@ -132,7 +132,7 @@ export class PulseFacebookResolver {
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
     @Arg("cardId", (type) => CardIdSmallFbType, CardIdSmallOptions)
     cardId?: CardIdSmallFbType
-  ): smailCardIn {
+  ): Promise<smailCardIn> {
     return smallCardService(ctx, dateRange, cardId);
   }
   /**
@@ -148,7 +148,7 @@ export class PulseFacebookResolver {
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
     @Arg("cardId", (type) => CardIdCompFbType, CardIdCompOptions)
     cardId?: CardIdCompFbType
-  ): nameValueDiffIn[] {
+  ): Promise<nameValueDiffIn[]> {
     return compCardService(ctx, dateRange, cardId);
   }
   /**
@@ -164,7 +164,7 @@ export class PulseFacebookResolver {
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
     @Arg("cardId", (type) => CardIdBarFbType, CardIdBarOptions)
     cardId?: CardIdBarFbType
-  ): kindIntValuesIn[] {
+  ): Promise<kindIntValuesIn[]> {
     return barCardService(ctx, dateRange, cardId);
   }
   /**

@@ -18,5 +18,8 @@ export const valuePrevTrans = (data) => {
       value: data[0].interactions,
       diff: data[0].interactions,
     },
+    generalInt01: data[0].engagement_rate,
+    generalInt02: data[0].afinity_rate,
+    generalString01: data[0].sentiment,
   };
 };
