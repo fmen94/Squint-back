@@ -3,11 +3,9 @@ import { DateRange } from "../../../schema/common/Arguments";
 import { valueDiffIn } from "../../../interfaces/common";
 import logger from "../../../helpers/logins/login.helper";
 import { CardIdValuePrevFbType } from "../../../schema/common/Enums";
-import { generalCall } from "./generalCall";
-import { communityDateCall } from "./communityDates";
+import { readTopCall } from "./readTopCall";
+import { readDetailsCall } from "./readDetails";
 
-//const myCache = new ExpirationStrategy(new MemoryStorage());
-//El uso de Faker es temportal hasta conectar a base de datos
 export const valuePrevCardService = async (
   ctx,
   dateRange: DateRange,
@@ -17,23 +15,27 @@ export const valuePrevCardService = async (
   /**
    * Prueba
    */
-  if (cardId.includes("general")) {
-    let data = await ctx.myCache.getItem(`${ctx.id}_general`);
+  if (
+    cardId == "generalValuePrev02" ||
+    cardId == "communityValuePrev01" ||
+    cardId == "communityValuePrev04"
+  ) {
+    let data = await ctx.myCache.getItem(`${ctx.id}_readDetails`);
     if (data) {
       logger.info(`Successfully obtained of cache: ${cardId}`);
       return data[cardId];
     } else {
-      data = await generalCall(dateRange.date, ctx);
+      data = await readDetailsCall(dateRange.date, ctx);
       logger.info(`Successfully obtained: ${cardId}`);
       return data[cardId];
     }
-  } else if (cardId.includes("community")) {
-    let data = await ctx.myCache.getItem(`${ctx.id}_communityDate`);
+  } else {
+    let data = await ctx.myCache.getItem(`${ctx.id}_readTop`);
     if (data) {
       logger.info(`Successfully obtained of cache: ${cardId}`);
       return data[cardId];
     } else {
-      data = await communityDateCall(dateRange.date, ctx);
+      data = await readTopCall(dateRange, ctx);
       logger.info(`Successfully obtained: ${cardId}`);
       return data[cardId];
     }

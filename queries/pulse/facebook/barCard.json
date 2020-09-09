@@ -1,7 +1,0 @@
- {
-    "communityBar01": "call_SP = {{status}}",
-    "affinityBar01": "call_SP2 = {{status}}",
-    "affinityBar02": "call_SP3 = {{status}}",
-    "affinityBar03": "call_SP4 = {{status}}",
-    "conversationBar01": "call_SP5 = {{status}}"
- }

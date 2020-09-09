@@ -6,38 +6,22 @@ import { DateRange } from "../../../schema/common/Arguments";
 import { geoCardIn } from "../../../interfaces/common";
 import logger from "../../../helpers/logins/login.helper";
 import { CardIdGeoFbType } from "../../../schema/common/Enums";
+import { communityGeoCall } from "./communityGeo";
 
 //El uso de Faker es temportal hasta conectar a base de datos
-export const geoCardService = (
+export const geoCardService = async (
   ctx,
   dateRange: DateRange,
   cardId: CardIdGeoFbType
-): geoCardIn[] => {
+): Promise<geoCardIn[]> => {
   logger.info(`Getting values ​​for: ${cardId}`);
-  let response: geoCardIn[] = [];
-  for (let index = 0; index < 5; index++) {
-    response.push({
-      id: faker.random.uuid(),
-      iso_a2: faker.address.countryCode(2),
-      iso_a3: faker.address.countryCode(3),
-      position: index + 1,
-      name: faker.address.country(),
-      diff: faker.random.number(),
-      value: faker.random.number(),
-      cities: [
-        {
-          id: faker.random.uuid(),
-          diff: faker.random.number(),
-          value: faker.random.number(),
-          position: 1,
-          country: faker.address.country(),
-          name: faker.address.city(),
-          lat: faker.address.latitude(),
-          lng: faker.address.longitude(),
-        },
-      ],
-    });
+  let data = await ctx.myCache.getItem(`${ctx.id}_communityGeo`);
+  if (data) {
+    logger.info(`Successfully obtained of cache: ${cardId}`);
+    return data[cardId];
+  } else {
+    data = await communityGeoCall(dateRange.date, ctx);
+    logger.info(`Successfully obtained: ${cardId}`);
+    return data[cardId];
   }
-  logger.info(`Successfully obtained: ${cardId}`);
-  return response;
 };

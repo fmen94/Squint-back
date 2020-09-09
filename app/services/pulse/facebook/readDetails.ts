@@ -1,16 +1,16 @@
 import moment from "moment";
-import { valuePrevTrans } from "../../../transform/pulse/facebook/valuePrev.transform";
 import { fbQuerys } from "../../../../queries/pulse/facebook";
+import { readDetailsTrans } from "../../../transform/pulse/facebook/readDetails.transform";
 
-export const generalCall = async (date, ctx) => {
+export const readDetailsCall = async (date, ctx) => {
   let startDate = moment(date, "DD-MM-YYYYThh:mm:ss")
     .subtract(1, "day")
     .format("YYYY-MM-DD");
   let endDate = moment(startDate).format("YYYY-MM-DD");
-  let query = fbQuerys.general(ctx, startDate, endDate);
+  let query = fbQuerys.readDetails(ctx);
   let res = await ctx.conection.query(query);
-  let data = valuePrevTrans(res);
-  await ctx.myCache.setItem(`${ctx.id}_general`, data, {
+  let data = readDetailsTrans(res);
+  await ctx.myCache.setItem(`${ctx.id}_readDetails`, data, {
     ttl: parseInt(process.env.cache_ttl),
     isLazy: process.env.cache_isLazy == "true",
   });

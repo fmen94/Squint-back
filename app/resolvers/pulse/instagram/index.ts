@@ -19,6 +19,7 @@ import {
   CardIdGeoFbType,
   OrderType,
   topPeopleFbType,
+  dataCompType,
 } from "../../../schema/common/Enums";
 import {
   DateEndOptions,
@@ -38,6 +39,7 @@ import {
   CardIdGeoOptions,
   OrderOptions,
   topPeopleOptions,
+  DataCompOptions,
 } from "../../../schema/common/Options";
 import { intCardService } from "../../../services/pulse/facebook/intCard";
 import { DateRange } from "../../../schema/common/Arguments";
@@ -152,9 +154,11 @@ export class PulseInstagramResolver {
     @Ctx() ctx: any,
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
     @Arg("cardId", (type) => CardIdCompFbType, CardIdCompOptions)
-    cardId?: CardIdCompFbType
+    cardId?: CardIdCompFbType,
+    @Arg("dataType", (type) => dataCompType, DataCompOptions)
+    dataType?: dataCompType
   ): Promise<nameValueDiffIn[]> {
-    return compCardService(ctx, dateRange, cardId);
+    return compCardService(ctx, dateRange, cardId, dataType);
   }
   /**
    * Resolver de este tipo de card retorna un arreglo de kind y un valuesArray que es un arreglo de numeros
@@ -292,7 +296,7 @@ export class PulseInstagramResolver {
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
     @Arg("cardId", (type) => CardIdGeoFbType, CardIdGeoOptions)
     cardId?: CardIdGeoFbType
-  ): geoCardIn[] {
+  ): Promise<geoCardIn[]> {
     return geoCardService(ctx, dateRange, cardId);
   }
   @FieldResolver()

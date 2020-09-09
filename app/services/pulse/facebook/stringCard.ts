@@ -1,10 +1,9 @@
 import BadRequestException from "../../../exceptions/bad-request.exception";
 import faker from "faker";
 import { DateRange } from "../../../schema/common/Arguments";
-import config = require("../../../../queries/pulse/facebook/stringCard.json");
 import { CardIdStringFbType } from "../../../schema/common/Enums";
 import logger from "../../../helpers/logins/login.helper";
-import { generalCall } from "./generalCall";
+import { readTopCall } from "./readTopCall";
 
 //El uso de Faker es temportal hasta conectar a base de datos
 export const stringCardService = async (
@@ -18,8 +17,8 @@ export const stringCardService = async (
     logger.info(`Successfully obtained of cache: ${cardId}`);
     return data[cardId];
   } else {
-    data = await generalCall(dateRange.date, ctx);
+    data = await readTopCall(dateRange, ctx);
     logger.info(`Successfully obtained: ${cardId}`);
-    return data[cardId];
+    return "Good";
   }
 };

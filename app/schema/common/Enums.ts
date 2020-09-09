@@ -34,6 +34,57 @@ registerEnumType(OrderType, {
     ASC = upward,
     `,
 });
+export enum dataCompType {
+  fans_page = "fans_page",
+  organic_fans = "organic_fans",
+  paid_fans = "paid_fans",
+  viral_fans = "viral_fans",
+  investment = "investment",
+  engaged_users = "engaged_users",
+  unique_impressions = "unique_impressions",
+  total_impressions = "total_impressions",
+  paid_impressions = "paid_impressions",
+  organic_impressions = "organic_impressions",
+  viral_impressions = "viral_impressions",
+  engagemet_rate = "engagemet_rate",
+  total_engagement = "total_engagement",
+  paid_engagement = "paid_engagement",
+  organic_engagement = "organic_engagement",
+  viral_engagement = "viral_engagement",
+  interactions = "interactions",
+  organic_post = "organic_post",
+  paid_post = "paid_post",
+  video_viwes = "video_viwes",
+}
+
+registerEnumType(dataCompType, {
+  name: "Data",
+  description: `
+     
+They are the data types that can return the compCard
+    parameters:
+  fans_page = "fans_page",
+  organic_fans = "organic_fans",
+  paid_fans = "paid_fans",
+  viral_fans = "viral_fans",
+  investment = "investment",
+  engaged_users = "engaged_users",
+  unique_impressions = "unique_impressions",
+  total_impresions = "total_impresions",
+  paid_impresions = "paid_impresions",
+  organic_impresions = "organic_impresions",
+  viral_impresions = "viral_impresions",
+  engagemet_rate = "engagemet_rate",
+  total_engagement = "total_engagement",
+  paid_engagemet = "paid_engagemet",
+  organic_engagemet = "organic_engagemet",
+  viral_engaemet = "viral_engaemet",
+  interactions = "interactions",
+  organic_post = "organic_post",
+  paid_post = "paid_post",
+  video_viwes = "video_viwes",
+    `,
+});
 export enum CardIdIntFbType {
   generalInt01 = "generalInt01",
   generalInt02 = "generalInt02",

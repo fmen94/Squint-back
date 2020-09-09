@@ -1,8 +1,0 @@
- {
-    "communityList01": "call_SP = {{status}}",
-    "communityList02": "call_SP2 = {{status}}",
-    "affinityList01": "call_SP3 = {{status}}",
-    "contentList01": "call_SP4 = {{status}}",
-    "conversationList01": "call_SP5 = {{status}}",
-    "conversationList02": "call_SP6 = {{status}}"
- }

@@ -5,7 +5,7 @@ import { DateRange } from "../../../schema/common/Arguments";
 import { smailCardIn } from "../../../interfaces/common";
 import logger from "../../../helpers/logins/login.helper";
 import { CardIdSmallFbType } from "../../../schema/common/Enums";
-import { communityDateCall } from "./communityDates";
+import { readTopCall } from "./readTopCall";
 
 //El uso de Faker es temportal hasta conectar a base de datos
 export const smallCardService = async (
@@ -14,12 +14,12 @@ export const smallCardService = async (
   cardId: CardIdSmallFbType
 ): Promise<smailCardIn> => {
   logger.info(`Getting values ​​for: ${cardId}`);
-  let data = await ctx.myCache.getItem(`${ctx.id}_communityDate`);
+  let data = await ctx.myCache.getItem(`${ctx.id}_readTop`);
   if (data) {
     logger.info(`Successfully obtained of cache: ${cardId}`);
     return data[cardId];
   } else {
-    data = await communityDateCall(dateRange.date, ctx);
+    data = await readTopCall(dateRange, ctx);
     logger.info(`Successfully obtained: ${cardId}`);
     return data[cardId];
   }

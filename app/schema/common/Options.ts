@@ -8,6 +8,12 @@ export const OrderOptions = {
   defaultValue: "ASC",
   description: "Receive an Enum ORder and the default is ASC",
 };
+export const DataCompOptions = {
+  nullable: true,
+  defaultValue: "fans_page",
+  description:
+    "Receive an Enum data of comparations card and the default is fans_page",
+};
 export const PeriodOptions = {
   nullable: true,
   defaultValue: "DL",
