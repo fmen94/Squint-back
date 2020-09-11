@@ -1,6 +1,8 @@
 export const sourseValueTrans = (data) => {
   data = Object.values(data).filter((r: any) => r.command === "FETCH");
   data = data[0].rows;
+  console.log(data);
+
   return data.reduce(
     (obj, e, index) => {
       if ((e.tipo = "External")) {
@@ -19,6 +21,8 @@ export const sourseValueTrans = (data) => {
     {
       communityList01: [],
       communityList02: [],
+      affinityDonutDetail01: [],
+      affinityList01: [],
     }
   );
 };
