@@ -5,24 +5,26 @@ import { DateRange } from "../../../schema/common/Arguments";
 import { nameValueDiffIn } from "../../../interfaces/common";
 import logger from "../../../helpers/logins/login.helper";
 import { CardIdListPrevFbType, OrderType } from "../../../schema/common/Enums";
+import { communityGeoCall } from "./communityGeo";
 
 //El uso de Faker es temportal hasta conectar a base de datos
-export const listPrevCardService = (
+export const listPrevCardService = async (
   ctx,
   dateRange: DateRange,
   cardId: CardIdListPrevFbType,
   order: OrderType
-): nameValueDiffIn[] => {
+): Promise<nameValueDiffIn[]> => {
   logger.info(`Getting values ​​for: ${cardId}`);
-  let response: nameValueDiffIn[] = [];
-  for (let index = 0; index < 12; index++) {
-    response.push({
-      name: faker.address.country(),
-      value: faker.random.number(),
-      diff: faker.random.number(),
-    });
+  let response;
+  let data = await ctx.myCache.getItem(`${ctx.id}_communityGeo`);
+  if (data) {
+    logger.info(`Successfully obtained of cache: ${cardId}`);
+    response = data[cardId];
+  } else {
+    data = await communityGeoCall(dateRange.date, ctx);
+    logger.info(`Successfully obtained: ${cardId}`);
+    response = data[cardId];
   }
-  logger.info(`Successfully obtained: ${cardId}`);
   if (order == "DESC") {
     response = response.sort((a, b) => (a.value > b.value ? -1 : 1));
   } else if (order == "ASC") {

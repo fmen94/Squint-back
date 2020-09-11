@@ -29,5 +29,11 @@ export const fbQuerys = {
   FETCH ALL FROM cursor_nkkbl4fz9am;
   CLOSE cursor_nkkbl4fz9am;
     `,
+  postSection: (ctx, limit) => `
+   BEGIN;
+    call read_post_section('cursor_1o32ghjfcph','${ctx.id}',${limit}
+  );
+    FETCH ALL FROM cursor_1o32ghjfcph;
+    CLOSE cursor_1o32ghjfcph;
+    `,
 };
-//BEGIN;

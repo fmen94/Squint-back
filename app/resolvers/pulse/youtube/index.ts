@@ -206,7 +206,7 @@ export class PulseYoutubeResolver {
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
     @Arg("cardId", (type) => CardIdListPrevFbType, CardIdListPrevOptions)
     cardId?: CardIdListPrevFbType
-  ): nameValueDiffIn[] {
+  ): Promise<nameValueDiffIn[]> {
     return listPrevCardService(ctx, dateRange, cardId, order);
   }
   /**
@@ -223,7 +223,7 @@ export class PulseYoutubeResolver {
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
     @Arg("cardId", (type) => CardIdListFbType, CardIdListOptions)
     cardId?: CardIdListFbType
-  ): kindValueIn[] {
+  ): Promise<kindValueIn[]> {
     return listCardService(ctx, dateRange, cardId, order);
   }
   /**
