@@ -5,24 +5,22 @@ import { DateRange } from "../../../schema/common/Arguments";
 import { kindDateValueIn } from "../../../interfaces/common";
 import logger from "../../../helpers/logins/login.helper";
 import { CardIdBubblesFbType } from "../../../schema/common/Enums";
+import { postSectionCall } from "./postSection";
 
 //El uso de Faker es temportal hasta conectar a base de datos
-export const bubblesService = (
+export const bubblesService = async (
   ctx,
   dateRange: DateRange,
   cardId: CardIdBubblesFbType
-): kindDateValueIn[] => {
+): Promise<kindDateValueIn[]> => {
   logger.info(`Getting values ​​for: ${cardId}`);
-  let response: kindDateValueIn[] = [];
-  for (let index = 0; index < 7; index++) {
-    response.push({
-      kind: faker.commerce.color(),
-      date: moment(dateRange.date, "DD-MM-YYYYThh:mm:ss")
-        .subtract(index, "days")
-        .format("DD-MM-YYYYThh:mm:ss"),
-      value: faker.random.number(),
-    });
+  let data = await ctx.myCache.getItem(`${ctx.id}_postSection`);
+  if (data) {
+    logger.info(`Successfully obtained of cache: ${cardId}`);
+    return data[cardId];
+  } else {
+    data = await postSectionCall(1, ctx);
+    logger.info(`Successfully obtained: ${cardId}`);
+    return data[cardId];
   }
-  logger.info(`Successfully obtained: ${cardId}`);
-  return response;
 };

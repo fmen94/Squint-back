@@ -36,4 +36,27 @@ export const fbQuerys = {
     FETCH ALL FROM cursor_1o32ghjfcph;
     CLOSE cursor_1o32ghjfcph;
     `,
+  bestMomnets: (ctx, startDate, endDate) => `
+   BEGIN;
+    call read_best_moments_section('cursor_1o32ghjfcph','${ctx.id}','${startDate}','${endDate}'
+  );
+    FETCH ALL FROM cursor_1o32ghjfcph;
+    CLOSE cursor_1o32ghjfcph;
+    `,
+  resctionsSection: (ctx, startDate, endDate) => `
+    BEGIN;
+    call read_reactions_section('cursor_nvtb855kzx','${ctx.id}','${startDate}','${endDate}'
+  );
+    FETCH ALL FROM cursor_nvtb855kzx;
+    CLOSE cursor_nvtb855kzx;
+    `,
 };
+/**
+ *   `
+   BEGIN;
+    call read_reactions_section('cursor_nvtb855kzx','${ctx.id}','${startDate}','${endDate}'
+  );
+    FETCH ALL FROM cursor_nvtb855kzx;
+    CLOSE cursor_nvtb855kzx;
+    `
+ */

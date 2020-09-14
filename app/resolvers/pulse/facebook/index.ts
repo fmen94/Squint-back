@@ -86,7 +86,7 @@ export class PulseFacebookResolver {
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
     @Arg("cardId", (type) => CardIdIntFbType, CardIdIntOptions)
     cardId?: CardIdIntFbType
-  ): Promise<number> {
+  ): /*Promise<*/ Number {
     return intCardService(ctx, dateRange, cardId);
   }
   /**
@@ -184,7 +184,7 @@ export class PulseFacebookResolver {
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
     @Arg("cardId", (type) => CardIdDonutFbType, CardIdDonutOptions)
     cardId?: CardIdDonutFbType
-  ): donutDetailIn {
+  ): Promise<donutDetailIn> {
     return donutDetailCardService(ctx, dateRange, cardId);
   }
   /**
@@ -250,7 +250,7 @@ export class PulseFacebookResolver {
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
     @Arg("cardId", (type) => CardIdBubblesFbType, CardIdBubblesOptions)
     cardId?: CardIdBubblesFbType
-  ): kindDateValueIn[] {
+  ): Promise<kindDateValueIn[]> {
     return bubblesService(ctx, dateRange, cardId);
   }
   /**
@@ -282,7 +282,7 @@ export class PulseFacebookResolver {
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
     @Arg("cardId", (type) => CardIdTitleTextFbType, CardIdtitleTextOptions)
     cardId?: CardIdTitleTextFbType
-  ): titleTextIn {
+  ): Promise<titleTextIn> {
     return titleTextCardService(ctx, dateRange, cardId);
   }
   @FieldResolver()

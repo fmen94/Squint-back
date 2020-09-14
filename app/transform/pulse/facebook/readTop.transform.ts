@@ -27,6 +27,12 @@ export const readTopTrans = (data) => {
     paid_post: [],
     video_viwes: [],
   };
+  let interactionsBar = [
+    { kind: "reactions", valuesArray: [] },
+    { kind: "shares", valuesArray: [] },
+    { kind: "comments", valuesArray: [] },
+    { kind: "clicks", valuesArray: [] },
+  ];
   let dateValue = data.reduce(
     (obj, e, index) => {
       let date = moment(e.row_date).format("DD-MM-YYYYThh:mm:ss");
@@ -223,6 +229,10 @@ export const readTopTrans = (data) => {
           diff: diffCalc(e.video_viwes, data[index + 1].video_viwes),
         });
       }
+      obj.inter[0].valuesArray.push(e.interactions);
+      obj.inter[1].valuesArray.push(e.shares);
+      obj.inter[2].valuesArray.push(e.comments);
+      obj.inter[3].valuesArray.push(e.clicks);
       return obj;
     },
     {
@@ -245,6 +255,7 @@ export const readTopTrans = (data) => {
       comments: [],
       clicks: [],
       inbox_messages: [],
+      inter: interactionsBar,
       comp: comparation,
     }
   );
@@ -381,5 +392,6 @@ export const readTopTrans = (data) => {
       diff: diffCalc(data[0].inbox_messages, data[7].inbox_messages),
       valuesArray: dateValue.inbox_messages,
     },
+    affinityBar02: dateValue.inter,
   };
 };

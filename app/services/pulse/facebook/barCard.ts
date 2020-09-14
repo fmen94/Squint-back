@@ -5,6 +5,9 @@ import { kindIntValuesIn } from "../../../interfaces/common";
 import logger from "../../../helpers/logins/login.helper";
 import { CardIdBarFbType } from "../../../schema/common/Enums";
 import { communityGenderCall } from "./communityGender";
+import { sourseValueCall } from "./sourseValue";
+import { reactionsSectionsCall } from "./reactionsSection";
+import { readTopCall } from "./readTopCall";
 
 //El uso de Faker es temportal hasta conectar a base de datos
 export const barCardService = async (
@@ -13,13 +16,45 @@ export const barCardService = async (
   cardId: CardIdBarFbType
 ): Promise<kindIntValuesIn[]> => {
   logger.info(`Getting values ​​for: ${cardId}`);
-  let data = await ctx.myCache.getItem(`${ctx.id}_communityGender`);
-  if (data) {
-    logger.info(`Successfully obtained of cache: ${cardId}`);
-    return data[cardId];
+  if (cardId == "affinityBar02") {
+    let data = await ctx.myCache.getItem(`${ctx.id}_readTop`);
+    if (data) {
+      logger.info(`Successfully obtained of cache: ${cardId}`);
+      return data[cardId];
+    } else {
+      data = await readTopCall(dateRange, ctx);
+      logger.info(`Successfully obtained: ${cardId}`);
+      return data[cardId];
+    }
+  } else if (cardId == "affinityBar01") {
+    let data = await ctx.myCache.getItem(`${ctx.id}_reactionsSections`);
+    if (data) {
+      logger.info(`Successfully obtained of cache: ${cardId}`);
+      return data[cardId];
+    } else {
+      data = await reactionsSectionsCall(dateRange.date, ctx);
+      logger.info(`Successfully obtained: ${cardId}`);
+      return data[cardId];
+    }
+  } else if (cardId == "affinityBar03") {
+    let data = await ctx.myCache.getItem(`${ctx.id}_sourseValue`);
+    if (data) {
+      logger.info(`Successfully obtained of cache: ${cardId}`);
+      return data[cardId];
+    } else {
+      data = await sourseValueCall(dateRange.date, ctx);
+      logger.info(`Successfully obtained: ${cardId}`);
+      return data[cardId];
+    }
   } else {
-    data = await communityGenderCall(dateRange.date, ctx);
-    logger.info(`Successfully obtained: ${cardId}`);
-    return data[cardId];
+    let data = await ctx.myCache.getItem(`${ctx.id}_communityGender`);
+    if (data) {
+      logger.info(`Successfully obtained of cache: ${cardId}`);
+      return data[cardId];
+    } else {
+      data = await communityGenderCall(dateRange.date, ctx);
+      logger.info(`Successfully obtained: ${cardId}`);
+      return data[cardId];
+    }
   }
 };

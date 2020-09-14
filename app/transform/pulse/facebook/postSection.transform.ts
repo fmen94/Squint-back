@@ -29,10 +29,16 @@ export const postSectionTrans = (data) => {
         shares: e.shared,
         feedbacks: e.negative_feedbacks,
       });
+      obj.affinityBubbles01.push({
+        kind: e.type,
+        date: e.publication_date.toString(),
+        value: e.reach,
+      });
       return obj;
     },
     {
       contentPost01: [],
+      affinityBubbles01: [],
     }
   );
 };
