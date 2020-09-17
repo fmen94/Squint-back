@@ -38,7 +38,7 @@ export interface kindDateValueIn {
 export interface kindNameValueIn {
   kind: String;
   name: String;
-  value: Number;
+  value: String;
 }
 export interface postFbIn {
   performance: String;

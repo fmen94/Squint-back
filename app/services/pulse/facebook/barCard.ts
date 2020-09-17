@@ -16,7 +16,7 @@ export const barCardService = async (
   cardId: CardIdBarFbType
 ): Promise<kindIntValuesIn[]> => {
   logger.info(`Getting values ​​for: ${cardId}`);
-  if (cardId == "affinityBar02") {
+  if (cardId == "affinityBar02" || cardId == "conversationBar01") {
     let data = await ctx.myCache.getItem(`${ctx.id}_readTop`);
     if (data) {
       logger.info(`Successfully obtained of cache: ${cardId}`);

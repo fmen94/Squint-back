@@ -3,7 +3,7 @@ import { diffCalc } from "../../../helpers/common/diiffCalc";
 export const readTopTrans = (data) => {
   data = Object.values(data).filter((r: any) => r.command === "FETCH");
   data = data[0].rows;
-  //console.log(data);
+  // console.log(data);
 
   let comparation = {
     fans_page: [],
@@ -228,11 +228,19 @@ export const readTopTrans = (data) => {
           value: e.video_viwes,
           diff: diffCalc(e.video_viwes, data[index + 1].video_viwes),
         });
+        obj.inter[0].valuesArray.push(e.interactions);
+        obj.inter[1].valuesArray.push(e.shares);
+        obj.inter[2].valuesArray.push(e.comments);
+        obj.inter[3].valuesArray.push(e.clicks);
+        obj.sentiment[0].valuesArray.push(e.sentiment_good);
+        obj.sentiment[1].valuesArray.push(e.sentiment_bad);
+        obj.sentimentTotal[0].value += e.sentiment_good;
+        obj.sentimentTotal[1].value += e.sentiment_bad;
+      } else {
+        obj.sentimentTotal[2].value += e.sentiment_good;
+        obj.sentimentTotal[3].value += e.sentiment_bad;
       }
-      obj.inter[0].valuesArray.push(e.interactions);
-      obj.inter[1].valuesArray.push(e.shares);
-      obj.inter[2].valuesArray.push(e.comments);
-      obj.inter[3].valuesArray.push(e.clicks);
+
       return obj;
     },
     {
@@ -255,6 +263,16 @@ export const readTopTrans = (data) => {
       comments: [],
       clicks: [],
       inbox_messages: [],
+      sentiment: [
+        { kind: "good", valuesArray: [] },
+        { kind: "bad", valuesArray: [] },
+      ],
+      sentimentTotal: [
+        { kind: "good", value: 0 },
+        { kind: "bad", value: 0 },
+        { kind: "good_prev", value: 0 },
+        { kind: "bad_prev", value: 0 },
+      ],
       inter: interactionsBar,
       comp: comparation,
     }
@@ -393,5 +411,11 @@ export const readTopTrans = (data) => {
       valuesArray: dateValue.inbox_messages,
     },
     affinityBar02: dateValue.inter,
+    conversationBar01: dateValue.sentiment,
+    conversationList02: dateValue.sentimentTotal,
+    generalString01:
+      dateValue.sentimentTotal[0].value >= dateValue.sentimentTotal[1].value
+        ? "Good"
+        : "Bad",
   };
 };

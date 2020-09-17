@@ -7,6 +7,7 @@ import logger from "../../../helpers/logins/login.helper";
 import { CardIdListFbType, OrderType } from "../../../schema/common/Enums";
 import { sourseValueCall } from "./sourseValue";
 import { reactionsSectionsCall } from "./reactionsSection";
+import { readTopCall } from "./readTopCall";
 //El uso de Faker es temportal hasta conectar a base de datos
 export const listCardService = async (
   ctx,
@@ -18,13 +19,17 @@ export const listCardService = async (
   let response;
   if (cardId === "conversationList02") {
     let data = await ctx.myCache.getItem(`${ctx.id}_reactionsSections`);
+    let dataSent = await ctx.myCache.getItem(`${ctx.id}_readTop`);
+    if (!dataSent) {
+      dataSent = await readTopCall(dateRange, ctx);
+    }
     if (data) {
       logger.info(`Successfully obtained of cache: ${cardId}`);
-      return data[cardId];
+      return dataSent[cardId].concat(data[cardId]);
     } else {
       data = await reactionsSectionsCall(dateRange.date, ctx);
       logger.info(`Successfully obtained: ${cardId}`);
-      return data[cardId];
+      return dataSent[cardId].concat(data[cardId]);
     }
   } else {
     let data = await ctx.myCache.getItem(`${ctx.id}_sourseValue`);

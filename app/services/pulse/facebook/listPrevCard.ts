@@ -19,9 +19,19 @@ export const listPrevCardService = async (
   let data = await ctx.myCache.getItem(`${ctx.id}_communityGeo`);
   if (data) {
     logger.info(`Successfully obtained of cache: ${cardId}`);
+    console.log(data[cardId]);
+
     response = data[cardId];
   } else {
-    data = await communityGeoCall(dateRange.date, ctx);
+    console.log("entra aqui ");
+
+    data = await communityGeoCall(dateRange.date, ctx)
+      .then((e) => {
+        console.log("esta es la respusta", e);
+      })
+      .catch((e) => {
+        console.log("Error", e);
+      });
     logger.info(`Successfully obtained: ${cardId}`);
     response = data[cardId];
   }

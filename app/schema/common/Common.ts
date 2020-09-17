@@ -97,7 +97,7 @@ export class kindNameValue implements kindNameValueIn {
   @Field(IsNull)
   name: String;
   @Field(IsNull)
-  value: Number;
+  value: String;
 }
 @ObjectType()
 export class postFB implements postFbIn {

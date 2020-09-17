@@ -239,7 +239,7 @@ export class PulseYoutubeResolver {
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
     @Arg("cardId", (type) => CardIdTableFbType, CardIdTableOptions)
     cardId?: CardIdTableFbType
-  ): kindNameValueIn[][][] {
+  ): Promise<kindNameValueIn[][][]> {
     return tableCardService(ctx, dateRange, cardId);
   }
   /**
