@@ -1,8 +1,6 @@
 import moment from "moment";
 import { diffCalc } from "../../../helpers/common/diiffCalc";
 export const readTopTrans = (data) => {
-  data = Object.values(data).filter((r: any) => r.command === "FETCH");
-  data = data[0].rows;
   // console.log(data);
 
   let comparation = {

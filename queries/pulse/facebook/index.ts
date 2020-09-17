@@ -1,55 +1,41 @@
+import { Pool } from 'pg';
+
+/**
+ * Función para generar el query de llamada a los SP, retorna sólo un string con el query.
+ * @param client Pool de conexión a base de datos
+ * @param func Nombre de la función del SP a llamar
+ * @param params Arreglo de parámetros en formato value:type, para formatearlos según su tipo
+ */
+const getCursor = async (client:Pool, func:string, params:Array<{value:any,type:string}>)=>{
+  let cursorName = Math.random().toString(36).substring(2, 20);//.replace(/[\W_]+/g,"");
+  const PARAMS = params.map(p=>{
+    if(p.type=='string' || p.type=='date'){
+      return `'${p.value}'`;
+    }else if(p.type=='number'){
+      return p.value;
+    }
+  });
+  let queryPage = `
+  BEGIN;
+  call ${func}('cursor_${cursorName}',${PARAMS.join(',')});
+  FETCH ALL FROM cursor_${cursorName};
+  CLOSE cursor_${cursorName};
+  `;
+  let responsePage = await client.query(queryPage);
+  let response:Array<any> = Object.values(responsePage).filter((r:any)=>r.command==='FETCH');
+  
+  return response.length ? response[0].rows ? response[0].rows : [] : [];
+}
+
 export const fbQuerys = {
-  readTop: (ctx, startDate, period) => `
-    BEGIN;
-    call read_top_section('cursor_czf365gntfl','${ctx.id}','${startDate}','${period[0]}');
-    FETCH ALL FROM cursor_czf365gntfl;
-    CLOSE cursor_czf365gntfl;
-    `,
-  readDetails: (ctx) => `
-   BEGIN;
-    call read_details_section('cursor_w03s8w3er','${ctx.id}');
-    FETCH ALL FROM cursor_w03s8w3er;
-    CLOSE cursor_w03s8w3er;
-    `,
-  communityGender: (ctx, startDate, endDate) => `
-  BEGIN;
-   call read_audience_annual_section('cursor_nkkbl4fz9am', '${ctx.id}','${startDate}','${endDate}');
-  FETCH ALL FROM cursor_nkkbl4fz9am;
-  CLOSE cursor_nkkbl4fz9am;
-    `,
-  communityGeo: (ctx, startDate, endDate) => `
-  BEGIN;
-   call read_geolocation_section('cursor_nkkbl4fz9am', '${ctx.id}','${startDate}','${endDate}');
-  FETCH ALL FROM cursor_nkkbl4fz9am;
-  CLOSE cursor_nkkbl4fz9am;
-    `,
-  communitySourse: (ctx, startDate, endDate) => `
-  BEGIN;
-   call read_fan_source_section('cursor_nkkbl4fz9am', '${ctx.id}','${startDate}','${endDate}');
-  FETCH ALL FROM cursor_nkkbl4fz9am;
-  CLOSE cursor_nkkbl4fz9am;
-    `,
-  postSection: (ctx, limit) => `
-   BEGIN;
-    call read_post_section('cursor_1o32ghjfcph','${ctx.id}',${limit}
-  );
-    FETCH ALL FROM cursor_1o32ghjfcph;
-    CLOSE cursor_1o32ghjfcph;
-    `,
-  bestMomnets: (ctx, startDate, endDate) => `
-   BEGIN;
-    call read_best_moments_section('cursor_1o32ghjfcph','${ctx.id}','${startDate}','${endDate}'
-  );
-    FETCH ALL FROM cursor_1o32ghjfcph;
-    CLOSE cursor_1o32ghjfcph;
-    `,
-  resctionsSection: (ctx, startDate, endDate) => `
-    BEGIN;
-    call read_reactions_section('cursor_nvtb855kzx','${ctx.id}','${startDate}','${endDate}'
-  );
-    FETCH ALL FROM cursor_nvtb855kzx;
-    CLOSE cursor_nvtb855kzx;
-    `,
+  readTop: (ctx, startDate, period) => getCursor(ctx.connection,'read_top_section',[{value:ctx.id,type:'string'},{value:startDate,type:'date'},{value:period[0],type:'string'}]),
+  readDetails: (ctx) => getCursor(ctx.connection,'read_details_section',[{value:ctx.id,type:'string'}]),
+  communityGender: (ctx, startDate, endDate) => getCursor(ctx.connection,'read_audience_annual_section',[{value:ctx.id,type:'string'},{value:startDate,type:'date'},{value:endDate,type:'date'}]),
+  communityGeo: (ctx, startDate, endDate) => getCursor(ctx.connection,'read_geolocation_section',[{value:ctx.id,type:'string'},{value:startDate,type:'date'},{value:endDate,type:'date'}]),
+  communitySourse: (ctx, startDate, endDate) => getCursor(ctx.connection,'read_fan_source_section',[{value:ctx.id,type:'string'},{value:startDate,type:'date'},{value:endDate,type:'date'}]),
+  postSection: (ctx, limit) => getCursor(ctx.connection,'read_post_section',[{value:ctx.id,type:'string'},{value:limit,type:'number'}]),
+  bestMomnets: (ctx, startDate, endDate) => getCursor(ctx.connection,'read_best_moments_section',[{value:ctx.id,type:'string'},{value:startDate,type:'date'},{value:endDate,type:'date'}]),
+  resctionsSection: (ctx, startDate, endDate) => getCursor(ctx.connection,'read_reactions_section',[{value:ctx.id,type:'string'},{value:startDate,type:'date'},{value:endDate,type:'date'}]),
 };
 /**
  *   `

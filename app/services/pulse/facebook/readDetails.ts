@@ -7,8 +7,7 @@ export const readDetailsCall = async (date, ctx) => {
     .subtract(1, "day")
     .format("YYYY-MM-DD");
   let endDate = moment(startDate).format("YYYY-MM-DD");
-  let query = fbQuerys.readDetails(ctx);
-  let res = await ctx.conection.query(query);
+  let res = await fbQuerys.readDetails(ctx);
   let data = readDetailsTrans(res);
   await ctx.myCache.setItem(`${ctx.id}_readDetails`, data, {
     ttl: parseInt(process.env.cache_ttl),

@@ -1,8 +1,6 @@
 import moment from "moment";
 
 export const postSectionTrans = (data) => {
-  data = Object.values(data).filter((r: any) => r.command === "FETCH");
-  data = data[0].rows;
   //console.log(data);
 
   return data.reduce(

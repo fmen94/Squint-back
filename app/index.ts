@@ -21,16 +21,16 @@ const init = async (port: any) => {
   const schema = await buildSchema(SchemaOptions);
   //La coneccion a base
   logger.info(`Connectiong databases`);
-  let conection: Pool;
+  let connection: Pool;
 
   await client
     .connect()
     .then((e) => {
       logger.info(`Connectiong Exist to Redshift`);
-      conection = e;
+      connection = e;
     })
     .catch((e) => {
-      logger.error("Conection DWH failed", e);
+      logger.error("connection DWH failed", e);
     });
   //Se Crea el server
   logger.info(`Initializing server`);
@@ -43,7 +43,7 @@ const init = async (port: any) => {
       // if (!req.headers.page_id) {
       //   throw new BadRequestException("Page_id is Invalid");
       // }
-      return { id: req.headers.page_id, conection, myCache };
+      return { id: req.headers.page_id, connection, myCache };
     },
   });
 

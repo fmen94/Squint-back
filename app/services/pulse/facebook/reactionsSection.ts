@@ -7,8 +7,7 @@ export const reactionsSectionsCall = async (date, ctx) => {
     .subtract(1, "day")
     .format("YYYY-MM-DD");
   let endDate = moment(startDate).format("YYYY-MM-DD");
-  let query = fbQuerys.resctionsSection(ctx, startDate, endDate);
-  let res = await ctx.conection.query(query);
+  let res = await fbQuerys.resctionsSection(ctx, startDate, endDate);
   console.log(res);
 
   let data = reactionSectionTrans(res);
