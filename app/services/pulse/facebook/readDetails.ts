@@ -6,7 +6,6 @@ export const readDetailsCall = async (date, ctx) => {
   let startDate = moment(date, "DD-MM-YYYYThh:mm:ss")
     .subtract(1, "day")
     .format("YYYY-MM-DD");
-  let endDate = moment(startDate).format("YYYY-MM-DD");
   let query = fbQuerys.readDetails(ctx);
   let res = await ctx.conection.query(query);
   let data = readDetailsTrans(res);

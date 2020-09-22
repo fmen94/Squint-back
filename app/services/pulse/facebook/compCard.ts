@@ -1,5 +1,5 @@
 import BadRequestException from "../../../exceptions/bad-request.exception";
-import faker from "faker";
+
 import { xlabels } from "../../../helpers/xlabels";
 import { DateRange } from "../../../schema/common/Arguments";
 import { nameValueDiffIn } from "../../../interfaces/common";
@@ -7,7 +7,6 @@ import logger from "../../../helpers/logins/login.helper";
 import { CardIdCompFbType, dataCompType } from "../../../schema/common/Enums";
 import { readTopCall } from "./readTopCall";
 
-//El uso de Faker es temportal hasta conectar a base de datos
 export const compCardService = async (
   ctx,
   dateRange: DateRange,

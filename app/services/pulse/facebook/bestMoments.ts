@@ -1,6 +1,5 @@
 import moment from "moment";
 import { fbQuerys } from "../../../../queries/pulse/facebook";
-import { sourseValueTrans } from "../../../transform/pulse/facebook/sourseValue.transform";
 import { bestMomentsTrans } from "../../../transform/pulse/facebook/bestMoments.transform";
 
 export const bestMomentsCall = async (date, ctx) => {
