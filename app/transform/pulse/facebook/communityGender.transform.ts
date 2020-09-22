@@ -1,6 +1,4 @@
 export const communutyGenderTrans = (data) => {
-  data = Object.values(data).filter((r: any) => r.command === "FETCH");
-  data = data[0].rows;
   // let mainGeneration = data.reduce((obj, e, index) => {
   //   if(data[0].genero==)
   // })

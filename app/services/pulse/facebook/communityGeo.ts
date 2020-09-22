@@ -7,8 +7,7 @@ export const communityGeoCall = async (date, ctx) => {
     .subtract(1, "day")
     .format("YYYY-MM-DD");
   let endDate = moment(startDate).format("YYYY-MM-DD");
-  let query = fbQuerys.communityGeo(ctx, startDate, endDate);
-  let res = await ctx.conection.query(query);
+  let res = await fbQuerys.communityGeo(ctx, startDate, endDate);
   let data = communutyGeoTrans(res);
   await ctx.myCache.setItem(`${ctx.id}_communityGeo`, data, {
     ttl: parseInt(process.env.cache_ttl),

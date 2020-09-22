@@ -1,6 +1,4 @@
 export const reactionSectionTrans = (data) => {
-  data = Object.values(data).filter((r: any) => r.command === "FETCH");
-  data = data[0].rows;
   return {
     affinityBar01: [
       {

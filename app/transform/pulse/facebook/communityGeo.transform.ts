@@ -1,6 +1,4 @@
 export const communutyGeoTrans = (data) => {
-  data = Object.values(data).filter((r: any) => r.command === "FETCH");
-  data = data[0].rows;
 
   return {
     communityListPrev01: data.map((e, index) => {

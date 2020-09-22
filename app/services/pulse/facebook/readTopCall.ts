@@ -7,8 +7,7 @@ export const readTopCall = async (dateRange: DateRange, ctx) => {
   let startDate = moment(dateRange.date, "DD-MM-YYYYThh:mm:ss")
     .subtract(1, "day")
     .format("YYYY-MM-DD");
-  let query = fbQuerys.readTop(ctx, startDate, dateRange.period);
-  let res = await ctx.conection.query(query);
+  let res = await fbQuerys.readTop(ctx, startDate, dateRange.period);
   let data = readTopTrans(res);
   await ctx.myCache.setItem(`${ctx.id}_readTop`, data, {
     ttl: parseInt(process.env.cache_ttl),

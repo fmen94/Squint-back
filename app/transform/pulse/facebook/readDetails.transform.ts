@@ -1,8 +1,7 @@
 import { diffCalc } from "../../../helpers/common/diiffCalc";
 
 export const readDetailsTrans = (data) => {
-  data = Object.values(data).filter((r: any) => r.command === "FETCH");
-  data = data[0].rows[0];
+  data = data[0];
   return {
     generalinfo01: data.name + " " + data.country,
     generalValuePrev02: {
