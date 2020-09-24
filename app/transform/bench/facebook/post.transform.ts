@@ -6,63 +6,69 @@ export const postTrans = (data) => {
       obj.contentTable02.push([
         [
           {
-            kind: "image",
-            name: null,
-            value: e.post_image,
-          },
-          {
-            kind: "name",
-            name: null,
+            kind: null,
+            name: "name",
             value: e.name,
           },
           {
-            kind: "date",
-            name: null,
+            kind: null,
+            name: "username",
+            value: "@" + e.name,
+          },
+          {
+            kind: null,
+            name: "image",
+            value: e.post_image,
+          },
+
+          {
+            kind: null,
+            name: "date",
             value: e.bench_date,
           },
           {
-            kind: "type",
-            name: null,
+            kind: null,
+            name: "type",
             value: e.bench_type,
           },
           {
-            kind: "text",
-            name: null,
+            kind: null,
+            name: "text",
             value: e.text,
           },
         ],
         [
           {
-            kind: "interactions",
-            name: null,
+            kind: null,
+            name: "interactions",
             value: e.interactions,
           },
         ],
         [
           {
-            kind: "reactions",
-            name: null,
+            kind: null,
+            name: "reactions",
             value: e.reactions,
           },
         ],
         [
           {
-            kind: "comentarios",
-            name: null,
+            kind: null,
+            name: "comentarios",
             value: e.comentarios,
           },
         ],
         [
           {
-            kind: "shares",
-            name: null,
+            kind: null,
+            name: "shares",
             value: e.shares,
           },
         ],
         [
           {
-            kind: "post_day",
-            name: null,
+            kind: null,
+            name: "post_day",
             value: e.post_day,
           },
         ],
