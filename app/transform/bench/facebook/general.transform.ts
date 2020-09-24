@@ -1,5 +1,5 @@
 export const generalTrans = (data) => {
-  console.log(data);
+  // console.log(data);
 
   return data.reduce(
     (obj, e, index) => {
@@ -42,42 +42,42 @@ export const generalTrans = (data) => {
       ]);
       obj.activityPrevsValues01.fans.push({
         value: e.fans,
-        diff: null,
-        name: e.id,
+        diff: 0,
+        name: e.name,
       });
       obj.activityPrevsValues01.interactions.push({
         value: e.interactions,
-        diff: null,
-        name: e.id,
+        diff: 0,
+        name: e.name,
       });
       obj.activityPrevsValues01.engagemet_rate.push({
         value: e.engagemet_rate,
-        diff: null,
-        name: e.id,
+        diff: 0,
+        name: e.name,
       });
       obj.activityPrevsValues01.share_of_voice.push({
         value: e.share_of_voice,
-        diff: null,
-        name: e.id,
+        diff: 0,
+        name: e.name,
       });
       obj.activityCopm01.fans.push({
         value: e.fans,
-        diff: null,
+        diff: 0,
         name: e.bench_date,
       });
       obj.activityCopm01.interactions.push({
         value: e.interactions,
-        diff: null,
+        diff: 0,
         name: e.bench_date,
       });
       obj.activityCopm01.engagemet_rate.push({
         value: e.engagemet_rate,
-        diff: null,
+        diff: 0,
         name: e.bench_date,
       });
       obj.activityCopm01.share_of_voice.push({
         value: e.share_of_voice,
-        diff: null,
+        diff: 0,
         name: e.bench_date,
       });
       obj.performanceTable01.push([
@@ -126,28 +126,28 @@ export const generalTrans = (data) => {
       ]);
       obj.performancesPrevsValues01.interactions.push({
         value: e.interactions,
-        diff: null,
-        name: e.id,
+        diff: 0,
+        name: e.name,
       });
       obj.performancesPrevsValues01.clicks.push({
         value: e.clicks,
-        diff: null,
-        name: e.id,
+        diff: 0,
+        name: e.name,
       });
       obj.performancesPrevsValues01.comments.push({
         value: e.comments,
-        diff: null,
-        name: e.id,
+        diff: 0,
+        name: e.name,
       });
       obj.performancesPrevsValues01.shares.push({
         value: e.shares,
-        diff: null,
-        name: e.id,
+        diff: 0,
+        name: e.name,
       });
       obj.performancesPrevsValues01.reactions.push({
         value: e.reactions,
-        diff: null,
-        name: e.id,
+        diff: 0,
+        name: e.name,
       });
       obj.affinityBubbles01.push({
         kind: e.id,

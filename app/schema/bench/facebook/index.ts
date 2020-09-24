@@ -11,8 +11,8 @@ import { facebookBenchIn } from "../../../interfaces/bench/facebook";
 export class FacebookBench implements facebookBenchIn {
   @Field((type) => [[[kindNameValue]]], IsNull)
   tableCard: [[[kindNameValue]]];
-  @Field((type) => [kindNameValue], IsNull)
-  prebsValuesCard: [kindNameValue];
+  @Field((type) => [nameValueDiff], IsNull)
+  prebsValuesCard: [nameValueDiff];
   @Field((type) => [nameValueDiff], IsNull)
   compCard: [nameValueDiff];
   @Field((type) => [kindDateValue], IsNull)

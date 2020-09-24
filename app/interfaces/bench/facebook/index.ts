@@ -7,7 +7,7 @@ import {
 
 export interface facebookBenchIn {
   tableCard: [[[kindNameValueIn]]];
-  prebsValuesCard: [kindNameValueIn];
+  prebsValuesCard: [nameValueDiffIn];
   compCard: [nameValueDiffIn];
   bubblesCard: [kindDateValueIn];
   listCard: [idListIn];
