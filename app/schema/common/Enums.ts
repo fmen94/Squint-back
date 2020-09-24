@@ -442,3 +442,109 @@ registerEnumType(CardIdPostNwType, {
      geenralPost01 = Post,
     `,
 });
+//types para Bench Facebook
+export enum CardIdTableBenchFbType {
+  generalTable01 = "generalTable01",
+  performanceTable01 = "performanceTable01",
+  contentTable01 = "contentTable01",
+  contentTable02 = "contentTable02",
+  responseTable01 = "responseTable01",
+}
+registerEnumType(CardIdTableBenchFbType, {
+  name: "CardIdTableBenchFb",
+  description: `
+    Represents the id of the specific metric that you want to see:
+     generalTable01 = General,
+  performanceTable01 = Performances,
+  contentTable01 = Post type,
+  contentTable02 = Post,
+  responseTable01 = Sentiement,
+    `,
+});
+export enum CardIdPrebsValuesBenchFbType {
+  activityPrevsValues01 = "activityPrevsValues01",
+  performancesPrevsValues01 = "performancesPrevsValues01",
+}
+registerEnumType(CardIdPrebsValuesBenchFbType, {
+  name: "CardIdPrebsValuesBenchFb",
+  description: `
+    Represents the id of the specific metric that you want to see:
+     activityPrevsValues01 = activity,
+     performancesPrevsValues01 = performances,
+    `,
+});
+export enum DataPrebsValuesBenchFbType {
+  fans = "fans",
+  interactions = "interactions",
+  engagemet_rate = "engagemet_rate",
+  share_of_voice = "share_of_voice",
+  clicks = "clicks",
+  comments = "comments",
+  shares = "shares",
+  reactions = "reactions",
+}
+registerEnumType(DataPrebsValuesBenchFbType, {
+  name: "DataPrebsValuesBenchFb",
+  description: `
+   They are the data types that can return the prebsValuesCard
+    parameters:
+    fans = "fans",
+    interactions = "interactions",
+    engagemet_rate = "engagemet_rate",
+    share_of_voice = "share_of_voice",
+    clicks = "clicks",
+    comments = "comments",
+    shares = "shares",
+    reactions = "reactions",
+    `,
+});
+export enum CardIdCompBenchFbType {
+  activityCopm01 = "activityCopm01",
+}
+registerEnumType(CardIdCompBenchFbType, {
+  name: "CardIdCompBenchFb",
+  description: `
+    Represents the id of the specific metric that you want to see:
+     activityPrevsValues01 = activity,
+     performancesPrevsValues01 = performances,
+    `,
+});
+export enum DataCompBenchFbType {
+  fans = "fans",
+  interactions = "interactions",
+  engagemet_rate = "engagemet_rate",
+  share_of_voice = "share_of_voice",
+}
+registerEnumType(DataCompBenchFbType, {
+  name: "DataCompBenchFb",
+  description: `
+   They are the data types that can return the prebsValuesCard
+    parameters:
+    fans = "fans",
+    interactions = "interactions",
+    engagemet_rate = "engagemet_rate",
+    share_of_voice = "share_of_voice",
+    `,
+});
+export enum CardIdBubblesBenchFbType {
+  affinityBubbles01 = "affinityBubbles01",
+}
+registerEnumType(CardIdBubblesBenchFbType, {
+  name: "CardIdBubblesBenchFb",
+  description: `
+    Represents the id of the specific metric that you want to see:
+     affinityBubbles01 = affinityBubbles01,
+    `,
+});
+export enum CardIdlistBenchFbType {
+  contentList01 = "contentList01",
+  responseList01 = "responseList01",
+}
+registerEnumType(CardIdlistBenchFbType, {
+  name: "CardIdlistBenchFb",
+  description: `
+    Represents the id of the specific metric that you want to see:
+     contentList01 = "contentList01",
+     responseList01 = "responseList01",
+    `,
+});

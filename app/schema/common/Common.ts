@@ -17,6 +17,7 @@ import {
   desktopIn,
   postYtIn,
   postNwIn,
+  idListIn,
 } from "../../interfaces/common";
 import { IsNull } from "./Options";
 
@@ -302,4 +303,12 @@ export class postNw implements postNwIn {
   autor: String;
   @Field(IsNull)
   category: String;
+}
+//bench FB
+@ObjectType()
+export class idList implements idListIn {
+  @Field((type) => [kindValue], IsNull)
+  data: [kindValue];
+  @Field(IsNull)
+  id: String;
 }

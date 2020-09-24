@@ -29,6 +29,13 @@ export const DateEndOptions = {
     and the default date is: ${moment().format("DD-MM-YYYYThh:mm:ss")} `,
 };
 
+//Date startend
+export const SetDataOptions = {
+  nullable: true,
+  defaultValue: { limit: 10, order: "ASC" },
+  description: `It is an object that receives two parameters, a limit of 1 to 100 and an order of type string that can be asc or desc
+  and the default date is: { limit: 10, order: "ASC" }`,
+};
 //Card id
 export const CardIdIntOptions = {
   nullable: true,
@@ -147,6 +154,24 @@ export const CardIdPostNwOptions = {
   nullable: true,
   defaultValue: "geenralPost01",
   description: `represents the id of the card that you want to show and the default value is: geenralPost01`,
+};
+//options bech fb
+export const CardIdTableFbOptions = {
+  nullable: true,
+  defaultValue: "generalTable01",
+  description: `represents the id of the card that you want to show and the default value is: generalTable01`,
+};
+export const CardIdPrebsValuesFbOptions = {
+  nullable: true,
+  defaultValue: "activityPrevsValues01",
+  description: `represents the id of the card that you want to show and the default value is: activityPrevsValues01`,
+};
+export const Options = (type: string | number, nullable = true) => {
+  return {
+    nullable,
+    defaultValue: `${type}`,
+    description: `represents the id of the card that you want to show and the default value is: ${type}`,
+  };
 };
 //IsNull
 export const IsNull = {

@@ -1,8 +1,8 @@
 import { InputType, Field } from "type-graphql";
-import { Length, Matches, Min, Max, IsEnum } from "class-validator";
-import { NotNull, PeriodOptions } from "./Options";
-import { PeriodType } from "./Enums";
-import { DateRangeIn } from "../../interfaces/common/anguments";
+import { Length, Matches, Min, Max, IsEnum, IsInt } from "class-validator";
+import { NotNull, PeriodOptions, Options } from "./Options";
+import { OrderType, PeriodType } from "./Enums";
+import { DataOptionsIn, DateRangeIn } from "../../interfaces/common/anguments";
 /**
  * Esta clase es una entrada de datos graph (argumento), un objeto de date period
  */
@@ -21,4 +21,17 @@ export class DateRange implements DateRangeIn {
   @Field((type) => PeriodType, PeriodOptions)
   @IsEnum(PeriodType)
   period: PeriodType;
+}
+
+@InputType()
+export class DataOptions implements DataOptionsIn {
+  @IsInt()
+  @Min(1, { message: "The limit must be greater than 1" })
+  @Max(10, { message: "The limit must be less than 100" })
+  @Field(NotNull)
+  limit: number;
+
+  @IsEnum(OrderType)
+  @Field((type) => OrderType, Options("ASC"))
+  order: OrderType;
 }

@@ -11,6 +11,8 @@ import { PulseInstagramResolver } from "./pulse/instagram/index";
 import { PulseYoutubeResolver } from "./pulse/youtube";
 import { PulseTrendsResolver } from "./pulse/trends";
 import { PulseNewsResolver } from "./pulse/news";
+import { BenchFieldResolver, BenchResolver } from "./bench";
+import { BenchFacebookResolver } from "./bench/facebook";
 export const SchemaOptions: BuildSchemaOptions = {
   resolvers: [
     PulseFieldResolver,
@@ -20,5 +22,10 @@ export const SchemaOptions: BuildSchemaOptions = {
     PulseYoutubeResolver,
     PulseTrendsResolver,
     PulseNewsResolver,
+
+    //bench
+    BenchResolver,
+    BenchFieldResolver,
+    BenchFacebookResolver,
   ],
 };

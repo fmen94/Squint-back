@@ -146,3 +146,8 @@ export interface postNwIn {
   autor: String;
   category: String;
 }
+//Bench FB
+export interface idListIn {
+  data: [kindValueIn];
+  id: String;
+}
