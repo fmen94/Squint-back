@@ -72,6 +72,7 @@ import {
 } from "../../../interfaces/common";
 import { geoCardService } from "../../../services/pulse/facebook/geoCard";
 import { topPeopleService } from "../../../services/pulse/instagram/topPeopleCrd";
+import { masterService } from "../../../services";
 
 /**
  * Este Resolver Contiene todos los resolutores que se puden usar para Instagram pulse.
@@ -91,8 +92,8 @@ export class PulseInstagramResolver {
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
     @Arg("cardId", (type) => CardIdIntFbType, CardIdIntOptions)
     cardId?: CardIdIntFbType
-  ): /*Promise<*/ Number {
-    return intCardService(ctx, dateRange, cardId);
+  ): Promise<Number> {
+    return masterService("instagram", "pulse", ctx, dateRange, cardId);
   }
   /**
    * Resolver de este tipo de card de solo un valor en texto
@@ -108,7 +109,7 @@ export class PulseInstagramResolver {
     @Arg("cardId", (type) => CardIdStringFbType, CardIdStringOptions)
     cardId?: CardIdStringFbType
   ): Promise<String> {
-    return stringCardService(ctx, dateRange, cardId);
+    return masterService("instagram", "pulse", ctx, dateRange, cardId);
   }
   /**
    * Resolver de este tipo de card retorna un valor y su diferencia contra el periodo de tiempo enterior

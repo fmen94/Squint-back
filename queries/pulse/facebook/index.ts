@@ -49,12 +49,14 @@ export const fbQuerys = {
       { value: ctx.id, type: "string" },
       { value: startDate, type: "date" },
       { value: endDate, type: "date" },
+      { value: "F", type: "string" },
     ]),
   communityGeo: (ctx, startDate, endDate) =>
     getCursor(ctx.connection, "read_geolocation_section", [
       { value: ctx.id, type: "string" },
       { value: startDate, type: "date" },
       { value: endDate, type: "date" },
+      { value: "F", type: "string" },
     ]),
   communitySourse: (ctx, startDate, endDate) =>
     getCursor(ctx.connection, "read_fan_source_section", [
@@ -96,13 +98,26 @@ export const fbQuerys = {
       { value: date, type: "date" },
       { value: period[0], type: "string" },
     ]),
+  readTopIG: (ctx, startDate, period) =>
+    getCursor(ctx.connection, "read_instagram_top_section", [
+      { value: ctx.id, type: "string" },
+      { value: startDate, type: "date" },
+      { value: period[0], type: "string" },
+    ]),
+  readPostIG: (ctx) =>
+    getCursor(ctx.connection, "read_instagram_post_section", [
+      { value: ctx.id, type: "string" },
+    ]),
+  readInteractionsIG: (ctx, startDate, endDate) =>
+    getCursor(ctx.connection, "read_instagram_brand_interaction_section", [
+      { value: ctx.id, type: "string" },
+      { value: startDate, type: "date" },
+      { value: endDate, type: "date" },
+    ]),
+  readBestMomentsIG: (ctx, startDate, endDate) =>
+    getCursor(ctx.connection, "read_instagram_best_moments_section", [
+      { value: ctx.id, type: "string" },
+      { value: startDate, type: "date" },
+      { value: endDate, type: "date" },
+    ]),
 };
-/**
- *   `
-   BEGIN;
-    call read_reactions_section('cursor_nvtb855kzx','${ctx.id}','${startDate}','${endDate}'
-  );
-    FETCH ALL FROM cursor_nvtb855kzx;
-    CLOSE cursor_nvtb855kzx;
-    `
- */
