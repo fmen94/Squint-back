@@ -17,7 +17,7 @@ var config = {
   user: process.env.db_user,
   password: process.env.db_password,
   minpoolsize: 2,
-  maxpoolsize: 20
+  maxpoolsize: 1000
 };
 
 const myCache = new ExpirationStrategy(new MemoryStorage());
