@@ -1,5 +1,3 @@
-import { Pool } from "pg";
-
 /**
  * Función para generar el query de llamada a los SP, retorna sólo un string con el query.
  * @param client Pool de conexión a base de datos
@@ -7,10 +5,11 @@ import { Pool } from "pg";
  * @param params Arreglo de parámetros en formato value:type, para formatearlos según su tipo
  */
 const getCursor = async (
-  client: Pool,
+  client,
   func: string,
   params: Array<{ value: any; type: string }>
 ) => {
+  console.log(client);
   let cursorName = Math.random().toString(36).substring(2, 20); //.replace(/[\W_]+/g,"");
   const PARAMS = params.map((p) => {
     if (p.type == "string" || p.type == "date") {
