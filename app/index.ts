@@ -9,7 +9,7 @@ import { ExpirationStrategy, MemoryStorage } from "node-ts-cache";
 
 if (!jinst.isJvmCreated()) {
   jinst.addOption("-Xrs");
-  jinst.setupClasspath([`${__dirname}/../drivers/*.jar`]);
+  jinst.setupClasspath([`${__dirname}/../driver/RedshiftJDBC42-no-awssdk-1.2.47.1071.jar`]);
 }
 
 var config = {

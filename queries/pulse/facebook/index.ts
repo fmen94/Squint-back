@@ -9,7 +9,6 @@ const getCursor = async (
   func: string,
   params: Array<{ value: any; type: string }>
 ) => {
-  console.log(client);
   let cursorName = Math.random().toString(36).substring(2, 20); //.replace(/[\W_]+/g,"");
   const PARAMS = params.map((p) => {
     if (p.type == "string" || p.type == "date") {
@@ -18,19 +17,44 @@ const getCursor = async (
       return p.value;
     }
   });
-  let queryPage = `
-  BEGIN;
-  call ${func}('cursor_${cursorName}',${PARAMS.join(",")});
-  FETCH ALL FROM cursor_${cursorName};
-  CLOSE cursor_${cursorName};
-  `;
-  let responsePage = await client.query(queryPage);
-  let response: Array<any> = Object.values(responsePage).filter(
-    (r: any) => r.command === "FETCH"
-  );
 
-  return response.length ? (response[0].rows ? response[0].rows : []) : [];
+  let responsePage = await new Promise((resolve,reject)=>{
+    client.reserve((err,conn)=>{
+      if(err) reject(err);
+      conn.conn.createStatement(async (err, statement) => {
+        if(err) reject(err);
+        await queryUpdate(statement,'BEGIN;');
+        await query(statement,`call ${func}('cursor_${cursorName}',${PARAMS.join(",")});`);
+        let result = await query(statement,`FETCH ALL FROM cursor_${cursorName};`);
+        await queryUpdate(statement,`CLOSE cursor_${cursorName};`);
+        resolve(result)
+      });
+    })
+  });
+  return responsePage;
 };
+const queryUpdate = (statement,query)=>{
+  return new Promise((resolve,reject)=>{
+    statement.executeUpdate(query,(err,resultset)=>{
+      if(err) reject(err)
+      resolve(null)
+    })
+  })
+}
+const query = (statement,query)=>{
+  return new Promise((resolve,reject)=>{
+    statement.executeQuery(query,(err,resultset)=>{
+      if(err) reject(err)
+      if(resultset)
+        resultset.toObjArray((err,results)=>{
+          if(err) reject(err)
+          resolve(results)
+        })
+      else
+        resolve(null)
+    })
+  })
+}
 
 export const fbQuerys = {
   readTop: (ctx, startDate, period) =>
