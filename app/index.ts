@@ -12,7 +12,7 @@ const pool = new Pool({
   port: process.env.db_port,
   password: process.env.db_password,
   host: process.env.db_host,
-  max: 499,
+  max: 50,
 });
 
 const myCache = new ExpirationStrategy(new MemoryStorage());
