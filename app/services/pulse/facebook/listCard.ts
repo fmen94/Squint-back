@@ -37,7 +37,7 @@ export const listCardService = async (
       logger.info(`Successfully obtained of cache: ${cardId}`);
       response = data[cardId];
     } else {
-      data = await sourseValueCall(dateRange.date, ctx);
+      data = await sourseValueCall(dateRange, ctx);
       logger.info(`Successfully obtained: ${cardId}`);
       response = data[cardId];
     }

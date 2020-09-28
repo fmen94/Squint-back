@@ -19,7 +19,7 @@ export const postSectionTrans = (data) => {
         interactions: e.interactions,
         like: e.like,
         love: e.love,
-        care: null,
+        care: e.care,
         haha: e.haha,
         wow: e.woow,
         sad: e.sad,

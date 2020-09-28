@@ -1,9 +1,10 @@
 import moment from "moment";
 import { fbQuerys } from "../../../../queries/pulse/facebook";
+import { DateRange } from "../../../schema/common/Arguments";
 import { communutyGenderTrans } from "../../../transform/pulse/facebook/communityGender.transform";
 
-export const communityGenderCall = async (date, ctx) => {
-  let startDate = moment(date, "DD-MM-YYYYThh:mm:ss")
+export const communityGenderCall = async (dateRange: DateRange, ctx) => {
+  let startDate = moment(dateRange.date, "DD-MM-YYYYThh:mm:ss")
     .subtract(1, "day")
     .format("YYYY-MM-DD");
   let endDate = moment(startDate).format("YYYY-MM-DD");

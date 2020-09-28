@@ -18,7 +18,7 @@ export const donutDetailCardService = async (
     logger.info(`Successfully obtained of cache: ${cardId}`);
     return data[cardId];
   } else {
-    data = await sourseValueCall(dateRange.date, ctx);
+    data = await sourseValueCall(dateRange, ctx);
     logger.info(`Successfully obtained: ${cardId}`);
     return data[cardId];
   }

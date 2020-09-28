@@ -25,7 +25,7 @@ export const listPrevCardService = async (
   } else {
     console.log("entra aqui ");
 
-    data = await communityGeoCall(dateRange.date, ctx)
+    data = await communityGeoCall(dateRange, ctx)
       .then((e) => {
         console.log("esta es la respusta", e);
       })

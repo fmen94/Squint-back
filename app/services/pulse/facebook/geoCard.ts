@@ -20,7 +20,7 @@ export const geoCardService = async (
     logger.info(`Successfully obtained of cache: ${cardId}`);
     return data[cardId];
   } else {
-    data = await communityGeoCall(dateRange.date, ctx);
+    data = await communityGeoCall(dateRange, ctx);
     logger.info(`Successfully obtained: ${cardId}`);
     return data[cardId];
   }

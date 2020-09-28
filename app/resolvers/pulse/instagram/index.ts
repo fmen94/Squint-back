@@ -73,7 +73,8 @@ import {
 import { geoCardService } from "../../../services/pulse/facebook/geoCard";
 import { topPeopleService } from "../../../services/pulse/instagram/topPeopleCrd";
 import { masterService } from "../../../services";
-
+const network = "instagram";
+const chanel = "pulse";
 /**
  * Este Resolver Contiene todos los resolutores que se puden usar para Instagram pulse.
  */
@@ -93,7 +94,7 @@ export class PulseInstagramResolver {
     @Arg("cardId", (type) => CardIdIntFbType, CardIdIntOptions)
     cardId?: CardIdIntFbType
   ): Promise<Number> {
-    return masterService("instagram", "pulse", ctx, dateRange, cardId);
+    return masterService(network, chanel, ctx, dateRange, cardId);
   }
   /**
    * Resolver de este tipo de card de solo un valor en texto
@@ -109,7 +110,7 @@ export class PulseInstagramResolver {
     @Arg("cardId", (type) => CardIdStringFbType, CardIdStringOptions)
     cardId?: CardIdStringFbType
   ): Promise<String> {
-    return masterService("instagram", "pulse", ctx, dateRange, cardId);
+    return masterService(network, chanel, ctx, dateRange, cardId);
   }
   /**
    * Resolver de este tipo de card retorna un valor y su diferencia contra el periodo de tiempo enterior
@@ -125,7 +126,7 @@ export class PulseInstagramResolver {
     @Arg("cardId", (type) => CardIdValuePrevFbType, CardIdValuePrevOptions)
     cardId?: CardIdValuePrevFbType
   ): Promise<valueDiffIn> {
-    return valuePrevCardService(ctx, dateRange, cardId);
+    return masterService(network, chanel, ctx, dateRange, cardId);
   }
   /**
    * Resolver de este tipo de card retorna un valor y su diferencia contra el periodo de tiempo enterior ademas de un arreglo de fecha valor
@@ -141,7 +142,7 @@ export class PulseInstagramResolver {
     @Arg("cardId", (type) => CardIdSmallFbType, CardIdSmallOptions)
     cardId?: CardIdSmallFbType
   ): Promise<smailCardIn> {
-    return smallCardService(ctx, dateRange, cardId);
+    return masterService(network, chanel, ctx, dateRange, cardId);
   }
   /**
    * Resolver de este tipo de card retorna un arreglo de valor y su diferencia contra el periodo de tiempo enterior y su nombre
@@ -159,7 +160,7 @@ export class PulseInstagramResolver {
     @Arg("dataType", (type) => dataCompType, DataCompOptions)
     dataType?: dataCompType
   ): Promise<nameValueDiffIn[]> {
-    return compCardService(ctx, dateRange, cardId, dataType);
+    return masterService(network, chanel, ctx, dateRange, cardId, [dataType]);
   }
   /**
    * Resolver de este tipo de card retorna un arreglo de kind y un valuesArray que es un arreglo de numeros
@@ -175,7 +176,7 @@ export class PulseInstagramResolver {
     @Arg("cardId", (type) => CardIdBarFbType, CardIdBarOptions)
     cardId?: CardIdBarFbType
   ): Promise<kindIntValuesIn[]> {
-    return barCardService(ctx, dateRange, cardId);
+    return masterService(network, chanel, ctx, dateRange, cardId);
   }
   /**
    * Resolver de este tipo de card retorna un titulo , subtitulo, texto y un arreglo  de Kind values
@@ -191,7 +192,7 @@ export class PulseInstagramResolver {
     @Arg("cardId", (type) => CardIdDonutFbType, CardIdDonutOptions)
     cardId?: CardIdDonutFbType
   ): Promise<donutDetailIn> {
-    return donutDetailCardService(ctx, dateRange, cardId);
+    return masterService(network, chanel, ctx, dateRange, cardId);
   }
   /**
    * Resolver de este tipo de card retorna un arreglo de nombre valor y la deferencia
@@ -208,7 +209,7 @@ export class PulseInstagramResolver {
     @Arg("cardId", (type) => CardIdListPrevFbType, CardIdListPrevOptions)
     cardId?: CardIdListPrevFbType
   ): Promise<nameValueDiffIn[]> {
-    return listPrevCardService(ctx, dateRange, cardId, order);
+    return masterService(network, chanel, ctx, dateRange, cardId, [order]);
   }
   /**
    * Resolver de este tipo de card retorna un arreglo de nombre valor
@@ -225,7 +226,7 @@ export class PulseInstagramResolver {
     @Arg("cardId", (type) => CardIdListFbType, CardIdListOptions)
     cardId?: CardIdListFbType
   ): Promise<kindValueIn[]> {
-    return listCardService(ctx, dateRange, cardId, order);
+    return masterService(network, chanel, ctx, dateRange, cardId, [order]);
   }
   /**
    * Resolver de este tipo de card retorna un arreglo en 3 dimenciones de nombre valor y kind
@@ -241,7 +242,7 @@ export class PulseInstagramResolver {
     @Arg("cardId", (type) => CardIdTableFbType, CardIdTableOptions)
     cardId?: CardIdTableFbType
   ): Promise<kindNameValueIn[][][]> {
-    return tableCardService(ctx, dateRange, cardId);
+    return masterService(network, chanel, ctx, dateRange, cardId);
   }
   /**
    * Resolver de este tipo de card retorna un arreglo en 3 dimenciones de nombre valor y kind
@@ -257,7 +258,7 @@ export class PulseInstagramResolver {
     @Arg("cardId", (type) => CardIdBubblesFbType, CardIdBubblesOptions)
     cardId?: CardIdBubblesFbType
   ): Promise<kindDateValueIn[]> {
-    return bubblesService(ctx, dateRange, cardId);
+    return masterService(network, chanel, ctx, dateRange, cardId);
   }
   /**
    * Resolver de este tipo de card retorna un arreglo de Post
@@ -272,8 +273,8 @@ export class PulseInstagramResolver {
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
     @Arg("cardId", (type) => CardIdPostFbType, CardIdPostOptions)
     cardId?: CardIdPostFbType
-  ): postIGIn[] {
-    return postCardService(ctx, dateRange, cardId);
+  ): Promise<postIGIn[]> {
+    return masterService(network, chanel, ctx, dateRange, cardId);
   }
   /**
    * Resolver de este tipo de card retorna un title text
@@ -289,7 +290,7 @@ export class PulseInstagramResolver {
     @Arg("cardId", (type) => CardIdTitleTextFbType, CardIdtitleTextOptions)
     cardId?: CardIdTitleTextFbType
   ): Promise<titleTextIn> {
-    return titleTextCardService(ctx, dateRange, cardId);
+    return masterService(network, chanel, ctx, dateRange, cardId);
   }
   @FieldResolver()
   geoCard(
@@ -298,7 +299,7 @@ export class PulseInstagramResolver {
     @Arg("cardId", (type) => CardIdGeoFbType, CardIdGeoOptions)
     cardId?: CardIdGeoFbType
   ): Promise<geoCardIn[]> {
-    return geoCardService(ctx, dateRange, cardId);
+    return masterService(network, chanel, ctx, dateRange, cardId);
   }
   @FieldResolver()
   topPeople(
@@ -306,7 +307,7 @@ export class PulseInstagramResolver {
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
     @Arg("cardId", (type) => topPeopleFbType, topPeopleOptions)
     cardId?: topPeopleFbType
-  ): topPeopleIn[] {
-    return topPeopleService(ctx, dateRange, cardId);
+  ): Promise<topPeopleIn[]> {
+    return masterService(network, chanel, ctx, dateRange, cardId);
   }
 }
