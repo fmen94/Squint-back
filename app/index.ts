@@ -3,13 +3,15 @@ import { buildSchema, Int } from "type-graphql";
 import logger from "./helpers/logins/login.helper";
 import BadRequestException from "./exceptions/bad-request.exception";
 import { SchemaOptions } from "./resolvers";
-import jinst from 'jdbc/lib/jinst';
-import Pool from 'jdbc/lib/pool';
+import jinst from "jdbc/lib/jinst";
+import Pool from "jdbc/lib/pool";
 import { ExpirationStrategy, MemoryStorage } from "node-ts-cache";
 
 if (!jinst.isJvmCreated()) {
   jinst.addOption("-Xrs");
-  jinst.setupClasspath([`${__dirname}/../driver/RedshiftJDBC42-no-awssdk-1.2.47.1071.jar`]);
+  jinst.setupClasspath([
+    `${__dirname}/../driver/RedshiftJDBC42-no-awssdk-1.2.47.1071.jar`,
+  ]);
 }
 
 var config = {
@@ -17,7 +19,7 @@ var config = {
   user: process.env.db_user,
   password: process.env.db_password,
   minpoolsize: 2,
-  maxpoolsize: 1000
+  maxpoolsize: 499,
 };
 
 const myCache = new ExpirationStrategy(new MemoryStorage());
@@ -29,7 +31,7 @@ const init = async (port: any) => {
   //La coneccion a base
   logger.info(`Connectiong databases`);
   let connection = new Pool(config);
-  
+
   //Se Crea el server
   logger.info(`Initializing server`);
   const server = new ApolloServer({
