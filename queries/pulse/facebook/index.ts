@@ -1,4 +1,4 @@
-import { Pool } from 'pg';
+import { Pool } from "pg";
 
 /**
  * Función para generar el query de llamada a los SP, retorna sólo un string con el query.
@@ -6,28 +6,34 @@ import { Pool } from 'pg';
  * @param func Nombre de la función del SP a llamar
  * @param params Arreglo de parámetros en formato value:type, para formatearlos según su tipo
  */
-const getCursor = async (pool:Pool, func:string, params:Array<{value:any,type:string}>)=>{
+const getCursor = async (
+  pool: Pool,
+  func: string,
+  params: Array<{ value: any; type: string }>
+) => {
   const client = await pool.connect();
-  let cursorName = Math.random().toString(36).substring(2, 20);//.replace(/[\W_]+/g,"");
-  const PARAMS = params.map(p=>{
-    if(p.type=='string' || p.type=='date'){
+  let cursorName = Math.random().toString(36).substring(2, 20); //.replace(/[\W_]+/g,"");
+  const PARAMS = params.map((p) => {
+    if (p.type == "string" || p.type == "date") {
       return `'${p.value}'`;
-    }else if(p.type=='number'){
+    } else if (p.type == "number") {
       return p.value;
     }
   });
   let queryPage = `
   BEGIN;
-  call ${func}('cursor_${cursorName}',${PARAMS.join(',')});
+  call ${func}('cursor_${cursorName}',${PARAMS.join(",")});
   FETCH ALL FROM cursor_${cursorName};
   CLOSE cursor_${cursorName};
   `;
   let responsePage = await client.query(queryPage);
-  let response:Array<any> = Object.values(responsePage).filter((r:any)=>r.command==='FETCH');
+  let response: Array<any> = Object.values(responsePage).filter(
+    (r: any) => r.command === "FETCH"
+  );
   client.release();
-  
-  return response.length ? response[0].rows ? response[0].rows : [] : [];
-}
+
+  return response.length ? (response[0].rows ? response[0].rows : []) : [];
+};
 
 export const fbQuerys = {
   readTop: (ctx, startDate, period) =>

@@ -34,28 +34,6 @@ export const masterService = async (
     return serviceControler[chanel][network][cardId].returnType(data, params);
   }
 };
-/**
- * {
-        sp: readTopIgCall,
-        cacheName: "_readTopIg",
-        returnType: (data, type) => data.generalInt01,
-      },
-      {
-        sp: readPostIgCall,
-        cacheName: "_readPostIg",
-        returnType: (data, type) => data.generalInt02,
-      },
-      {
-        sp: readInteractiosIgCall,
-        cacheName: "_readInteractiosIg",
-        returnType: (data, type) => data.generalString01,
-      },
-      {
-        sp: readBestMomentsIGCall,
-        cacheName: "_readBestMomentsIG",
-        returnType: (data, type) => data.generalValuePrev01,
-      },
- */
 const serviceControler = {
   pulse: {
     instagram: {
