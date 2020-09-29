@@ -167,7 +167,11 @@ const serviceControler = {
         cacheName: "_readTopIg",
         returnType: (data, type) => data.activitySmall08,
       },
-      activityTable01: {},
+      activityTable01: {
+        sp: readPostIgCall,
+        cacheName: "_readPostIg",
+        returnType: (data, type) => data.activityTable01,
+      },
       affinitySmall01: {
         sp: readTopIgCall,
         cacheName: "_readTopIg",
