@@ -498,6 +498,31 @@ registerEnumType(DataPrebsValuesBenchFbType, {
     reactions = "reactions",
     `,
 });
+export enum DataPrebsValuesBenchIgType {
+  followers = "followers",
+  interactions = "interactions",
+  engagemet_rate = "engagemet_rate",
+  share_of_voice = "share_of_voice",
+  clicks = "clicks",
+  comments = "comments",
+  shares = "shares",
+  replies = "replies",
+}
+registerEnumType(DataPrebsValuesBenchIgType, {
+  name: "DataPrebsValuesBenchIg",
+  description: `
+   They are the data types that can return the prebsValuesCard
+    parameters:
+    followers = "followers",
+    interactions = "interactions",
+    engagemet_rate = "engagemet_rate",
+    share_of_voice = "share_of_voice",
+    clicks = "clicks",
+    comments = "comments",
+    shares = "shares",
+    replies = "replies",
+    `,
+});
 export enum CardIdCompBenchFbType {
   activityCopm01 = "activityCopm01",
 }
@@ -521,6 +546,23 @@ registerEnumType(DataCompBenchFbType, {
    They are the data types that can return the prebsValuesCard
     parameters:
     fans = "fans",
+    interactions = "interactions",
+    engagemet_rate = "engagemet_rate",
+    share_of_voice = "share_of_voice",
+    `,
+});
+export enum DataCompBenchIgType {
+  followers = "followers",
+  interactions = "interactions",
+  engagemet_rate = "engagemet_rate",
+  share_of_voice = "share_of_voice",
+}
+registerEnumType(DataCompBenchIgType, {
+  name: "DataCompBenchIg",
+  description: `
+   They are the data types that can return the prebsValuesCard
+    parameters:
+    followers = "followers",
     interactions = "interactions",
     engagemet_rate = "engagemet_rate",
     share_of_voice = "share_of_voice",

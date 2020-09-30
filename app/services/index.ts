@@ -4,6 +4,9 @@ import { DateRange } from "./../schema/common/Arguments";
 import { GeneralBenchCall } from "./bench/facebook/general";
 import { keywordsCall } from "./bench/facebook/keywords";
 import { postCall } from "./bench/facebook/post";
+import { GeneralBenchIgCall } from "./bench/instagram/general";
+import { keywordsIgCall } from "./bench/instagram/keywords";
+import { postIgCall } from "./bench/instagram/post";
 import { communityGenderCall } from "./pulse/facebook/communityGender";
 import { communityGeoCall } from "./pulse/facebook/communityGeo";
 import { sourseValueCall } from "./pulse/facebook/sourseValue";
@@ -376,6 +379,65 @@ const serviceControler = {
       responseList01: {
         sp: keywordsCall,
         cacheName: "_keywordBench",
+        returnType: (data, type) =>
+          orderBench(type[0], data.responseList01, "value"),
+      },
+    },
+    instagram: {
+      generalTable01: {
+        sp: GeneralBenchIgCall,
+        cacheName: "_generalBenchIg",
+        returnType: (data, type) => data.generalTable01,
+      },
+      activityPrevsValues01: {
+        sp: GeneralBenchIgCall,
+        cacheName: "_generalBenchIg",
+        returnType: (data, type) => data.activityPrevsValues01[type[0]],
+      },
+      activityCopm01: {
+        sp: GeneralBenchIgCall,
+        cacheName: "_generalBenchIg",
+        returnType: (data, type) => data.activityCopm01[type[0]],
+      },
+      performanceTable01: {
+        sp: GeneralBenchIgCall,
+        cacheName: "_generalBenchIg",
+        returnType: (data, type) => data.performanceTable01,
+      },
+      performancesPrevsValues01: {
+        sp: GeneralBenchIgCall,
+        cacheName: "_generalBenchIg",
+        returnType: (data, type) => data.performancesPrevsValues01[type[0]],
+      },
+      affinityBubbles01: {
+        sp: GeneralBenchIgCall,
+        cacheName: "_generalBenchIg",
+        returnType: (data, type) => data.affinityBubbles01,
+      },
+      contentTable01: {
+        sp: GeneralBenchIgCall,
+        cacheName: "_generalBenchIg",
+        returnType: (data, type) => data.contentTable01,
+      },
+      contentTable02: {
+        sp: postIgCall,
+        cacheName: "_postBenchIg",
+        returnType: (data, type) => data.contentTable02,
+      },
+      contentList01: {
+        sp: keywordsIgCall,
+        cacheName: "_keywordBenchIg",
+        returnType: (data, type) =>
+          orderBench(type[0], data.contentList01, "value"),
+      },
+      responseTable01: {
+        sp: GeneralBenchIgCall,
+        cacheName: "_generalBenchIg",
+        returnType: (data, type) => data.responseTable01,
+      },
+      responseList01: {
+        sp: keywordsIgCall,
+        cacheName: "_keywordBenchIg",
         returnType: (data, type) =>
           orderBench(type[0], data.responseList01, "value"),
       },

@@ -122,4 +122,21 @@ export const fbQuerys = {
       { value: startDate, type: "date" },
       { value: endDate, type: "date" },
     ]),
+  geenralBenchIg: (ctx, date, period) =>
+    getCursor(ctx.pool, "read_instagram_bench_top_section", [
+      { value: ctx.id, type: "string" },
+      { value: date, type: "date" },
+      { value: period[0], type: "string" },
+    ]),
+  postBenchIg: (ctx, limit) =>
+    getCursor(ctx.pool, "read_instagram_bench_post_section", [
+      { value: ctx.id, type: "string" },
+      { value: limit, type: "number" },
+    ]),
+  keywordsBenchIg: (ctx, date, period) =>
+    getCursor(ctx.pool, "read_instagram_bench_fan_source_section", [
+      { value: ctx.id, type: "string" },
+      { value: date, type: "date" },
+      { value: period[0], type: "string" },
+    ]),
 };

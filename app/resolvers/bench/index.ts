@@ -20,4 +20,8 @@ export class BenchFieldResolver {
   facebook() {
     return {};
   }
+  @FieldResolver()
+  instagram() {
+    return {};
+  }
 }
