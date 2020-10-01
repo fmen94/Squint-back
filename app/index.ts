@@ -3,9 +3,11 @@ import { buildSchema, Int } from "type-graphql";
 import logger from "./helpers/logins/login.helper";
 import BadRequestException from "./exceptions/bad-request.exception";
 import { SchemaOptions } from "./resolvers";
-
 import { Pool } from "pg";
 import { ExpirationStrategy, MemoryStorage } from "node-ts-cache";
+import { DynamoDB } from 'aws-sdk';
+import { CONTEXT } from "./interfaces/common";
+
 const pool = new Pool({
   user: process.env.db_user,
   database: process.env.db_database,
@@ -18,6 +20,14 @@ const pool = new Pool({
 const myCache = new ExpirationStrategy(new MemoryStorage());
 //Funcion principal del proyecto
 const init = async (port: any) => {
+
+  const dynamodb = new DynamoDB({
+    region: "us-west-2",
+    /*endpoint: "http://localhost:8000",
+    accessKeyId: "fakeMyKeyId",
+    secretAccessKey: "fakeSecretAccessKey"*/
+  });
+
   logger.info(`Loading schemas`);
   //lee todos los schemas importados de ./resolvers/index.ts
   const schema = await buildSchema(SchemaOptions);
@@ -30,12 +40,13 @@ const init = async (port: any) => {
     schema,
     playground: true,
     //Se crea el context
-    context: ({ req }) => {
+    context: ({ req }):CONTEXT => {
       //Esta validacion esta pendiente para cuando este en produccion
       // if (!req.headers.page_id) {
       //   throw new BadRequestException("Page_id is Invalid");
       // }
-      return { id: req.headers.page_id, pool, myCache };
+      const page_id:any = req.headers.page_id;
+      return { id: page_id, pool, myCache, dynamodb };
     },
   });
 

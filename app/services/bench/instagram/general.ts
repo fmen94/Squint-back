@@ -3,7 +3,7 @@ import { fbQuerys } from "../../../../queries/pulse/facebook";
 import { generalTrans } from "../../../transform/bench/instagram/general.transform";
 import { DateRange } from "../../../schema/common/Arguments";
 export const GeneralBenchIgCall = async (dateRange: DateRange, ctx) => {
-  let date = moment(dateRange.date, "DD-MM-YYYYThh:mm:ss").format("YYYY-MM-DD");
+  let date = moment(dateRange.date, "X").format("YYYY-MM-DD");
   let res = await fbQuerys.geenralBenchIg(ctx, date, dateRange.period);
   let data = generalTrans(res);
   await ctx.myCache.setItem(`${ctx.id}_generalBenchIg`, data, {

@@ -4,7 +4,7 @@ import { DateRange } from "../../../schema/common/Arguments";
 import { sourseValueTrans } from "../../../transform/pulse/facebook/sourseValue.transform";
 
 export const sourseValueCall = async (dateRange: DateRange, ctx) => {
-  let startDate = moment(dateRange.date, "DD-MM-YYYYThh:mm:ss")
+  let startDate = moment(dateRange.date, "X")
     .subtract(1, "day")
     .format("YYYY-MM-DD");
   let endDate = moment(startDate).format("YYYY-MM-DD");

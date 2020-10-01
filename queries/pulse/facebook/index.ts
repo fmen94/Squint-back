@@ -1,4 +1,7 @@
 import { Pool } from "pg";
+import { readCommunityGender } from "../../../app/stored_procedures/pulse/facebook/read_community_gender.sp";
+import { readDetailsSection } from "../../../app/stored_procedures/pulse/facebook/read_details_section.sp";
+import { readTopSection } from "../../../app/stored_procedures/pulse/facebook/read_top_section.sp";
 
 /**
  * Función para generar el query de llamada a los SP, retorna sólo un string con el query.
@@ -36,23 +39,23 @@ const getCursor = async (
 };
 
 export const fbQuerys = {
-  readTop: (ctx, startDate, period) =>
-    getCursor(ctx.pool, "read_top_section", [
+  readTop: (ctx, startDate, period) => readTopSection(ctx, startDate, period)
+    /*getCursor(ctx.pool, "read_top_section", [
       { value: ctx.id, type: "string" },
       { value: startDate, type: "date" },
       { value: period[0], type: "string" },
-    ]),
-  readDetails: (ctx) =>
-    getCursor(ctx.pool, "read_details_section", [
+    ])*/,
+  readDetails: (ctx) => readDetailsSection(ctx)
+    /*getCursor(ctx.pool, "read_details_section", [
       { value: ctx.id, type: "string" },
-    ]),
-  communityGender: (ctx, startDate, endDate) =>
-    getCursor(ctx.pool, "read_audience_annual_section", [
+    ])*/,
+  communityGender: (ctx, startDate, period) => readCommunityGender(ctx,startDate,period)
+    /*getCursor(ctx.pool, "read_audience_annual_section", [
       { value: ctx.id, type: "string" },
       { value: startDate, type: "date" },
       { value: endDate, type: "date" },
       { value: "F", type: "string" },
-    ]),
+    ])*/,
   communityGeo: (ctx, startDate, endDate) =>
     getCursor(ctx.pool, "read_geolocation_section", [
       { value: ctx.id, type: "string" },

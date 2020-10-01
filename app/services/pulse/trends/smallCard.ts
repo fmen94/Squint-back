@@ -20,7 +20,7 @@ export const smallCardService = (
   };
   for (let index = 0; index < 7; index++) {
     response.valuesArray.push({
-      date: moment(dateRange.date, "DD-MM-YYYYThh:mm:ss")
+      date: moment(dateRange.date, "X")
         .subtract(index, "days")
         .format("DD-MM-YYYYThh:mm:ss"),
       value: faker.random.number(),

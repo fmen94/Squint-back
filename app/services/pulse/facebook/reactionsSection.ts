@@ -3,7 +3,7 @@ import { fbQuerys } from "../../../../queries/pulse/facebook";
 import { reactionSectionTrans } from "../../../transform/pulse/facebook/reactionsSections.transform";
 
 export const reactionsSectionsCall = async (date, ctx) => {
-  let startDate = moment(date, "DD-MM-YYYYThh:mm:ss")
+  let startDate = moment(date, "X")
     .subtract(1, "day")
     .format("YYYY-MM-DD");
   let endDate = moment(startDate).format("YYYY-MM-DD");

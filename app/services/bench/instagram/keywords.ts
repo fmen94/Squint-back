@@ -3,7 +3,7 @@ import { fbQuerys } from "../../../../queries/pulse/facebook";
 import { DateRange } from "../../../schema/common/Arguments";
 import { keywordsTrans } from "../../../transform/bench/instagram/keywods.transform";
 export const keywordsIgCall = async (dateRange: DateRange, ctx) => {
-  let date = moment(dateRange.date, "DD-MM-YYYYThh:mm:ss").format("YYYY-MM-DD");
+  let date = moment(dateRange.date, "X").format("YYYY-MM-DD");
   let res = await fbQuerys.keywordsBenchIg(ctx, date, dateRange.period);
   let data = keywordsTrans(res);
   await ctx.myCache.setItem(`${ctx.id}_keywordBenchIg`, data, {

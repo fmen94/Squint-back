@@ -1,3 +1,16 @@
+import { DynamoDB } from "aws-sdk";
+import { Pool } from "pg";
+import { ExpirationStrategy } from "node-ts-cache";
+
+export type PERIODS = 'DL'|'MT'|'WK'|'YR'|'HY';
+
+export interface CONTEXT {
+  id: string;
+  pool: Pool;
+  myCache:ExpirationStrategy;
+  dynamodb: DynamoDB;
+}
+
 export interface valueDiffIn {
   value: Number;
   diff: Number;
