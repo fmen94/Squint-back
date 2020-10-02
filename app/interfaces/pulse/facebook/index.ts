@@ -49,7 +49,18 @@ export interface ReadTopSectionResponse{
   page_video_views: number;
   page_clics: number;
   page_reactions_total: Array<KeyValue>,
-  page_positive_feedback_by_type: Array<KeyValue>
+  page_positive_feedback_by_type: Array<KeyValue>,
+  page_fans_by_like_source: Array<KeyValue>
+}
+
+export interface ReadTopSectionPageInfoResponse{
+  system_timestamp: number;
+  global_account: {
+    name: string|null;
+    id: string|null;
+    fans: number|null;
+  },
+  fan_count: number;
 }
 
 export interface ReadDetailsSectionResponse{
@@ -63,11 +74,18 @@ export interface ReadDetailsSectionResponse{
 export interface ReadCommunityGender {
   metric_timestamp: number;
   system_timestamp: number;
-  page_fans_gender_age: Array<KeyValue>
+  page_fans_gender_age: Array<KeyValue>;
 }
 
 export interface ProcessedGender {
   genero: string;
   age: string;
   cantidad: number;
+}
+
+export interface ReadFanSourceSection {
+  metric_timestamp: number;
+  system_timestamp: number;
+  page_views_external_referrals: Array<KeyValue>
+  page_fans_by_like_source: Array<KeyValue>;
 }

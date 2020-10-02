@@ -1,7 +1,7 @@
 import { CONTEXT, PERIODS } from "../../../interfaces/common";
 import moment from 'moment';
 import { DynamoDB } from "aws-sdk";
-import { ReadTopSectionResponse } from "../../../interfaces/pulse/facebook";
+import { ReadTopSectionPageInfoResponse, ReadTopSectionResponse } from "../../../interfaces/pulse/facebook";
 import { parseResponse } from "../../../helpers/common/parseResults.helper";
 
 function rand(maxLimit = 100) {
@@ -48,8 +48,27 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
             'page_message_count',
             'page_video_views',
             'page_positive_feedback_by_type',
-            'page_clics'
+            'page_clics',
+            'page_fans_by_like_source'
         ]
+    }).promise();
+
+    let pageInfo = await dynamo.query({
+        TableName: 'FB_PAGE_INFO',
+        IndexName: 'pageidIndex',
+        ScanIndexForward: false,
+        KeyConditions: {
+            'page_id': {
+                ComparisonOperator: 'EQ',
+                AttributeValueList: [{ 'S': ctx.id }]
+            }
+        },
+        AttributesToGet: [
+            'system_timestamp',
+            'fan_count',
+            'global_account'
+        ],
+        Limit: 1
     }).promise();
 
     let processedMetrics:ReadTopSectionResponse[] = [];
@@ -62,30 +81,39 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
         if(index == find){
             return elem;
         }
-    })
+    });
+
+    let processedPageInfo:ReadTopSectionPageInfoResponse = parseResponse(pageInfo.Items[0],true);
 
     let response = []
     for(let x = 0; x<processedMetrics.length; x++){
         let metric = processedMetrics[x];
+        let viral_fans = metric.page_fans_by_like_source===null ? [] : metric.page_fans_by_like_source.filter(s=>{
+            if(s.key == 'News Feed' || s.key == 'Page Suggestions'){
+                return s;
+            }
+        });
         response.push({
-            page_fans: rand(999999),
-            total_fans: rand(999999),
+            page_fans: metric.page_fans,
+            total_fans: processedPageInfo.global_account.fans===null ? processedPageInfo.fan_count : processedPageInfo.global_account.fans,
             engaged_users: metric.page_engaged_users,
             interactions: metric.page_post_engagements,
             row_date: metric.metric_timestamp,
             fans_page: metric.page_fans,
             organic_fans: metric.page_fans_organic,
             paid_fans: metric.page_fans_organic,
-            viral_fans: rand(999999),
+            viral_fans: !viral_fans.length ? 0 : viral_fans.reduce((accumulator, currentValue)=>{
+                return {key:'total', value: accumulator.value + currentValue.value }
+            }).value,
             investment: rand(999999),
             total_impressions: metric.page_impressions,
             paid_impressions: metric.page_impressions_paid,
             organic_impressions: metric.page_impressions_organic,
             viral_impressions: metric.page_impressions_viral,
-            total_engagement: rand(999999),
-            paid_engagement: rand(999999),
-            organic_engagement: rand(999999),
-            viral_engagement: rand(999999),
+            total_engagement: metric.page_post_engagements,
+            paid_engagement: ((metric.page_impressions_paid / metric.page_post_engagements) * 100),
+            organic_engagement: ((metric.page_impressions_organic / metric.page_post_engagements) * 100),
+            viral_engagement: ((metric.page_impressions_viral / metric.page_post_engagements) * 100),
             ad_impressions: rand(999999),
             ad_reach: rand(999999),
             ad_interactions: rand(999999),
