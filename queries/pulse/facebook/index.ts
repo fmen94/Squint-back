@@ -4,6 +4,7 @@ import { readDetailsSection } from "../../../app/stored_procedures/pulse/faceboo
 import { readGeoLocationSection } from "../../../app/stored_procedures/pulse/facebook/read_geolocation_section.sp";
 import { readTopSection } from "../../../app/stored_procedures/pulse/facebook/read_top_section.sp";
 import { readFanSourceSection } from "../../../app/stored_procedures/pulse/facebook/read_fan_source_section.sp";
+import { readPostSection } from "../../../app/stored_procedures/pulse/facebook/read_post_section.sp";
 
 /**
  * Función para generar el query de llamada a los SP, retorna sólo un string con el query.
@@ -71,11 +72,11 @@ export const fbQuerys = {
       { value: startDate, type: "date" },
       { value: endDate, type: "date" },
     ])*/,
-  postSection: (ctx, limit) =>
-    getCursor(ctx.pool, "read_post_section", [
+  postSection: (ctx, limit) => readPostSection(ctx,limit)
+    /*getCursor(ctx.pool, "read_post_section", [
       { value: ctx.id, type: "string" },
       { value: limit, type: "number" },
-    ]),
+    ])*/,
   bestMomnets: (ctx, startDate, endDate) =>
     getCursor(ctx.pool, "read_best_moments_section", [
       { value: ctx.id, type: "string" },

@@ -89,3 +89,29 @@ export interface ReadFanSourceSection {
   page_views_external_referrals: Array<KeyValue>
   page_fans_by_like_source: Array<KeyValue>;
 }
+
+export interface PostResponse{
+  post_timestamp: number;
+  system_timestamp: number;
+  page_id: string;
+  post_id: string;
+  post_image: string;
+  post_promotion_status: string;
+  post_content: string;
+  post_impressions: number;
+  post_video_views: number;
+  post_clicks: number;
+  post_type: string;
+  post_author_name: string;
+  post_author_picture: string;
+  post_reactions_like_total: number;
+  post_reactions_love_total: number;
+  post_reactions_wow_total: number;
+  post_reactions_haha_total: number;
+  post_reactions_sorry_total: number;
+  post_reactions_anger_total: number;
+  post_comments_count: number;
+  post_shares_count: number;
+  post_engaged_users: number;
+  post_reactions_count: number;
+}
