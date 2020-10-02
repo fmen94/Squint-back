@@ -15,7 +15,7 @@ export const readCommunityGender = async (ctx:CONTEXT,start:number,period:PERIOD
 
     let metrics = await dynamo.query({
         TableName: 'FB_PAGE_INSIGHTS',
-        IndexName: 'pageidIndex',
+        IndexName: 'pageidSIndex',
         ScanIndexForward: false,
         KeyConditions: {
             'page_id': {

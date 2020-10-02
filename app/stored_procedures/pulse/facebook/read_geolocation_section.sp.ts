@@ -15,7 +15,7 @@ export const readGeoLocationSection = async (ctx:CONTEXT,start:number,period:PER
 
     let metrics = await dynamo.query({
         TableName: 'FB_PAGE_INSIGHTS',
-        IndexName: 'pageidIndex',
+        IndexName: 'pageidSIndex',
         ScanIndexForward: false,
         KeyConditions: {
             'page_id': {

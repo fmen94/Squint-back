@@ -16,7 +16,7 @@ export const readDetailsSection = async (ctx:CONTEXT) => {
 
     let metrics = await dynamo.query({
         TableName: 'FB_PAGE_INSIGHTS',
-        IndexName: 'pageidIndex',
+        IndexName: 'pageidSIndex',
         ScanIndexForward: false,
         KeyConditions: {
             'page_id': {
