@@ -52,7 +52,16 @@ export const readReactionSection = async (ctx:CONTEXT,start:number,period:PERIOD
             'page_positive_feedback_by_type',
             'page_clics',
             'page_fans_by_like_source'*/
-            'page_reactions_like'
+            'page_reactions_like',
+            'page_reactions_love',
+            'page_reactions_haha',
+            'page_reactions_wow',
+            'page_reactions_sorry',
+            'page_reactions_anger',
+            'page_message_count',
+            'page_clics',
+            'page_positive_feedback_by_type',
+            'page_negative_feedback_by_type'
         ]
     }).promise();
 
@@ -85,77 +94,72 @@ export const readReactionSection = async (ctx:CONTEXT,start:number,period:PERIOD
             return elem;
         }
     });
-    console.log(processedMetrics);
-/*
-    let processedPageInfo:ReadTopSectionPageInfoResponse = parseResponse(pageInfo.Items[0],true);
+
+
+    /* inicio del matcheo */
 
     let response = []
     for(let x = 0; x<processedMetrics.length; x++){
         let metric = processedMetrics[x];
-        let viral_fans = metric.page_fans_by_like_source===null ? [] : metric.page_fans_by_like_source.filter(s=>{
-            if(s.key == 'News Feed' || s.key == 'Page Suggestions'){
+        let shares = metric.page_positive_feedback_by_type.find(s=>{
+            if(s.key == 'link'){
                 return s;
             }
         });
-        response.push({
-            page_fans: metric.page_fans,
-            total_fans: processedPageInfo.global_account.fans===null ? processedPageInfo.fan_count : processedPageInfo.global_account.fans,
-            engaged_users: metric.page_engaged_users,
-            interactions: metric.page_post_engagements,
-            row_date: metric.metric_timestamp,
-            fans_page: metric.page_fans,
-            organic_fans: metric.page_fans_organic,
-            paid_fans: metric.page_fans_organic,
-            viral_fans: !viral_fans.length ? 0 : viral_fans.reduce((accumulator, currentValue)=>{
-                return {key:'total', value: accumulator.value + currentValue.value }
-            }).value,
-            investment: rand(999999),
-            total_impressions: metric.page_impressions,
-            paid_impressions: metric.page_impressions_paid,
-            organic_impressions: metric.page_impressions_organic,
-            viral_impressions: metric.page_impressions_viral,
-            total_engagement: metric.page_post_engagements,
-            paid_engagement: ((metric.page_impressions_paid / metric.page_post_engagements) * 100),
-            organic_engagement: ((metric.page_impressions_organic / metric.page_post_engagements) * 100),
-            viral_engagement: ((metric.page_impressions_viral / metric.page_post_engagements) * 100),
-            ad_impressions: rand(999999),
-            ad_reach: rand(999999),
-            ad_interactions: rand(999999),
-            ad_frecuency: rand(999999),
-            relevance_score: rand(999999),
-            ctr: Math.random().toFixed(2),
-            cpc: Math.random().toFixed(2),
-            stories: metric.page_content_activity,
-            post_performance_ratio: ((metric.page_post_engagements / metric.page_impressions_unique) * 100),
-            reactions: metric.page_reactions_total.reduce((accumulator, currentValue)=>{
-                return {key:'total', value: accumulator.value + currentValue.value }
-            }).value,
-            shares: metric.page_positive_feedback_by_type.find(el => el.key == 'link').value,
-            comments: metric.page_positive_feedback_by_type.find(el => el.key == 'comment').value,
-            clicks: metric.page_clics,
-            organic_post: rand(999999),
-            paid_post: rand(999999),
-            video_viwes: metric.page_video_views,
-            inbox_messages: metric.page_message_count
-        })
-    }*/
-    return [
-        { like: 88000,
-            live: 35000,
-            haha: 37000,
-            think: 35000,
-            wow: 50000,
-            sad: 21000,
-            angry: 8000,
-            messages: 420,
-            shares: 639,
-            clicks: 202,
-            others: 157,
-            respond_to_an_event: 119,
-            hide_this_story: 639,
-            hide_all_post_from_this_page: 202,
-            report_an_object_as_a_spam: 137,
-            unlike_a_page: 426,
-            fecha: '2020-09-16T16:11:55.757Z' }
-    ];
+        let others = metric.page_positive_feedback_by_type.find(s=>{
+            if(s.key == 'other'){
+                return s;
+            }
+        });
+        let RSVP = metric.page_positive_feedback_by_type.find(s=>{
+            if(s.key == 'rsvp'){
+                return s;
+            }
+        });
+        let hide_clicks = metric.page_positive_feedback_by_type.find(s=>{
+            if(s.key == 'hide_clicks'){
+                return s;
+            }
+        });
+        let hide_all_clicks = metric.page_positive_feedback_by_type.find(s=>{
+            if(s.key == 'hide_all_clicks'){
+                return s;
+            }
+        });
+        let report_spam_clicks = metric.page_positive_feedback_by_type.find(s=>{
+            if(s.key == 'report_spam_clicks'){
+                return s;
+            }
+        });
+        let unlike_page = metric.page_positive_feedback_by_type.find(s=>{
+            if(s.key == 'unlike_page'){
+                return s;
+            }
+        });
+        
+
+        /*page_negative_feedback_by_type */
+        response.push(
+            { like: metric.page_reactions_like,
+                live: metric.page_reactions_love,
+                haha: metric.page_reactions_haha,
+                think: rand(9999),
+                wow: metric.page_reactions_wow,
+                sad: metric.page_reactions_sorry,
+                angry: metric.page_reactions_anger,
+                messages: metric.page_message_count || 0,
+                shares: shares ? shares.value : 0,
+                clicks: metric.page_clics,
+                others: others ? others.value : 0,
+                respond_to_an_event: RSVP ? RSVP.value : 0,
+                hide_this_story: hide_clicks ? hide_clicks.value : 0,
+                hide_all_post_from_this_page: hide_all_clicks ? hide_all_clicks.value : 0,
+                report_an_object_as_a_spam: report_spam_clicks ? report_spam_clicks.value : 0,
+                unlike_a_page: unlike_page ? unlike_page.value : 0,
+                fecha: metric.metric_timestamp  }
+        )
+    }
+    /* fin del matcheo */
+    console.log(response);
+    return response;
 }

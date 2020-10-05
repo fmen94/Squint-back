@@ -120,4 +120,13 @@ export interface ReadReactionsSectionResponse{
   metric_timestamp: number;
   system_timestamp: number;
   page_reactions_like : number;
+  page_reactions_love : number,
+  page_reactions_haha : number,
+  page_reactions_wow : number,
+  page_reactions_sorry : number,
+  page_reactions_anger : number,
+  page_message_count : number,
+  page_clics : number
+  page_positive_feedback_by_type : Array<KeyValue>,
+  page_negative_feedback_by_type : Array<KeyValue>
 }
