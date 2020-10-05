@@ -15,7 +15,7 @@ export const readFanSourceSection = async (ctx:CONTEXT,start:number,period:PERIO
 
     let metrics = await dynamo.query({
         TableName: 'FB_PAGE_INSIGHTS',
-        IndexName: 'pageidSIndex',
+        IndexName: 'pageidIndex',
         ScanIndexForward: false,
         KeyConditions: {
             'page_id': {
