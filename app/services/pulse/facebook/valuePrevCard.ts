@@ -13,7 +13,7 @@ export const valuePrevCardService = async (
 ): Promise<valueDiffIn> => {
   logger.info(`Getting values ​​for: ${cardId}`);
   if (cardId == "generalValuePrev01") {
-    return null;
+    throw new BadRequestException(" errorCode_nullData");
   }
   if (
     cardId == "generalValuePrev02" ||
