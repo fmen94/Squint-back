@@ -2,12 +2,9 @@ import moment from "moment";
 import { fbQuerys } from "../../../../queries/pulse/facebook";
 import { reactionSectionTrans } from "../../../transform/pulse/facebook/reactionsSections.transform";
 
-export const reactionsSectionsCall = async (date, ctx) => {
-  let startDate = moment(date, "X")
-    .subtract(1, "day")
-    .format("YYYY-MM-DD");
-  let endDate = moment(startDate).format("YYYY-MM-DD");
-  let res = await fbQuerys.resctionsSection(ctx, startDate, endDate);
+export const reactionsSectionsCall = async (dateRange, ctx) => {
+  let res = await fbQuerys.resctionsSection(ctx, dateRange.date, dateRange.period);
+  
   console.log(res);
 
   let data = reactionSectionTrans(res);

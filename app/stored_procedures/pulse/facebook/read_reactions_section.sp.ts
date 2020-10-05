@@ -1,14 +1,14 @@
 import { CONTEXT, PERIODS } from "../../../interfaces/common";
 import moment from 'moment';
 import { DynamoDB } from "aws-sdk";
-import { ReadTopSectionPageInfoResponse, ReadTopSectionResponse } from "../../../interfaces/pulse/facebook";
+import { ReadReactionsSectionResponse } from "../../../interfaces/pulse/facebook";
 import { parseResponse } from "../../../helpers/common/parseResults.helper";
 
 function rand(maxLimit = 100) {
     let rand = Math.random() * maxLimit;
     return Math.floor(rand);
 }
-export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) => {
+export const readReactionSection = async (ctx:CONTEXT,start:number,period:PERIODS) => {
     let end = moment(start,'X').subtract(8,'days').unix();
 
     const dynamo:DynamoDB = ctx.dynamodb;
@@ -33,7 +33,8 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
         AttributesToGet: [
             'metric_timestamp',
             'system_timestamp',
-            'page_fans',
+
+            /*'page_fans',
             'page_fans_organic',
             'page_fans_paid',
             'page_impressions',
@@ -49,11 +50,12 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
             'page_video_views',
             'page_positive_feedback_by_type',
             'page_clics',
-            'page_fans_by_like_source'
+            'page_fans_by_like_source'*/
+            'page_reactions_like'
         ]
     }).promise();
 
-    let pageInfo = await dynamo.query({
+    /*let pageInfo = await dynamo.query({
         TableName: 'FB_PAGE_INFO',
         IndexName: 'pageidIndex',
         ScanIndexForward: false,
@@ -69,9 +71,9 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
             'global_account'
         ],
         Limit: 1
-    }).promise();
+    }).promise();*/
 
-    let processedMetrics:ReadTopSectionResponse[] = [];
+    let processedMetrics:ReadReactionsSectionResponse[] = [];
     for(let index in metrics.Items){
         let metric:any = parseResponse(metrics.Items[index],true);
         processedMetrics.push(metric)
@@ -82,7 +84,8 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
             return elem;
         }
     });
-
+    console.log(processedMetrics);
+/*
     let processedPageInfo:ReadTopSectionPageInfoResponse = parseResponse(pageInfo.Items[0],true);
 
     let response = []
@@ -134,6 +137,24 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
             video_viwes: metric.page_video_views,
             inbox_messages: metric.page_message_count
         })
-    }
-    return response;
+    }*/
+    return [
+        { like: 88000,
+            live: 35000,
+            haha: 37000,
+            think: 35000,
+            wow: 50000,
+            sad: 21000,
+            angry: 8000,
+            messages: 420,
+            shares: 639,
+            clicks: 202,
+            others: 157,
+            respond_to_an_event: 119,
+            hide_this_story: 639,
+            hide_all_post_from_this_page: 202,
+            report_an_object_as_a_spam: 137,
+            unlike_a_page: 426,
+            fecha: '2020-09-16T16:11:55.757Z' }
+    ];
 }

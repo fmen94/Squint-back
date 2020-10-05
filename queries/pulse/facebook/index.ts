@@ -5,6 +5,7 @@ import { readGeoLocationSection } from "../../../app/stored_procedures/pulse/fac
 import { readTopSection } from "../../../app/stored_procedures/pulse/facebook/read_top_section.sp";
 import { readFanSourceSection } from "../../../app/stored_procedures/pulse/facebook/read_fan_source_section.sp";
 import { readPostSection } from "../../../app/stored_procedures/pulse/facebook/read_post_section.sp";
+import { readReactionSection } from "../../../app/stored_procedures/pulse/facebook/read_reactions_section.sp";
 
 /**
  * Función para generar el query de llamada a los SP, retorna sólo un string con el query.
@@ -83,12 +84,12 @@ export const fbQuerys = {
       { value: startDate, type: "date" },
       { value: endDate, type: "date" },
     ]),
-  resctionsSection: (ctx, startDate, endDate) =>
-    getCursor(ctx.pool, "read_reactions_section", [
+  resctionsSection: (ctx, startDate, period) => readReactionSection(ctx, startDate, period)
+      /*getCursor(ctx.pool, "read_reactions_section", [
       { value: ctx.id, type: "string" },
       { value: startDate, type: "date" },
       { value: endDate, type: "date" },
-    ]),
+    ])*/,
   geenralBench: (ctx, date, period) =>
     getCursor(ctx.pool, "read_bench_top_section", [
       { value: ctx.id, type: "string" },

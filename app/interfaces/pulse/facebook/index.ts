@@ -115,3 +115,9 @@ export interface PostResponse{
   post_engaged_users: number;
   post_reactions_count: number;
 }
+
+export interface ReadReactionsSectionResponse{
+  metric_timestamp: number;
+  system_timestamp: number;
+  page_reactions_like : number;
+}
