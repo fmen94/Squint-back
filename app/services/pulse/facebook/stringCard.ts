@@ -14,6 +14,7 @@ export const stringCardService = async (
 ): Promise<String> => {
   logger.info(`Getting values ​​for: ${cardId}`);
   if (cardId == "generalString01") {
+    throw new BadRequestException("Data outdated since 28/09/2020", ["good"]);
     let data = await ctx.myCache.getItem(`${ctx.id}_readTop`);
     if (data) {
       logger.info(`Successfully obtained of cache: ${cardId}`);
@@ -21,9 +22,7 @@ export const stringCardService = async (
     } else {
       data = await readTopCall(dateRange, ctx);
       logger.info(`Successfully obtained: ${cardId}`);
-      throw new BadRequestException("Data outdated since 28/09/2020", [
-        data[cardId],
-      ]);
+
       return data[cardId];
     }
   } else {
