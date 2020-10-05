@@ -139,4 +139,24 @@ export const fbQuerys = {
       { value: date, type: "date" },
       { value: period[0], type: "string" },
     ]),
+  bestMomentsYt: (ctx, startDate, endDate) =>
+    getCursor(ctx.pool, "read_youtube_best_moments_section", [
+      { value: ctx.id, type: "string" },
+      { value: startDate, type: "date" },
+      { value: endDate, type: "date" },
+    ]),
+  detailsSectionYt: (ctx) =>
+    getCursor(ctx.pool, "read_youtube_details_section", [
+      { value: ctx.id, type: "string" },
+    ]),
+  postYt: (ctx) =>
+    getCursor(ctx.pool, "read_youtube_post_section", [
+      { value: ctx.id, type: "string" },
+    ]),
+  topSectionYt: (ctx, date, period) =>
+    getCursor(ctx.pool, "read_youtube_top_section", [
+      { value: ctx.id, type: "string" },
+      { value: date, type: "date" },
+      { value: period[0], type: "string" },
+    ]),
 };

@@ -53,7 +53,6 @@ import { listPrevCardService } from "../../../services/pulse/facebook/listPrevCa
 import { listCardService } from "../../../services/pulse/facebook/listCard";
 import { bubblesService } from "../../../services/pulse/facebook/bubbleCards";
 import { tableCardService } from "../../../services/pulse/facebook/tableCard";
-import { postCardService } from "../../../services/pulse/instagram/postCard";
 import { titleTextCardService } from "../../../services/pulse/facebook/titleTextCard";
 import {
   donutDetailIn,
@@ -71,7 +70,6 @@ import {
   postIGIn,
 } from "../../../interfaces/common";
 import { geoCardService } from "../../../services/pulse/facebook/geoCard";
-import { topPeopleService } from "../../../services/pulse/instagram/topPeopleCrd";
 import { masterService } from "../../../services";
 const network = "instagram";
 const chanel = "pulse";

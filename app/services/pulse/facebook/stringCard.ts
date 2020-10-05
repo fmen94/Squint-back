@@ -21,6 +21,9 @@ export const stringCardService = async (
     } else {
       data = await readTopCall(dateRange, ctx);
       logger.info(`Successfully obtained: ${cardId}`);
+      throw new BadRequestException("Data outdated since 28/09/2020", [
+        data[cardId],
+      ]);
       return data[cardId];
     }
   } else {

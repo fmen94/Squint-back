@@ -12,9 +12,9 @@ export const valuePrevCardService = async (
   cardId: CardIdValuePrevFbType
 ): Promise<valueDiffIn> => {
   logger.info(`Getting values ​​for: ${cardId}`);
-  /**
-   * Prueba
-   */
+  if (cardId == "generalValuePrev01") {
+    return null;
+  }
   if (
     cardId == "generalValuePrev02" ||
     cardId == "communityValuePrev01" ||
