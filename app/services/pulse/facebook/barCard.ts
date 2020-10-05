@@ -32,7 +32,7 @@ export const barCardService = async (
       logger.info(`Successfully obtained of cache: ${cardId}`);
       return data[cardId];
     } else {
-      data = await reactionsSectionsCall(dateRange.date, ctx);
+      data = await reactionsSectionsCall(dateRange, ctx);
       logger.info(`Successfully obtained: ${cardId}`);
       return data[cardId];
     }

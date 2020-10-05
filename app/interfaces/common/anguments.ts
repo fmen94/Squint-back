@@ -1,6 +1,6 @@
 export interface DateRangeIn {
-  date: String;
-  period: String;
+  date: number;
+  period: string;
 }
 export interface DataOptionsIn {
   limit: number;

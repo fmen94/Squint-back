@@ -1,4 +1,6 @@
-export const communutyGenderTrans = (data) => {
+import { ProcessedGender } from "../../../interfaces/pulse/facebook";
+
+export const communutyGenderTrans = (data:ProcessedGender[]) => {
   // let mainGeneration = data.reduce((obj, e, index) => {
   //   if(data[0].genero==)
   // })
@@ -7,39 +9,39 @@ export const communutyGenderTrans = (data) => {
     communityDonutDetail01: {},
     communityBar01: [
       {
-        kind: data[0].genero,
+        kind: 'Women',
         valuesArray: [
-          data[0].cantidad,
-          data[1].cantidad,
-          data[2].cantidad,
-          data[3].cantidad,
-          data[4].cantidad,
-          data[5].cantidad,
-          data[6].cantidad,
+          data.find(g=>g.genero=='Women'&&g.age=='13-17').cantidad,
+          data.find(g=>g.genero=='Women'&&g.age=='18-24').cantidad,
+          data.find(g=>g.genero=='Women'&&g.age=='25-34').cantidad,
+          data.find(g=>g.genero=='Women'&&g.age=='35-44').cantidad,
+          data.find(g=>g.genero=='Women'&&g.age=='45-54').cantidad,
+          data.find(g=>g.genero=='Women'&&g.age=='55-64').cantidad,
+          data.find(g=>g.genero=='Women'&&g.age=='65+').cantidad,
         ],
       },
       {
-        kind: data[7].genero,
+        kind: 'men',
         valuesArray: [
-          data[7].cantidad,
-          data[8].cantidad,
-          data[9].cantidad,
-          data[10].cantidad,
-          data[11].cantidad,
-          data[12].cantidad,
-          data[13].cantidad,
+          data.find(g=>g.genero=='men'&&g.age=='13-17').cantidad,
+          data.find(g=>g.genero=='men'&&g.age=='18-24').cantidad,
+          data.find(g=>g.genero=='men'&&g.age=='25-34').cantidad,
+          data.find(g=>g.genero=='men'&&g.age=='35-44').cantidad,
+          data.find(g=>g.genero=='men'&&g.age=='45-54').cantidad,
+          data.find(g=>g.genero=='men'&&g.age=='55-64').cantidad,
+          data.find(g=>g.genero=='men'&&g.age=='65+').cantidad,
         ],
       },
       {
-        kind: data[14].genero,
+        kind: 'Others',
         valuesArray: [
-          data[14].cantidad,
-          data[15].cantidad,
-          data[16].cantidad,
-          data[17].cantidad,
-          data[18].cantidad,
-          data[19].cantidad,
-          data[20].cantidad,
+          data.find(g=>g.genero=='Others'&&g.age=='13-17').cantidad,
+          data.find(g=>g.genero=='Others'&&g.age=='18-24').cantidad,
+          data.find(g=>g.genero=='Others'&&g.age=='25-34').cantidad,
+          data.find(g=>g.genero=='Others'&&g.age=='35-44').cantidad,
+          data.find(g=>g.genero=='Others'&&g.age=='45-54').cantidad,
+          data.find(g=>g.genero=='Others'&&g.age=='55-64').cantidad,
+          data.find(g=>g.genero=='Others'&&g.age=='65+').cantidad,
         ],
       },
     ],

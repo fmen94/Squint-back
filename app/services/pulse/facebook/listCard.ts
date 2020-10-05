@@ -27,7 +27,7 @@ export const listCardService = async (
       logger.info(`Successfully obtained of cache: ${cardId}`);
       return dataSent[cardId].concat(data[cardId]);
     } else {
-      data = await reactionsSectionsCall(dateRange.date, ctx);
+      data = await reactionsSectionsCall(dateRange, ctx);
       logger.info(`Successfully obtained: ${cardId}`);
       return dataSent[cardId].concat(data[cardId]);
     }

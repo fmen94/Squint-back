@@ -6,7 +6,7 @@ export const readTopIgTrans = (data) => {
 
   return data.reduce(
     (obj, e, index) => {
-      let date = moment(e.row_date).format("DD-MM-YYYYThh:mm:ss");
+      let date = moment(e.row_date,'X').format("DD-MM-YYYYThh:mm:ss");
       if (index == 0) {
         (obj.generalInt01 = e.engagemet_rate),
           (obj.generalInt02 = "7.5"), //pendiente de formula de afinidad

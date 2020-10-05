@@ -3,9 +3,10 @@ import { fbQuerys } from "../../../../queries/pulse/facebook";
 import { readDetailsTrans } from "../../../transform/pulse/facebook/readDetails.transform";
 
 export const readDetailsCall = async (date, ctx) => {
-  let startDate = moment(date, "DD-MM-YYYYThh:mm:ss")
+  /*let startDate = moment(date, "DD-MM-YYYYThh:mm:ss")
     .subtract(1, "day")
     .format("YYYY-MM-DD");
+  let res = await fbQuerys.readDetails(ctx);*/
   let res = await fbQuerys.readDetails(ctx);
   let data = readDetailsTrans(res);
   await ctx.myCache.setItem(`${ctx.id}_readDetails`, data, {

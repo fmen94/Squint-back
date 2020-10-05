@@ -3,7 +3,7 @@ import { fbQuerys } from "../../../../queries/pulse/facebook";
 import { DateRange } from "../../../schema/common/Arguments";
 import { interationsIGTrans } from "../../../transform/pulse/instagram/readInteractions.transform";
 export const readInteractiosIgCall = async (dateRange: DateRange, ctx) => {
-  let startDate = moment(dateRange.date, "DD-MM-YYYYThh:mm:ss")
+  let startDate = moment(dateRange.date, "X")
     .subtract(1, "day")
     .format("YYYY-MM-DD");
   let endDate = moment(startDate).format("YYYY-MM-DD");

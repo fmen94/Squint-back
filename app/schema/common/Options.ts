@@ -23,10 +23,10 @@ export const PeriodOptions = {
 //Date startend
 export const DateEndOptions = {
   nullable: true,
-  defaultValue: { date: moment().format("DD-MM-YYYYThh:mm:ss"), period: "DL" },
+  defaultValue: { date: moment().unix(), period: "DL" },
   description: `It receives the final date of which the information is displayed in format DD-MM-YYYYThh:mm:ss and 
     Receive an Enum Period and the default is DL
-    and the default date is: ${moment().format("DD-MM-YYYYThh:mm:ss")} `,
+    and the default date is: ${moment().unix()} `,
 };
 
 //Date startend

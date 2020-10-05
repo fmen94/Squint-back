@@ -33,7 +33,7 @@ export const readTopTrans = (data) => {
   ];
   let dateValue = data.reduce(
     (obj, e, index) => {
-      let date = moment(e.row_date).format("DD-MM-YYYYThh:mm:ss");
+      let date = moment(e.row_date,'X').format("DD-MM-YYYYThh:mm:ss");
       if (index < 7) {
         obj.total_fans.push({
           date,
