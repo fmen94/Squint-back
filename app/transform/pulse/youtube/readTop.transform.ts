@@ -3,7 +3,6 @@ import { diffCalc } from "../../../helpers/common/diiffCalc";
 
 export const readTopYtTrans = (data) => {
   console.log(data);
-  return {};
   return data.reduce(
     (obj, e, index) => {
       let date = moment(e.row_date).format("DD-MM-YYYYThh:mm:ss");
@@ -12,82 +11,77 @@ export const readTopYtTrans = (data) => {
           (obj.generalInt02 = "7.5"), //pendiente de formula de afinidad
           (obj.generalString01 = "Good"); //pendiente
         obj.generalValuePrev01 = {
-          value: e.followers,
-          diff: diffCalc(e.followers, data[7].followers),
-        };
-        obj.generalValuePrev02 = {
-          value: e.reach,
-          diff: diffCalc(e.reach, data[7].reach),
-        };
-        obj.generalValuePrev03 = {
           value: e.views,
           diff: diffCalc(e.views, data[7].views),
         };
+        obj.generalValuePrev02 = {
+          value: e.suscribers,
+          diff: diffCalc(e.suscribers, data[7].suscribers),
+        };
+        obj.generalValuePrev03 = {
+          value: e.video_count,
+          diff: diffCalc(e.video_count, data[7].video_count),
+        };
         obj.generalValuePrev04 = {
-          value: e.interactions,
-          diff: diffCalc(e.interactions, data[7].interactions),
+          value: e.minutes_viewed,
+          diff: diffCalc(e.minutes_viewed, data[7].minutes_viewed),
         };
         obj.communitySmall01 = {
-          valueInt: e.followers,
-          diff: diffCalc(e.followers, data[7].followers),
-          valuesArray: [],
-        };
-        obj.communitySmall01 = {
-          valueInt: e.followers,
-          diff: diffCalc(e.followers, data[7].followers),
+          valueInt: e.suscribers,
+          diff: diffCalc(e.suscribers, data[7].suscribers),
           valuesArray: [],
         };
         obj.communitySmall02 = {
-          valueInt: e.following,
-          diff: diffCalc(e.following, data[7].following),
+          valueInt: e.view_rate,
+          diff: diffCalc(e.view_rate, data[7].view_rate),
           valuesArray: [],
         };
         obj.communityValuePrev01 = {
-          value: e.new_followers,
-          diff: diffCalc(e.new_followers, data[7].new_followers),
+          value: e.new_suscribers,
+          diff: diffCalc(e.new_suscribers, data[7].new_suscribers),
         };
         obj.communityValuePrev02 = {
-          value: e.online_followers,
-          diff: diffCalc(e.online_followers, data[7].online_followers),
+          value: e.new_unsuscribers,
+          diff: diffCalc(e.new_unsuscribers, data[7].new_unsuscribers),
         };
         obj.activitySmall01 = {
-          valueInt: e.spend,
-          diff: diffCalc(e.spend, data[7].spend),
+          valueInt: e.inversión,
+          diff: diffCalc(e.inversión, data[7].inversión),
           valuesArray: [],
         };
         obj.activitySmall02 = {
-          valueInt: e.total_impressions,
-          diff: diffCalc(e.total_impressions, data[7].total_impressions),
+          valueInt: e.ad_impressions,
+          diff: diffCalc(e.ad_impressions, data[7].ad_impressions),
           valuesArray: [],
         };
         obj.activitySmall03 = {
-          valueInt: e.ad_reach,
-          diff: diffCalc(e.ad_reach, data[7].ad_reach),
+          valueInt: e.conversions,
+          diff: diffCalc(e.conversions, data[7].conversions),
           valuesArray: [],
         };
         obj.activitySmall04 = {
-          valueInt: e.ad_interactions,
-          diff: diffCalc(e.ad_interactions, data[7].ad_interactions),
+          valueInt: e.engagement,
+          diff: diffCalc(e.engagement, data[7].engagement),
           valuesArray: [],
         };
         obj.activitySmall05 = {
-          valueInt: e.ad_frecuency,
-          diff: diffCalc(e.ad_frecuency, data[7].ad_frecuency),
+          valueInt: e.clicks,
+          diff: diffCalc(e.clicks, data[7].clicks),
           valuesArray: [],
         };
         obj.activitySmall06 = {
-          valueInt: e.relevance_score,
-          diff: diffCalc(e.relevance_score, data[7].relevance_score),
+          valueInt: e.cpv,
+          diff: diffCalc(e.cpv, data[7].cpv),
           valuesArray: [],
         };
         obj.activitySmall07 = {
-          valueInt: e.ctr,
-          diff: diffCalc(e.ctr, data[7].ctr),
+          valueInt: e.cpc,
+          diff: diffCalc(e.cpc, data[7].cpc),
           valuesArray: [],
         };
         obj.activitySmall08 = {
-          valueInt: e.cpc,
-          diff: diffCalc(e.cpc, data[7].cpc),
+          valueInt: e.ctr,
+          diff: diffCalc(e.ctr, data[7].ctr),
           valuesArray: [],
         };
         obj.affinitySmall01 = {
@@ -96,58 +90,43 @@ export const readTopYtTrans = (data) => {
           valuesArray: [],
         };
         obj.affinitySmall02 = {
-          valueInt: e.online_followers,
-          diff: diffCalc(e.online_followers, data[7].online_followers),
+          valueInt: e.favorites,
+          diff: diffCalc(e.favorites, data[7].favorites),
           valuesArray: [],
         };
         obj.affinitySmall03 = {
-          valueInt: e.saves,
-          diff: diffCalc(e.saves, data[7].saves),
+          valueInt: e.views,
+          diff: diffCalc(e.views, data[7].views),
           valuesArray: [],
         };
         obj.affinitySmall04 = {
-          valueInt: e.interactions,
-          diff: diffCalc(e.interactions, data[7].interactions),
+          valueInt: e.minutes_viewed,
+          diff: diffCalc(e.minutes_viewed, data[7].minutes_viewed),
           valuesArray: [],
         };
         obj.affinitySmall05 = {
-          valueInt: e.carrusel_views,
-          diff: diffCalc(e.carrusel_views, data[7].carrusel_views),
+          valueInt: e.likes,
+          diff: diffCalc(e.likes, data[7].likes),
           valuesArray: [],
         };
         obj.affinitySmall06 = {
-          valueInt: e.carrusel_outputs,
-          diff: diffCalc(e.carrusel_outputs, data[7].carrusel_outputs),
+          valueInt: e.unlikes,
+          diff: diffCalc(e.unlikes, data[7].unlikes),
           valuesArray: [],
         };
         obj.affinitySmall07 = {
-          valueInt: e.shered_taps,
-          diff: diffCalc(e.shered_taps, data[7].shered_taps),
+          valueInt: e.comments,
+          diff: diffCalc(e.comments, data[7].comments),
           valuesArray: [],
         };
         obj.affinitySmall08 = {
-          valueInt: e.tap_views,
-          diff: diffCalc(e.tap_views, data[7].tap_views),
+          valueInt: e.shares,
+          diff: diffCalc(e.shares, data[7].shares),
           valuesArray: [],
         };
         obj.conversationSmall01 = {
           valueInt: e.comments,
           diff: diffCalc(e.comments, data[7].comments),
-          valuesArray: [],
-        };
-        obj.conversationSmall02 = {
-          valueInt: e.clicks,
-          diff: diffCalc(e.clicks, data[7].clicks),
-          valuesArray: [],
-        };
-        obj.conversationSmall03 = {
-          valueInt: e.shares,
-          diff: diffCalc(e.shares, data[7].shares),
-          valuesArray: [],
-        };
-        obj.conversationSmall04 = {
-          valueInt: e.saved,
-          diff: diffCalc(e.saved, data[7].saved),
           valuesArray: [],
         };
         obj.conversationList02[0].value = e.sentiment_good;
@@ -160,47 +139,55 @@ export const readTopYtTrans = (data) => {
           e.sentiment_bad,
           data[7].sentiment_bad
         );
+        obj.conversationList02[4].value = e.clicks;
+        obj.conversationList02[5].value = e.comments;
+        obj.conversationList02[6].value = e.conversions;
+        obj.conversationList02[7].value = e.shares;
+        obj.conversationList02[8].value = e.favorites;
+        obj.conversationList02[9].value = e.likes;
+        obj.conversationList02[10].value = e.unlikes;
+        obj.conversationList02[11].value = e.unsuscribers; //pendiente en el sp
       }
       if (index < 7) {
         obj.communitySmall01.valuesArray.push({
           date,
-          value: e.followers,
+          value: e.suscribers,
         });
         obj.communitySmall02.valuesArray.push({
           date,
-          value: e.following,
+          value: e.view_rate,
         });
         obj.activitySmall01.valuesArray.push({
           date,
-          value: e.spend,
+          value: e.inversión,
         });
         obj.activitySmall02.valuesArray.push({
           date,
-          value: e.total_impressions,
+          value: e.ad_impressions,
         });
         obj.activitySmall03.valuesArray.push({
           date,
-          value: e.ad_reach,
+          value: e.conversions,
         });
         obj.activitySmall04.valuesArray.push({
           date,
-          value: e.ad_interactions,
+          value: e.engagement,
         });
         obj.activitySmall05.valuesArray.push({
           date,
-          value: e.ad_frecuency,
+          value: e.clicks,
         });
         obj.activitySmall06.valuesArray.push({
           date,
-          value: e.relevance_score,
+          value: e.cpv,
         });
         obj.activitySmall07.valuesArray.push({
           date,
-          value: e.ctr,
+          value: e.cpc,
         });
         obj.activitySmall08.valuesArray.push({
           date,
-          value: e.cpc,
+          value: e.ctr,
         });
         obj.affinitySmall01.valuesArray.push({
           date,
@@ -208,31 +195,31 @@ export const readTopYtTrans = (data) => {
         });
         obj.affinitySmall02.valuesArray.push({
           date,
-          value: e.online_followers,
+          value: e.favorites,
         });
         obj.affinitySmall03.valuesArray.push({
           date,
-          value: e.saves,
+          value: e.views,
         });
         obj.affinitySmall04.valuesArray.push({
           date,
-          value: e.interactions,
+          value: e.minutes_viewed,
         });
         obj.affinitySmall05.valuesArray.push({
           date,
-          value: e.carrusel_views,
+          value: e.likes,
         });
         obj.affinitySmall06.valuesArray.push({
           date,
-          value: e.carrusel_outputs,
+          value: e.unlikes,
         });
         obj.affinitySmall07.valuesArray.push({
           date,
-          value: e.shered_taps,
+          value: e.comments,
         });
         obj.affinitySmall08.valuesArray.push({
           date,
-          value: e.tap_views,
+          value: e.shares,
         });
         obj.conversationSmall01.valuesArray.push({
           date,
@@ -368,6 +355,14 @@ export const readTopYtTrans = (data) => {
         { kind: "bad", value: 0 },
         { kind: "good_prev", value: 0 },
         { kind: "bad_prev", value: 0 },
+        { kind: "clicks", value: 0 },
+        { kind: "comments", value: 0 },
+        { kind: "conversions", value: 0 },
+        { kind: "shares", value: 0 },
+        { kind: "favorites", value: 0 },
+        { kind: "likes", value: 0 },
+        { kind: "unlike", value: 0 },
+        { kind: "unsubscribe", value: 0 },
       ],
       comparation: {
         followers: [],

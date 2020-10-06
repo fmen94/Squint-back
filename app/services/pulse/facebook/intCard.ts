@@ -23,13 +23,14 @@ export const intCardService = (
   //   return 123;
   // }
   if (cardId == "generalInt01") {
-    throw new InternalException("errorCode_dbError", [
-      "Database connection problems ",
-    ]);
+    // throw new InternalException("errorCode_dbError", [
+    //   "Database connection problems ",
+    // ]);
+    return 1.2;
   } else if (cardId == "generalInt02") {
-    throw new InternalException("errorCode_apiError", [
-      "Error when transforming the data",
-    ]);
+    // throw new InternalException("errorCode_apiError", [
+    //   "Error when transforming the data",
+    // ]);
     return 7.5;
   }
 };

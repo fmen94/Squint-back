@@ -12,9 +12,9 @@ export const valuePrevCardService = async (
   cardId: CardIdValuePrevFbType
 ): Promise<valueDiffIn> => {
   logger.info(`Getting values ​​for: ${cardId}`);
-  if (cardId == "generalValuePrev01") {
-    throw new BadRequestException(" errorCode_nullData");
-  }
+  // if (cardId == "generalValuePrev01") {
+  //   throw new BadRequestException(" errorCode_nullData");
+  // }
   if (
     cardId == "generalValuePrev02" ||
     cardId == "communityValuePrev01" ||
@@ -25,11 +25,7 @@ export const valuePrevCardService = async (
       logger.info(`Successfully obtained of cache: ${cardId}`);
       return data[cardId];
     } else {
-      console.log(dateRange);
-
       data = await readDetailsCall(dateRange.date, ctx);
-      console.log(data);
-
       logger.info(`Successfully obtained: ${cardId}`);
       return data[cardId];
     }
