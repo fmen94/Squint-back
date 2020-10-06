@@ -16,44 +16,48 @@ export const readDetailsSection = async (ctx:CONTEXT) => {
 
     let metrics = await dynamo.query({
         TableName: 'FB_PAGE_INSIGHTS',
-        IndexName: 'pageidIndex',
+        IndexName: 'pageidSIndex',
         ScanIndexForward: false,
-        KeyConditions: {
-            'page_id': {
-                ComparisonOperator: 'EQ',
-                AttributeValueList: [{ 'S': ctx.id }]
-            },
-            'metric_timestamp': {
-                ComparisonOperator: 'BETWEEN',
-                AttributeValueList: [
-                    { 'N': end.toString() },
-                    { 'N': start.toString() }
-                ]
-            }
+        KeyConditionExpression: '#pi = :pi AND #st <= :st',
+        FilterExpression: '#mt BETWEEN :end and :start',
+        ExpressionAttributeNames: {
+            '#pi': 'page_id',
+            '#st': 'system_timestamp',
+            '#mt': 'metric_timestamp'
         },
+        ExpressionAttributeValues: {
+            ':pi': { 'S': ctx.id },
+            ':st': {'N': moment().unix().toString() },
+            ':start': {'N': start.toString() },
+            ':end': {'N': end.toString() }
+        }/*,
         AttributesToGet: [
             'metric_timestamp',
             'system_timestamp',
             'page_impressions_unique',
             'page_fan_adds',
             'page_fan_removes'
-        ]
+        ]*/
     }).promise();
 
     let pageInfo = await dynamo.query({
         TableName: 'FB_PAGE_INFO',
         IndexName: 'pageidIndex',
         ScanIndexForward: false,
-        KeyConditions: {
-            'page_id': {
-                ComparisonOperator: 'EQ',
-                AttributeValueList: [{ 'S': ctx.id }]
-            }
+        KeyConditionExpression: '#pi = :pi AND #st <= :st',
+        ExpressionAttributeNames: {
+            '#pi': 'page_id',
+            '#st': 'system_timestamp'
         },
+        ExpressionAttributeValues: {
+            ':pi': { 'S': ctx.id },
+            ':st': {'N': moment().unix().toString() }
+        }/*,
         AttributesToGet: [
             'system_timestamp',
-            'page_name'
-        ],
+            'fan_count',
+            'global_account'
+        ]*/,
         Limit: 1
     }).promise();
 

@@ -17,19 +17,19 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
         TableName: 'FB_PAGE_INSIGHTS',
         IndexName: 'pageidSIndex',
         ScanIndexForward: false,
-        KeyConditions: {
-            'page_id': {
-                ComparisonOperator: 'EQ',
-                AttributeValueList: [{ 'S': ctx.id }]
-            },
-            'metric_timestamp': {
-                ComparisonOperator: 'BETWEEN',
-                AttributeValueList: [
-                    { 'N': end.toString() },
-                    { 'N': start.toString() }
-                ]
-            }
+        KeyConditionExpression: '#pi = :pi AND #st <= :st',
+        FilterExpression: '#mt BETWEEN :end and :start',
+        ExpressionAttributeNames: {
+            '#pi': 'page_id',
+            '#st': 'system_timestamp',
+            '#mt': 'metric_timestamp'
         },
+        ExpressionAttributeValues: {
+            ':pi': { 'S': ctx.id },
+            ':st': {'N': moment().unix().toString() },
+            ':start': {'N': start.toString() },
+            ':end': {'N': end.toString() }
+        }/*,
         AttributesToGet: [
             'metric_timestamp',
             'system_timestamp',
@@ -50,27 +50,29 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
             'page_positive_feedback_by_type',
             'page_clics',
             'page_fans_by_like_source'
-        ]
+        ]*/
     }).promise();
 
     let pageInfo = await dynamo.query({
         TableName: 'FB_PAGE_INFO',
         IndexName: 'pageidIndex',
         ScanIndexForward: false,
-        KeyConditions: {
-            'page_id': {
-                ComparisonOperator: 'EQ',
-                AttributeValueList: [{ 'S': ctx.id }]
-            }
+        KeyConditionExpression: '#pi = :pi AND #st <= :st',
+        ExpressionAttributeNames: {
+            '#pi': 'page_id',
+            '#st': 'system_timestamp'
         },
+        ExpressionAttributeValues: {
+            ':pi': { 'S': ctx.id },
+            ':st': {'N': moment().unix().toString() }
+        }/*,
         AttributesToGet: [
             'system_timestamp',
             'fan_count',
             'global_account'
-        ],
+        ]*/,
         Limit: 1
     }).promise();
-
     let processedMetrics:ReadTopSectionResponse[] = [];
     for(let index in metrics.Items){
         let metric:any = parseResponse(metrics.Items[index],true);
@@ -84,8 +86,7 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
     });
 
     let processedPageInfo:ReadTopSectionPageInfoResponse = parseResponse(pageInfo.Items[0],true);
-
-    let response = []
+    let response = [];
     for(let x = 0; x<processedMetrics.length; x++){
         let metric = processedMetrics[x];
         let viral_fans = metric.page_fans_by_like_source===null ? [] : metric.page_fans_by_like_source.filter(s=>{
@@ -132,7 +133,8 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
             organic_post: rand(999999),
             paid_post: rand(999999),
             video_viwes: metric.page_video_views,
-            inbox_messages: metric.page_message_count
+            inbox_messages: metric.page_message_count,
+            reach: metric.page_impressions_unique
         })
     }
     return response;

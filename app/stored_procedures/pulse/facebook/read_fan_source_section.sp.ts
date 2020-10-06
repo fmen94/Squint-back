@@ -15,27 +15,27 @@ export const readFanSourceSection = async (ctx:CONTEXT,start:number,period:PERIO
 
     let metrics = await dynamo.query({
         TableName: 'FB_PAGE_INSIGHTS',
-        IndexName: 'pageidIndex',
+        IndexName: 'pageidSIndex',
         ScanIndexForward: false,
-        KeyConditions: {
-            'page_id': {
-                ComparisonOperator: 'EQ',
-                AttributeValueList: [{ 'S': ctx.id }]
-            },
-            'metric_timestamp': {
-                ComparisonOperator: 'BETWEEN',
-                AttributeValueList: [
-                    { 'N': end.toString() },
-                    { 'N': start.toString() }
-                ]
-            }
+        KeyConditionExpression: '#pi = :pi AND #st <= :st',
+        FilterExpression: '#mt BETWEEN :end and :start',
+        ExpressionAttributeNames: {
+            '#pi': 'page_id',
+            '#st': 'system_timestamp',
+            '#mt': 'metric_timestamp'
         },
+        ExpressionAttributeValues: {
+            ':pi': { 'S': ctx.id },
+            ':st': {'N': moment().unix().toString() },
+            ':start': {'N': start.toString() },
+            ':end': {'N': end.toString() }
+        }/*,
         AttributesToGet: [
             'metric_timestamp',
             'system_timestamp',
             'page_views_external_referrals',
             'page_fans_by_like_source'
-        ]
+        ]*/
     }).promise();
 
     let processedMetrics:ReadFanSourceSection[] = [];
@@ -43,6 +43,7 @@ export const readFanSourceSection = async (ctx:CONTEXT,start:number,period:PERIO
         let metric:any = parseResponse(metrics.Items[index],true);
         processedMetrics.push(metric)
     }
+    console.log(processedMetrics);
     processedMetrics = processedMetrics.filter((elem,index,self)=>{
         let find = self.findIndex(e=>e.metric_timestamp == elem.metric_timestamp);
         if(index == find){

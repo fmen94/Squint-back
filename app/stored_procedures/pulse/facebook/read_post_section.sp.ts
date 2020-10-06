@@ -20,6 +20,12 @@ export const readPostSection = async (ctx:CONTEXT,limit:number) => {
             'page_id': {
                 ComparisonOperator: 'EQ',
                 AttributeValueList: [{ 'S': ctx.id }]
+            },
+            'system_timestamp': {
+                ComparisonOperator: 'LT',
+                AttributeValueList: [
+                    { 'N': moment().unix().toString() }
+                ]
             }
         },
         AttributesToGet: [

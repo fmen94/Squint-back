@@ -16,42 +16,24 @@ export const readReactionSection = async (ctx:CONTEXT,start:number,period:PERIOD
 
     let metrics = await dynamo.query({
         TableName: 'FB_PAGE_INSIGHTS',
-        IndexName: 'pageidIndex',
+        IndexName: 'pageidSIndex',
         ScanIndexForward: false,
-        KeyConditions: {
-            'page_id': {
-                ComparisonOperator: 'EQ',
-                AttributeValueList: [{ 'S': ctx.id }]
-            },
-            'metric_timestamp': {
-                ComparisonOperator: 'BETWEEN',
-                AttributeValueList: [
-                    { 'N': end.toString() },
-                    { 'N': start.toString() }
-                ]
-            }
+        KeyConditionExpression: '#pi = :pi AND #st <= :st',
+        FilterExpression: '#mt BETWEEN :end and :start',
+        ExpressionAttributeNames: {
+            '#pi': 'page_id',
+            '#st': 'system_timestamp',
+            '#mt': 'metric_timestamp'
         },
+        ExpressionAttributeValues: {
+            ':pi': { 'S': ctx.id },
+            ':st': {'N': moment().unix().toString() },
+            ':start': {'N': start.toString() },
+            ':end': {'N': end.toString() }
+        }/*,
         AttributesToGet: [
             'metric_timestamp',
             'system_timestamp',
-
-            /*'page_fans',
-            'page_fans_organic',
-            'page_fans_paid',
-            'page_impressions',
-            'page_impressions_organic',
-            'page_impressions_paid',
-            'page_impressions_unique',
-            'page_impressions_viral',
-            'page_content_activity',
-            'page_post_engagements',
-            'page_reactions_total',
-            'page_engaged_users',
-            'page_message_count',
-            'page_video_views',
-            'page_positive_feedback_by_type',
-            'page_clics',
-            'page_fans_by_like_source'*/
             'page_reactions_like',
             'page_reactions_love',
             'page_reactions_haha',
@@ -62,7 +44,7 @@ export const readReactionSection = async (ctx:CONTEXT,start:number,period:PERIOD
             'page_clics',
             'page_positive_feedback_by_type',
             'page_negative_feedback_by_type'
-        ]
+        ]*/
     }).promise();
 
     /*let pageInfo = await dynamo.query({
