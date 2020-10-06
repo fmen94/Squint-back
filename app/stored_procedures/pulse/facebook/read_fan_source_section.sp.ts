@@ -40,6 +40,48 @@ export const readFanSourceSection = async (ctx:CONTEXT,start:number,period:PERIO
         ]*/
     }).promise();
 
+    end = moment(start,'X').subtract(7,'days').unix();
+    let posts = await dynamo.query({
+        TableName: 'FB_FEED',
+        IndexName: 'pageidIndex',
+        ScanIndexForward: false,
+        KeyConditionExpression: '#pi = :pi AND #st <= :st',
+        FilterExpression: '#pt BETWEEN :end and :start',
+        ExpressionAttributeNames: {
+            '#pi': 'page_id',
+            '#st': 'system_timestamp',
+            '#pt': 'post_timestamp'
+        },
+        ExpressionAttributeValues: {
+            ':pi': { 'S': ctx.id },
+            ':st': {'N': moment().unix().toString() },
+            ':start': {'N': start.toString() },
+            ':end': {'N': end.toString() }
+        }
+    }).promise();
+
+    let processedposts:any[] = [];
+    for(let index in posts.Items){
+        let post:any = parseResponse(posts.Items[index],true);
+        processedposts.push(post)
+    }
+
+    processedposts = processedposts.filter((elem,index,self)=>{
+        let find = self.findIndex(e=>e.post_id == elem.post_id);
+        if(index == find){
+            return elem;
+        }
+    });
+    let arr = {};
+    for(let index in processedposts){
+        let type = processedposts[index].post_type;
+        arr[type] = arr[type] ? arr[type]+1 : 1;
+    }
+    let formats = [];
+    for(let type in arr){
+        formats.push({ origen: type, cantidad: arr[type], tipo: 'post_format' });
+    }
+
     let processedMetrics:ReadFanSourceSection[] = [];
     for(let index in metrics.Items){
         let metric:any = parseResponse(metrics.Items[index],true);
@@ -62,6 +104,7 @@ export const readFanSourceSection = async (ctx:CONTEXT,start:number,period:PERIO
     let sources = [
         ...externalSources,
         ...internalSources,
+        ...formats,
         { origen: '3s', cantidad: processedMetrics[0].page_video_views, tipo: 'video_views' },
         { origen: '10s', cantidad: processedMetrics[0].page_video_views_10s, tipo: 'video_views' },
         { origen: '95', cantidad: processedMetrics[0].page_video_views_30s, tipo: 'video_views' },
