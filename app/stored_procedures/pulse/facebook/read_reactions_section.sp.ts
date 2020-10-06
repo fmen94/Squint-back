@@ -77,7 +77,6 @@ export const readReactionSection = async (ctx:CONTEXT,start:number,period:PERIOD
         }
     });
 
-
     /* inicio del matcheo */
 
     let response = []
@@ -142,6 +141,5 @@ export const readReactionSection = async (ctx:CONTEXT,start:number,period:PERIOD
         )
     }
     /* fin del matcheo */
-    console.log(response);
     return response;
 }

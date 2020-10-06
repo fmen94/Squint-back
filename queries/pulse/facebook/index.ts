@@ -105,7 +105,8 @@ export const fbQuerys = {
       { value: ctx.id, type: "string" },
       { value: startDate, type: "date" },
       { value: endDate, type: "date" },
-    ])*/ geenralBench: (
+    ])*/
+  geenralBench: (
     ctx,
     date,
     period
