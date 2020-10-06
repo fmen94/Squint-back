@@ -86,6 +86,12 @@ export interface ProcessedGender {
 export interface ReadFanSourceSection {
   metric_timestamp: number;
   system_timestamp: number;
+  page_video_views: number;
+  page_video_views_10s: number;
+  page_video_views_30s: number;
+  page_impressions_organic: number;
+  page_impressions_paid: number;
+  page_impressions_viral: number;
   page_views_external_referrals: Array<KeyValue>
   page_fans_by_like_source: Array<KeyValue>;
 }

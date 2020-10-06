@@ -7,6 +7,7 @@ export const sourseValueCall = async (dateRange: DateRange, ctx) => {
   let res = await fbQuerys.communitySourse(ctx, dateRange.date, dateRange.period);
   //let res = await fbQuerys.communitySourse(ctx, startDate, endDate);
   let data = sourseValueTrans(res);
+  console.log(data);
   await ctx.myCache.setItem(`${ctx.id}_sourseValue`, data, {
     ttl: parseInt(process.env.cache_ttl),
     isLazy: process.env.cache_isLazy == "true",
