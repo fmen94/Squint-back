@@ -18,7 +18,7 @@ export const titleTextCardService = async (
     logger.info(`Successfully obtained of cache: ${cardId}`);
     return data[cardId];
   } else {
-    data = await bestMomentsCall(dateRange.date, ctx);
+    data = await bestMomentsCall(dateRange, ctx);
     logger.info(`Successfully obtained: ${cardId}`);
     return data[cardId];
   }
