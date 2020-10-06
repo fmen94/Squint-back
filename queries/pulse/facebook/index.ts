@@ -43,69 +43,21 @@ const getCursor = async (
 };
 
 export const fbQuerys = {
-  readTop: (ctx, startDate, period) => readTopSection(ctx, startDate, period),
-  /*getCursor(ctx.pool, "read_top_section", [
-      { value: ctx.id, type: "string" },
-      { value: startDate, type: "date" },
-      { value: period[0], type: "string" },
-    ])*/ readDetails: (
-    ctx
-  ) => readDetailsSection(ctx),
-  /*getCursor(ctx.pool, "read_details_section", [
-      { value: ctx.id, type: "string" },
-    ])*/ communityGender: (
-    ctx,
-    startDate,
-    period
-  ) => readCommunityGender(ctx, startDate, period),
-  /*getCursor(ctx.pool, "read_audience_annual_section", [
-      { value: ctx.id, type: "string" },
-      { value: startDate, type: "date" },
-      { value: endDate, type: "date" },
-      { value: "F", type: "string" },
-    ])*/ communityGeo: (
-    ctx,
-    startDate,
-    period
-  ) => readGeoLocationSection(ctx, startDate, period),
-  /*getCursor(ctx.pool, "read_geolocation_section", [
-      { value: ctx.id, type: "string" },
-      { value: startDate, type: "date" },
-      { value: endDate, type: "date" },
-      { value: "F", type: "string" },
-    ])*/ communitySourse: (
-    ctx,
-    startDate,
-    endDate
-  ) => readFanSourceSection(ctx, startDate, endDate),
-  /*getCursor(ctx.pool, "read_fan_source_section", [
-      { value: ctx.id, type: "string" },
-      { value: startDate, type: "date" },
-      { value: endDate, type: "date" },
-    ])*/ postSection: (
-    ctx,
-    limit
-  ) => readPostSection(ctx, limit),
-  /*getCursor(ctx.pool, "read_post_section", [
-      { value: ctx.id, type: "string" },
-      { value: limit, type: "number" },
-    ])*/ bestMomnets: (
-    ctx,
-    startDate,
-    endDate
-  ) =>
+  /*INICIO: SI QUIERES CONSERVAR TUS PIERNAS, NO CAMBIES ESTA ESTRUCTURA*/
+  readTop: (ctx, startDate, period)           => readTopSection(ctx, startDate, period),
+  readDetails: (ctx)                          => readDetailsSection(ctx),
+  communityGender: (ctx,startDate,period)     => readCommunityGender(ctx, startDate, period),
+  communityGeo: (ctx,startDate,period)        => readGeoLocationSection(ctx, startDate, period),
+  communitySourse: (ctx,startDate,endDate)    => readFanSourceSection(ctx, startDate, endDate),
+  postSection: (ctx,limit)                    => readPostSection(ctx, limit),
+  bestMomnets: (ctx,startDate,endDate)        =>
     getCursor(ctx.pool, "read_best_moments_section", [
       { value: ctx.id, type: "string" },
       { value: startDate, type: "date" },
       { value: endDate, type: "date" },
     ]),
-  resctionsSection: (ctx, startDate, period) =>
-    readReactionSection(ctx, startDate, period),
-  /*getCursor(ctx.pool, "read_reactions_section", [
-      { value: ctx.id, type: "string" },
-      { value: startDate, type: "date" },
-      { value: endDate, type: "date" },
-    ])*/
+  resctionsSection: (ctx, startDate, period)  => readReactionSection(ctx, startDate, period),
+  /*FIN: SI QUIERES CONSERVAR TUS PIERNAS, NO CAMBIES ESTA ESTRUCTURA*/
   geenralBench: (
     ctx,
     date,
