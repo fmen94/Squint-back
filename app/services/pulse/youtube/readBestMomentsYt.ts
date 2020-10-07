@@ -4,7 +4,7 @@ import { DateRange } from "../../../schema/common/Arguments";
 import { bestMomentsIgTrans } from "../../../transform/pulse/instagram/readBestMoments.transform";
 import { bestMomentsYtTrans } from "../../../transform/pulse/youtube/readBestMoments.transform";
 export const readBestMomentsYtCall = async (dateRange: DateRange, ctx) => {
-  let startDate = moment(dateRange.date, "DD-MM-YYYYThh:mm:ss")
+  let startDate = moment(dateRange.date, "x")
     .subtract(1, "day")
     .format("YYYY-MM-DD");
   let endDate = moment(startDate).format("YYYY-MM-DD");

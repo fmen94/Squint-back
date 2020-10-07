@@ -1,20 +1,9 @@
 export const bestMomentsYtTrans = (data) => {
   console.log(data);
-  return {};
   return data.reduce(
     (obj, e, index) => {
-      if (e.tipo == "post_format") {
-        obj.affinityDonutDetail01.valuesArray.push({
-          kind: e.origen,
-          value: e.cantidad,
-        });
-      } else if (e.tipo == "post_spend") {
-        obj.affinityList01.push({
-          kind: e.origen,
-          value: e.cantidad,
-        });
-      } else if (e.tipo == "video_views") {
-        obj.affinityBar03.push({
+      if (e.tipo == "video_views") {
+        obj.affinityBar01.push({
           kind: e.origen,
           valuesArray: [e.cantidad],
         });
@@ -49,13 +38,7 @@ export const bestMomentsYtTrans = (data) => {
       return obj;
     },
     {
-      affinityDonutDetail01: {
-        valuesArray: [],
-        title: "Post/Day",
-        subtitle: "1.5",
-      },
-      affinityList01: [],
-      affinityBar03: [],
+      affinityBar01: [],
       contentList01: [],
       conversationList01: [],
       conversationTitleText01: [],

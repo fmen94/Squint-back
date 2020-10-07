@@ -2,7 +2,7 @@ import moment from "moment";
 import { diffCalc } from "../../../helpers/common/diiffCalc";
 
 export const readTopYtTrans = (data) => {
-  console.log(data);
+  //console.log(data);
   return data.reduce(
     (obj, e, index) => {
       let date = moment(e.row_date).format("DD-MM-YYYYThh:mm:ss");
@@ -146,7 +146,7 @@ export const readTopYtTrans = (data) => {
         obj.conversationList02[8].value = e.favorites;
         obj.conversationList02[9].value = e.likes;
         obj.conversationList02[10].value = e.unlikes;
-        obj.conversationList02[11].value = e.unsuscribers; //pendiente en el sp
+        obj.conversationList02[11].value = e.new_unsuscribers; //pendiente en el sp
       }
       if (index < 7) {
         obj.communitySmall01.valuesArray.push({
@@ -225,79 +225,67 @@ export const readTopYtTrans = (data) => {
           date,
           value: e.comments,
         });
-        obj.conversationSmall02.valuesArray.push({
-          date,
-          value: e.clicks,
-        });
-        obj.conversationSmall03.valuesArray.push({
-          date,
-          value: e.shares,
-        });
-        obj.conversationSmall04.valuesArray.push({
-          date,
-          value: e.saved,
-        });
         obj.conversationBar01[0].valuesArray.push(e.sentiment_good);
         obj.conversationBar01[1].valuesArray.push(e.sentiment_bad);
-        obj.comparation.followers.push({
+        obj.comparation.suscribers.push({
           name: date,
-          value: e.followers,
-          diff: diffCalc(e.followers, data[index + 1].followers),
+          value: e.suscribers,
+          diff: diffCalc(e.suscribers, data[index + 1].suscribers),
         });
-        obj.comparation.post.push({
+        obj.comparation.impressions.push({
           name: date,
-          value: e.publicaciones,
-          diff: diffCalc(e.publicaciones, data[index + 1].publicaciones),
+          value: e.ad_impressions,
+          diff: diffCalc(e.ad_impressions, data[index + 1].ad_impressions),
         });
-        obj.comparation.online_followers.push({
+        obj.comparation.conversions.push({
           name: date,
-          value: e.online_followers,
-          diff: diffCalc(e.online_followers, data[index + 1].online_followers),
+          value: e.conversions,
+          diff: diffCalc(e.conversions, data[index + 1].conversions),
         });
         obj.comparation.views.push({
           name: date,
           value: e.views,
           diff: diffCalc(e.views, data[index + 1].views),
         });
-        obj.comparation.impressions.push({
+        obj.comparation.minutes_viewed.push({
           name: date,
-          value: e.impressions,
-          diff: diffCalc(e.impressions, data[index + 1].impressions),
-        });
-        obj.comparation.reach.push({
-          name: date,
-          value: e.reach,
-          diff: diffCalc(e.reach, data[index + 1].reach),
-        });
-        obj.comparation.interactions.push({
-          name: date,
-          value: e.interactions,
-          diff: diffCalc(e.interactions, data[index + 1].interactions),
-        });
-        obj.comparation.spend.push({
-          name: date,
-          value: e.spend,
-          diff: diffCalc(e.spend, data[index + 1].spend),
+          value: e.minutes_viewed,
+          diff: diffCalc(e.minutes_viewed, data[index + 1].minutes_viewed),
         });
         obj.comparation.engagemet_rate.push({
           name: date,
           value: e.engagemet_rate,
           diff: diffCalc(e.engagemet_rate, data[index + 1].engagemet_rate),
         });
+        obj.comparation.inversión.push({
+          name: date,
+          value: e.inversión,
+          diff: diffCalc(e.inversión, data[index + 1].inversión),
+        });
+        obj.comparation.interactions.push({
+          name: date,
+          value: e.ad_interactions,
+          diff: diffCalc(e.ad_interactions, data[index + 1].ad_interactions),
+        });
         obj.comparation.engagement.push({
           name: date,
           value: e.engagement,
           diff: diffCalc(e.engagement, data[index + 1].engagement),
         });
-        obj.comparation.engaged_users.push({
+        obj.comparation.likes.push({
           name: date,
-          value: e.engaged_users,
-          diff: diffCalc(e.engaged_users, data[index + 1].engaged_users),
+          value: e.likes,
+          diff: diffCalc(e.likes, data[index + 1].likes),
         });
-        obj.comparation.saves.push({
+        obj.comparation.comments.push({
           name: date,
-          value: e.saves,
-          diff: diffCalc(e.saves, data[index + 1].saves),
+          value: e.comments,
+          diff: diffCalc(e.comments, data[index + 1].comments),
+        });
+        obj.comparation.shares.push({
+          name: date,
+          value: e.shares,
+          diff: diffCalc(e.shares, data[index + 1].shares),
         });
       }
       if (index == 7) {
@@ -321,12 +309,10 @@ export const readTopYtTrans = (data) => {
       communitySmall02: {},
       communityValuePrev01: {},
       communityValuePrev02: {},
-      //communityComp01: [],
       activitySmall01: {},
       activitySmall02: {},
       activitySmall03: {},
       activitySmall04: {},
-      //activityComp01: [],
       activitySmall05: {},
       activitySmall06: {},
       activitySmall07: {},
@@ -335,17 +321,11 @@ export const readTopYtTrans = (data) => {
       affinitySmall02: {},
       affinitySmall03: {},
       affinitySmall04: {},
-      //affinityComp01: [],
       affinitySmall05: {},
       affinitySmall06: {},
       affinitySmall07: {},
       affinitySmall08: {},
-      //affinityComp02: [],
-      //affinityComp03: [],
       conversationSmall01: {},
-      conversationSmall02: {},
-      conversationSmall03: {},
-      conversationSmall04: {},
       conversationBar01: [
         { kind: "good", valuesArray: [] },
         { kind: "bad", valuesArray: [] },
@@ -365,18 +345,18 @@ export const readTopYtTrans = (data) => {
         { kind: "unsubscribe", value: 0 },
       ],
       comparation: {
-        followers: [],
-        post: [],
-        online_followers: [],
-        views: [],
+        suscribers: [],
         impressions: [],
-        reach: [],
-        interactions: [],
-        spend: [],
+        conversions: [],
+        views: [],
+        minutes_viewed: [],
         engagemet_rate: [],
+        inversión: [],
+        interactions: [],
         engagement: [],
-        engaged_users: [],
-        saves: [],
+        likes: [],
+        comments: [],
+        shares: [],
       },
     }
   );
