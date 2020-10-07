@@ -6,6 +6,7 @@ import { readTopSection } from "../../../app/stored_procedures/pulse/facebook/re
 import { readFanSourceSection } from "../../../app/stored_procedures/pulse/facebook/read_fan_source_section.sp";
 import { readPostSection } from "../../../app/stored_procedures/pulse/facebook/read_post_section.sp";
 import { readReactionSection } from "../../../app/stored_procedures/pulse/facebook/read_reactions_section.sp";
+import { readBestMomentsSection } from "../../../app/stored_procedures/pulse/facebook/read_best_moments_section.sp";
 
 /**
  * Función para generar el query de llamada a los SP, retorna sólo un string con el query.
@@ -50,12 +51,12 @@ export const fbQuerys = {
   communityGeo: (ctx,startDate,period)        => readGeoLocationSection(ctx, startDate, period),
   communitySourse: (ctx,startDate,endDate)    => readFanSourceSection(ctx, startDate, endDate),
   postSection: (ctx,limit)                    => readPostSection(ctx, limit),
-  bestMomnets: (ctx,startDate,endDate)        =>
-    getCursor(ctx.pool, "read_best_moments_section", [
+  bestMomnets: (ctx,startDate,period)        => readBestMomentsSection(ctx, startDate, period)
+    /*getCursor(ctx.pool, "read_best_moments_section", [
       { value: ctx.id, type: "string" },
       { value: startDate, type: "date" },
       { value: endDate, type: "date" },
-    ]),
+    ])*/,
   resctionsSection: (ctx, startDate, period)  => readReactionSection(ctx, startDate, period),
   /*FIN: SI QUIERES CONSERVAR TUS PIERNAS, NO CAMBIES ESTA ESTRUCTURA*/
   geenralBench: (

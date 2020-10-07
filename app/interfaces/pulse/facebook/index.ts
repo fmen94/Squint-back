@@ -136,3 +136,11 @@ export interface ReadReactionsSectionResponse{
   page_positive_feedback_by_type : Array<KeyValue>,
   page_negative_feedback_by_type : Array<KeyValue>
 }
+
+export interface ReadBestMomentsSectionResponse{
+    metric_timestamp: number;
+    system_timestamp: number;
+    page_views_external_referrals: Array<KeyValue>
+    page_fans_by_like_source: Array<KeyValue>;
+  }
+  
