@@ -14,51 +14,26 @@ export const readPostSection = async (ctx:CONTEXT,limit:number) => {
 
     let posts = await dynamo.query({
         TableName: 'FB_FEED',
-        IndexName: 'pageidIndex',
+        IndexName: 'pageidPIndex',
         ScanIndexForward: false,
-        KeyConditions: {
-            'page_id': {
-                ComparisonOperator: 'EQ',
-                AttributeValueList: [{ 'S': ctx.id }]
-            },
-            'system_timestamp': {
-                ComparisonOperator: 'LT',
-                AttributeValueList: [
-                    { 'N': moment().unix().toString() }
-                ]
-            }
+        KeyConditionExpression: '#pi = :pi AND #pt <= :pt',
+        FilterExpression: '#ai = :ai',
+        ExpressionAttributeNames: {
+            '#pi': 'page_id',
+            '#pt': 'post_timestamp',
+            '#ai': 'post_author_id'
         },
-        AttributesToGet: [
-            'post_timestamp',
-            'system_timestamp',
-            'page_id',
-            'post_id',
-            'post_image',
-            'post_promotion_status',
-            'post_content',
-            'post_impressions',
-            'post_video_views',
-            'post_clicks',
-            'post_type',
-            'post_author_name',
-            'post_author_picture',
-            'post_reactions_like_total',
-            'post_reactions_love_total',
-            'post_reactions_wow_total',
-            'post_reactions_haha_total',
-            'post_reactions_sorry_total',
-            'post_reactions_anger_total',
-            'post_comments_count',
-            'post_shares_count',
-            'post_engaged_users',
-            'post_reactions_count'
-        ]
+        ExpressionAttributeValues: {
+            ':pi': { 'S': ctx.id },
+            ':pt': { 'N': moment().unix().toString() },
+            ':ai': { 'S': ctx.id }
+        }
     }).promise();
 
     let processedposts:PostResponse[] = [];
     for(let index in posts.Items){
         let post:PostResponse = parseResponse(posts.Items[index],true);
-        processedposts.push(post)
+        processedposts.push(post);
     }
 
     processedposts = processedposts.filter((elem,index,self)=>{
@@ -68,23 +43,71 @@ export const readPostSection = async (ctx:CONTEXT,limit:number) => {
         }
     });
 
+
     let result = [];
-    for(let x=0; x<limit; x++){
+    for(let x=0; x<10; x++){
         let post = processedposts[x];
+        if(!post) break;
+        let ad = await dynamo.query({
+            TableName: 'FB_MARKETING_ADS',
+            IndexName: 'pageidIndex',
+            ScanIndexForward: false,
+            KeyConditionExpression: '#pi = :pi AND #st <= :st',
+            FilterExpression: '#cr = :cr',
+            ExpressionAttributeNames: {
+                '#pi': 'page_id',
+                '#st': 'system_timestamp',
+                '#cr': 'creative.effective_object_story_id'
+            },
+            ExpressionAttributeValues: {
+                ':pi': { 'S': ctx.id },
+                ':st': {'N': moment().unix().toString() },
+                ':cr': { 'S': post.post_promotable_id },
+            },
+            Limit: 1
+        }).promise();
+        let insData:any = {};
+        if(ad.Items.length){
+            let adInfo = parseResponse(ad.Items[0],true);
+            let ad_id = adInfo.ad_id;
+            let insights = await dynamo.query({
+                TableName: 'FB_MARKETING_INSIGHTS',
+                IndexName: 'pageidSIndex',
+                ScanIndexForward: false,
+                KeyConditionExpression: '#pi = :pi AND #st <= :st',
+                FilterExpression: '#src = :src AND #srcid = :srcid',
+                ExpressionAttributeNames: {
+                    '#pi': 'page_id',
+                    '#st': 'system_timestamp',
+                    '#src': 'source',
+                    '#srcid': 'source_id'
+                },
+                ExpressionAttributeValues: {
+                    ':pi': { 'S': ctx.id },
+                    ':st': {'N': moment().unix().toString() },
+                    ':src': { 'S': 'ADS' },
+                    ':srcid': {'S': ad_id.toString() }
+                },
+                Limit: 1
+            }).promise();
+            insData = parseResponse(insights.Items[0],true);
+        }
         result.push({
             publication_date: moment(post.post_timestamp,'X').format('DD-MM-YYYYTHH:mm:ss'),
             image: post.post_image,
             promotion_status: post.post_promotion_status,
             text: post.post_content,
-            spend: rand(9999),
+            spend: insData.spend||0,
             impresions: post.post_impressions,
             video_views: post.post_video_views,
-            reach: rand(9999),
-            frecuency: rand(99),
-            interactions: rand(9999),
+            reach: insData.reach||0,
+            frecuency: insData.frecuency||0,
+            interactions: insData.actions && insData.actions.length ? insData.actions.reduce((accumulator, currentValue)=>{
+                return { action_type:'total', value: accumulator.value + currentValue.value }
+            }).value : 0,
             clics: post.post_clicks,
-            ctr: (Math.random()*10).toFixed(2),
-            cpc: Math.random().toFixed(2),
+            ctr: insData.ctr||0,
+            cpc: insData.cpc||0,
             type: post.post_type,
             page_name: post.post_author_name,
             page_image: post.post_author_picture,
@@ -95,14 +118,13 @@ export const readPostSection = async (ctx:CONTEXT,limit:number) => {
             sad: post.post_reactions_sorry_total,
             angry: post.post_reactions_anger_total,
             comments: post.post_comments_count,
-            negative_feedbacks: rand(9999),
+            negative_feedbacks: post.post_negative_feedback||0,
             shared: post.post_shares_count,
             engaged_users: post.post_engaged_users,
             engagemet_rate: ((post.post_impressions / post.post_engaged_users) * 100),
             reactions: post.post_reactions_count
         });
     }
-
-    console.log(result);
+    //console.log(result);
     return result;
 }

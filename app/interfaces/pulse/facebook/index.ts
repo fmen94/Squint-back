@@ -31,7 +31,7 @@ export interface facebookIn {
 
 export interface KeyValue{key:string,value:number}
 
-export interface ReadTopSectionResponse{
+export interface ReadTopSectionResponse extends MarketingResponse {
   metric_timestamp: number;
   system_timestamp: number;
   page_fans: number;
@@ -120,6 +120,8 @@ export interface PostResponse{
   post_shares_count: number;
   post_engaged_users: number;
   post_reactions_count: number;
+  post_negative_feedback: number;
+  post_promotable_id: string;
 }
 
 export interface ReadReactionsSectionResponse{
@@ -143,4 +145,54 @@ export interface ReadBestMomentsSectionResponse{
     page_views_external_referrals: Array<KeyValue>
     page_fans_by_like_source: Array<KeyValue>;
   }
-  
+
+export interface ActionTypes {
+  action_type: string;
+  value: number;
+}
+
+export interface MarketingResponse {
+  spend: number;
+  ctr: number;
+  cpp: number;
+  social_spend: number;
+  video_p95_watched_actions: Array<ActionTypes>,
+  metric_day: number;
+  metric_timestamp: number;
+  page_id: string;
+  action_values: Array<ActionTypes>,
+  source_id: string;
+  outbound_clicks_ctr: [ [Object] ],
+  unique_clicks: number;
+  date_start: number;
+  clicks: number;
+  video_p50_watched_actions: Array<ActionTypes>,
+  video_avg_time_watched_actions: Array<ActionTypes>,
+  video_p25_watched_actions: Array<ActionTypes>,
+  video_15_sec_watched_actions: Array<ActionTypes>,
+  ID: string;
+  system_year: number;
+  date_stop: number;
+  system_timestamp: number;
+  video_30_sec_watched_actions: Array<ActionTypes>,
+  metric_month: number;
+  unique_actions: Array<ActionTypes>,
+  system_month: number;
+  frequency: number;
+  source: 'ADACCOUNTS',
+  website_ctr: Array<ActionTypes>,
+  video_play_actions: Array<ActionTypes>,
+  video_p75_watched_actions: Array<ActionTypes>,
+  metric_year: number;
+  metric_hour: number;
+  video_p100_watched_actions: Array<ActionTypes>,
+  cpc: number;
+  outbound_clicks: Array<ActionTypes>,
+  system_day: number;
+  reach: number;
+  purchase_roas: Array<ActionTypes>,
+  system_hour: number;
+  impressions: number;
+  actions: Array<ActionTypes>,
+  cpm: number;
+}
