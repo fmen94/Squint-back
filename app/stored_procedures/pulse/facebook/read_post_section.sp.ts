@@ -9,7 +9,6 @@ function rand(maxLimit = 100) {
     return Math.floor(rand);
 }
 export const readPostSection = async (ctx:CONTEXT,limit:number) => {
-
     const dynamo:DynamoDB = ctx.dynamodb;
 
     let posts = await dynamo.query({
@@ -29,6 +28,7 @@ export const readPostSection = async (ctx:CONTEXT,limit:number) => {
             ':ai': { 'S': ctx.id }
         }
     }).promise();
+    console.log('ENTRA AQUI',posts);
 
     let processedposts:PostResponse[] = [];
     for(let index in posts.Items){

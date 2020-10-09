@@ -81,13 +81,13 @@ export class PulseFacebookResolver {
    * @returns Number
    */
   @FieldResolver()
-  intCard(
+  async intCard(
     @Ctx() ctx: any,
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
     @Arg("cardId", (type) => CardIdIntFbType, CardIdIntOptions)
     cardId?: CardIdIntFbType
-  ): /*Promise<*/ Number {
-    return intCardService(ctx, dateRange, cardId);
+  ) {
+    return await intCardService(ctx, dateRange, cardId);
   }
   /**
    * Resolver de este tipo de card de solo un valor en texto

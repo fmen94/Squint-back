@@ -18,43 +18,55 @@ export const barCardService = async (
   logger.info(`Getting values ​​for: ${cardId}`);
   if (cardId == "affinityBar02" || cardId == "conversationBar01") {
     let data = await ctx.myCache.getItem(`${ctx.id}_readTop`);
-    if (data) {
+    data = await readTopCall(dateRange, ctx);
+    logger.info(`Successfully obtained: ${cardId}`);
+    return data[cardId];
+    /*if (data) {
       logger.info(`Successfully obtained of cache: ${cardId}`);
       return data[cardId];
     } else {
       data = await readTopCall(dateRange, ctx);
       logger.info(`Successfully obtained: ${cardId}`);
       return data[cardId];
-    }
+    }*/
   } else if (cardId == "affinityBar01") {
     let data = await ctx.myCache.getItem(`${ctx.id}_reactionsSections`);
-    if (data) {
+    data = await reactionsSectionsCall(dateRange, ctx);
+    logger.info(`Successfully obtained: ${cardId}`);
+    return data[cardId];
+    /*if (data) {
       logger.info(`Successfully obtained of cache: ${cardId}`);
       return data[cardId];
     } else {
       data = await reactionsSectionsCall(dateRange, ctx);
       logger.info(`Successfully obtained: ${cardId}`);
       return data[cardId];
-    }
+    }*/
   } else if (cardId == "affinityBar03") {
     let data = await ctx.myCache.getItem(`${ctx.id}_sourseValue`);
-    if (data) {
+    data = await sourseValueCall(dateRange, ctx);
+    logger.info(`Successfully obtained: ${cardId}`);
+    return data[cardId];
+    /*if (data) {
       logger.info(`Successfully obtained of cache: ${cardId}`);
       return data[cardId];
     } else {
       data = await sourseValueCall(dateRange, ctx);
       logger.info(`Successfully obtained: ${cardId}`);
       return data[cardId];
-    }
+    }*/
   } else {
     let data = await ctx.myCache.getItem(`${ctx.id}_communityGender`);
-    if (data) {
+    data = await communityGenderCall(dateRange, ctx);
+    logger.info(`Successfully obtained: ${cardId}`);
+    return data[cardId];
+    /*if (data) {
       logger.info(`Successfully obtained of cache: ${cardId}`);
       return data[cardId];
     } else {
       data = await communityGenderCall(dateRange, ctx);
       logger.info(`Successfully obtained: ${cardId}`);
       return data[cardId];
-    }
+    }*/
   }
 };

@@ -142,6 +142,8 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
             }
         });
         response.push({
+            engagemet_rate: ((metric.page_post_engagements / metric.page_fans) / 100),
+            affinity_rate: rand(9),
             page_fans: metric.page_fans,
             total_fans: processedPageInfo.global_account.fans===null ? processedPageInfo.fan_count : processedPageInfo.global_account.fans,
             engaged_users: metric.page_engaged_users,
@@ -186,5 +188,13 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
             reach: metric.page_impressions_unique
         })
     }
-    return response;
+    return response.sort((a:any,b:any)=> {
+        if(a.row_date > b.row_date){
+            return -1;   
+        }
+        if(a.row_date < b.row_date){
+            return 1;   
+        }
+        return 0;
+    });
 }
