@@ -122,7 +122,8 @@ export const readPostSection = async (ctx:CONTEXT,limit:number) => {
             shared: post.post_shares_count,
             engaged_users: post.post_engaged_users,
             engagemet_rate: ((post.post_impressions / post.post_engaged_users) * 100),
-            reactions: post.post_reactions_count
+            reactions: post.post_reactions_count,
+            performance: 'Good performance'
         });
     }
     //console.log(result);
