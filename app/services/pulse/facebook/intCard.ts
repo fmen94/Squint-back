@@ -12,14 +12,14 @@ export const intCardService = async (
   cardId: CardIdIntFbType
 ): Promise<Number> => {
   let data = await ctx.myCache.getItem(`${ctx.id}_readTop`);
-  if (data) {
-    logger.info(`Successfully obtained of cache: ${cardId}`);
-    return data[cardId];
-  } else {
+  //if (data) {
+    //logger.info(`Successfully obtained of cache: ${cardId}`);
+    //return data[cardId];
+  //} else {
     data = await readTopCall(dateRange, ctx);
     logger.info(`Successfully obtained: ${cardId}`);
     return data[cardId];
-  }
+  //}
   //if (cardId == "generalInt01") {
   // throw new InternalException("errorCode_dbError", [
   //   "Database connection problems ",

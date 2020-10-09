@@ -122,7 +122,6 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
         let marketing = processedMarketing.find((vmk,i,s)=>{
             let markDate = moment(vmk.metric_timestamp,'X').format('YYYYMMDD');
             if(markDate===mDate){
-                console.log(moment(vme.metric_timestamp,'X'),moment(vmk.metric_timestamp,'X'));
                 return vmk;
             }
         });
@@ -142,8 +141,8 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
             }
         });
         response.push({
-            engagemet_rate: ((metric.page_post_engagements / metric.page_fans) / 100),
-            affinity_rate: rand(9),
+            engagemet_rate: ((metric.page_post_engagements / metric.page_fans) / 100).toFixed(20).match(/^-?\d*\.?0*\d{0,2}/)[0],
+            affinity_rate: rand(9).toFixed(20).match(/^-?\d*\.?0*\d{0,2}/)[0],
             page_fans: metric.page_fans,
             total_fans: processedPageInfo.global_account.fans===null ? processedPageInfo.fan_count : processedPageInfo.global_account.fans,
             engaged_users: metric.page_engaged_users,
