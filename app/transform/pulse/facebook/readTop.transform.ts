@@ -1,6 +1,9 @@
 import moment from "moment";
 import { diffCalc } from "../../../helpers/common/diiffCalc";
+
 export const readTopTrans = (data) => {
+  console.log(data);
+
   let comparation = {
     fans_page: [],
     organic_fans: [],
@@ -274,6 +277,8 @@ export const readTopTrans = (data) => {
     }
   );
   return {
+    generalInt01: data[0].engagemet_rate,
+    generalInt02: data[0].affinity_rate,
     generalValuePrev01: {
       value: data[0].page_fans,
       diff: diffCalc(data[0].page_fans, data[7].page_fans),

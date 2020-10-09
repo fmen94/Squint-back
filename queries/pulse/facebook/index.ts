@@ -45,25 +45,28 @@ const getCursor = async (
 
 export const fbQuerys = {
   /*INICIO: SI QUIERES CONSERVAR TUS PIERNAS, NO CAMBIES ESTA ESTRUCTURA*/
-  readTop: (ctx, startDate, period)           => readTopSection(ctx, startDate, period),
-  readDetails: (ctx)                          => readDetailsSection(ctx),
-  communityGender: (ctx,startDate,period)     => readCommunityGender(ctx, startDate, period),
-  communityGeo: (ctx,startDate,period)        => readGeoLocationSection(ctx, startDate, period),
-  communitySourse: (ctx,startDate,endDate)    => readFanSourceSection(ctx, startDate, endDate),
-  postSection: (ctx,limit)                    => readPostSection(ctx, limit),
-  bestMomnets: (ctx,startDate,period)        => readBestMomentsSection(ctx, startDate, period)
-    /*getCursor(ctx.pool, "read_best_moments_section", [
+  readTop: (ctx, startDate, period) => readTopSection(ctx, startDate, period),
+  readDetails: (ctx) => readDetailsSection(ctx),
+  communityGender: (ctx, startDate, period) =>
+    readCommunityGender(ctx, startDate, period),
+  communityGeo: (ctx, startDate, period) =>
+    readGeoLocationSection(ctx, startDate, period),
+  communitySourse: (ctx, startDate, endDate) =>
+    readFanSourceSection(ctx, startDate, endDate),
+  postSection: (ctx, limit) => readPostSection(ctx, limit),
+  bestMomnets: (ctx, startDate, period) =>
+    readBestMomentsSection(ctx, startDate, period),
+  /*getCursor(ctx.pool, "read_best_moments_section", [
       { value: ctx.id, type: "string" },
       { value: startDate, type: "date" },
       { value: endDate, type: "date" },
-    ])*/,
-  resctionsSection: (ctx, startDate, period)  => readReactionSection(ctx, startDate, period),
-  /*FIN: SI QUIERES CONSERVAR TUS PIERNAS, NO CAMBIES ESTA ESTRUCTURA*/
-  geenralBench: (
+    ])*/ resctionsSection: (
     ctx,
-    date,
+    startDate,
     period
-  ) =>
+  ) => readReactionSection(ctx, startDate, period),
+  /*FIN: SI QUIERES CONSERVAR TUS PIERNAS, NO CAMBIES ESTA ESTRUCTURA*/
+  geenralBench: (ctx, date, period) =>
     getCursor(ctx.pool, "read_bench_top_section", [
       { value: ctx.id, type: "string" },
       { value: date, type: "date" },
@@ -135,6 +138,23 @@ export const fbQuerys = {
     ]),
   topSectionYt: (ctx, date, period) =>
     getCursor(ctx.pool, "read_youtube_top_section", [
+      { value: ctx.id, type: "string" },
+      { value: date, type: "date" },
+      { value: period[0], type: "string" },
+    ]),
+  genralBenchYT: (ctx, date, period) =>
+    getCursor(ctx.pool, "read_youtube_bench_top_section", [
+      { value: ctx.id, type: "string" },
+      { value: date, type: "date" },
+      { value: period[0], type: "string" },
+    ]),
+  postBenchYt: (ctx, limit) =>
+    getCursor(ctx.pool, "read_youtube_bench_post_section", [
+      { value: ctx.id, type: "string" },
+      { value: limit, type: "number" },
+    ]),
+  keywordsBenchYt: (ctx, date, period) =>
+    getCursor(ctx.pool, "read_youtube_bench_fan_source_section", [
       { value: ctx.id, type: "string" },
       { value: date, type: "date" },
       { value: period[0], type: "string" },

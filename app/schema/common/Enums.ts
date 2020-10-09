@@ -523,6 +523,35 @@ registerEnumType(DataPrebsValuesBenchIgType, {
     replies = "replies",
     `,
 });
+export enum DataPrebsValuesBenchYtType {
+  suscribers = "suscribers",
+  views = "views",
+  minutes_viewed = "minutes_viewed",
+  videos_count = "videos_count",
+  engagemet = "engagemet",
+  likes = "likes",
+  comments = "comments",
+  shares = "shares",
+  favorites = "favorites",
+  unlikes = "unlikes",
+}
+registerEnumType(DataPrebsValuesBenchYtType, {
+  name: "DataPrebsValuesBenchYt",
+  description: `
+   They are the data types that can return the prebsValuesCard
+    parameters:
+   suscribers = "suscribers",
+  views = "views",
+  minutes_viewed = "minutes_viewed",
+  videos_count = "videos_count",
+  engagemet = "engagemet",
+  likes = "likes",
+  comments = "comments",
+  shares = "shares",
+  favorites = "favorites",
+  unlikes = "unlikes",
+    `,
+});
 export enum CardIdCompBenchFbType {
   activityCopm01 = "activityCopm01",
 }
@@ -566,6 +595,23 @@ registerEnumType(DataCompBenchIgType, {
     interactions = "interactions",
     engagemet_rate = "engagemet_rate",
     share_of_voice = "share_of_voice",
+    `,
+});
+export enum DataCompBenchYtType {
+  suscribers = "suscribers",
+  views = "views",
+  minutes_viewed = "minutes_viewed",
+  videos_count = "videos_count",
+}
+registerEnumType(DataCompBenchYtType, {
+  name: "DataCompBenchYt",
+  description: `
+   They are the data types that can return the prebsValuesCard
+    parameters:
+   suscribers = "suscribers",
+  views = "views",
+  minutes_viewed = "minutes_viewed",
+  videos_count = "videos_count",
     `,
 });
 export enum CardIdBubblesBenchFbType {

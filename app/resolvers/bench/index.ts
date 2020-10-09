@@ -24,4 +24,8 @@ export class BenchFieldResolver {
   instagram() {
     return {};
   }
+  @FieldResolver()
+  youtube() {
+    return {};
+  }
 }
