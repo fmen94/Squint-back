@@ -35,6 +35,7 @@ export interface ReadTopSectionResponse extends MarketingResponse {
   metric_timestamp: number;
   system_timestamp: number;
   page_fans: number;
+  page_global_fans: number;
   page_fans_organic: number;
   page_fans_paid: number;
   page_impressions: number;
@@ -50,7 +51,7 @@ export interface ReadTopSectionResponse extends MarketingResponse {
   page_clics: number;
   page_reactions_total: Array<KeyValue>,
   page_positive_feedback_by_type: Array<KeyValue>,
-  page_fans_by_like_source: Array<KeyValue>
+  page_fans_by_like_source: Array<KeyValue>;
 }
 
 export interface ReadTopSectionPageInfoResponse{

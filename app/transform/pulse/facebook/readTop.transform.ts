@@ -2,7 +2,6 @@ import moment from "moment";
 import { diffCalc } from "../../../helpers/common/diiffCalc";
 
 export const readTopTrans = (data) => {
-  console.log(data);
 
   let comparation = {
     fans_page: [],

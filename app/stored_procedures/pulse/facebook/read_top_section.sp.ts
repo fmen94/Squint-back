@@ -11,6 +11,64 @@ function rand(maxLimit = 100) {
 export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) => {
     let end = moment(start,'X').subtract(8,'days').unix();
 
+    /*let years:Array<any> = [moment(end,'X').format('YYYY')];
+    let months:Array<any> = [moment(end,'X').format('MM')];
+    let days:Array<any> = [moment(end,'X').format('DD')];
+    let e = end;
+    let s = start;
+    while(e<s){
+        let d = moment(e,'X').add(1,'day');
+        let yfound = years.indexOf(d.format('YYYY'))===-1 ? false : true;
+        if(!yfound){
+            years.push(d.format('YYYY'));
+        }
+        let mfound = months.indexOf(d.format('MM'))===-1 ? false : true;
+        if(!mfound){
+            months.push(d.format('MM'));
+        }
+        let dfound = days.indexOf(d.format('DD'))===-1 ? false : true;
+        if(!dfound){
+            days.push(d.format('DD'));
+        }
+        e=d.unix();
+    }
+    years = years.map(y=>Number(y));
+    months = months.map(m=>Number(m));
+    days = days.map(d=>Number(d));
+
+    let yearExpArray:any = years.map(y=>`:year${y}`);
+    let monthExpArray:any = months.map(m=>`:month${m}`);
+    let dayExpArray:any = days.map(d=>`:day${d}`);
+
+    let yearExp = yearExpArray.join(',');
+    let monthExp = monthExpArray.join(',');
+    let dayExp = dayExpArray.join(',');
+
+    yearExpArray = yearExpArray.map(y=>{
+        let obj = {};
+        obj[y] = {'N':y.replace(':year','')}
+        return obj;
+    });
+    monthExpArray = monthExpArray.map(m=>{
+        let obj = {};
+        obj[m] = {'N':m.replace(':month','')}
+        return obj;
+    });
+    dayExpArray = dayExpArray.map(d=>{
+        let obj = {};
+        obj[d] = {'N':d.replace(':day','')}
+        return obj;
+    });
+    let filters = [...yearExpArray,...monthExpArray,...dayExpArray];
+    let filtersObject:any = {};
+    for(let x=0; x<filters.length; x++){
+        let filter = filters[x];
+        filtersObject = {
+            ...filtersObject,
+            ...filter
+        }
+    }*/
+
     const dynamo:DynamoDB = ctx.dynamodb;
 
     let metrics = await dynamo.query({
@@ -26,53 +84,27 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
         },
         ExpressionAttributeValues: {
             ':pi': { 'S': ctx.id },
-            ':st': {'N': moment().unix().toString() },
-            ':start': {'N': start.toString() },
-            ':end': {'N': end.toString() }
-        }/*,
-        AttributesToGet: [
-            'metric_timestamp',
-            'system_timestamp',
-            'page_fans',
-            'page_fans_organic',
-            'page_fans_paid',
-            'page_impressions',
-            'page_impressions_organic',
-            'page_impressions_paid',
-            'page_impressions_unique',
-            'page_impressions_viral',
-            'page_content_activity',
-            'page_post_engagements',
-            'page_reactions_total',
-            'page_engaged_users',
-            'page_message_count',
-            'page_video_views',
-            'page_positive_feedback_by_type',
-            'page_clics',
-            'page_fans_by_like_source'
-        ]*/
+            ':st': { 'N': moment().unix().toString() },
+            ':end': { 'N': end.toString() },
+            ':start': { 'N': start.toString() },
+        }
     }).promise();
-
     let pageInfo = await dynamo.query({
         TableName: 'FB_PAGE_INFO',
         IndexName: 'pageidIndex',
         ScanIndexForward: false,
-        KeyConditionExpression: '#pi = :pi AND #st <= :st',
+        KeyConditionExpression: '#pi = :pi AND #st BETWEEN :end and :start',
         ExpressionAttributeNames: {
             '#pi': 'page_id',
             '#st': 'system_timestamp'
         },
         ExpressionAttributeValues: {
             ':pi': { 'S': ctx.id },
-            ':st': {'N': moment().unix().toString() }
-        }/*,
-        AttributesToGet: [
-            'system_timestamp',
-            'fan_count',
-            'global_account'
-        ]*/,
-        Limit: 1
+            ':end': { 'N': end.toString() },
+            ':start': { 'N': start.toString() }
+        }
     }).promise();
+
     let marketing = await dynamo.query({
         TableName: 'FB_MARKETING_INSIGHTS',
         IndexName: 'pageidSIndex',
@@ -117,7 +149,41 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
         }
     });
 
-    processedMetrics = processedMetrics.map((vme,i,s)=>{
+    let pageInfoArray: Array<ReadTopSectionPageInfoResponse> = [];
+    for(let x=0; x<pageInfo.Items.length; x++){
+        let processedPageInfo:ReadTopSectionPageInfoResponse = parseResponse(pageInfo.Items[x],true);
+        pageInfoArray.push(processedPageInfo);
+    }
+    pageInfoArray = pageInfoArray.sort((a:any,b:any)=> {
+        if(a.system_timestamp > b.system_timestamp){
+            return -1;   
+        }
+        if(a.system_timestamp < b.system_timestamp){
+            return 1;   
+        }
+        return 0;
+    });
+    pageInfoArray = pageInfoArray.map((v,i,s)=>{
+        let currDate = moment(v.system_timestamp,'X').format('YYYYMMDD');
+        let indexPrev = i-1;
+        if(indexPrev<0){
+            return v;
+        }else{
+            while(!s[indexPrev]){
+                indexPrev = indexPrev + 1;
+            }
+            let prev = s[indexPrev];
+            let prevDate = moment(prev.system_timestamp,'X').format('YYYYMMDD');
+            if(prevDate==currDate){
+                return null;
+            }else{
+                return v;
+            }
+        }
+        return v;
+    }).filter(pi=>pi!=null);
+
+    processedMetrics = processedMetrics.filter(pm=>pm.metric_timestamp>9999999).map((vme,i,s)=>{
         let mDate = moment(vme.metric_timestamp,'X').format('YYYYMMDD');
         let marketing = processedMarketing.find((vmk,i,s)=>{
             let markDate = moment(vmk.metric_timestamp,'X').format('YYYYMMDD');
@@ -125,13 +191,19 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
                 return vmk;
             }
         });
+        let pageInfo = pageInfoArray.find((vpi,i,s)=>{
+            let piDate = moment(vpi.system_timestamp,'X').format('YYYYMMDD');
+            if(piDate===mDate){
+                return vpi;
+            }
+        });
         return {
             ...vme,
-            ...marketing
+            ...marketing,
+            page_global_fans: pageInfo ? pageInfo.global_account.fans : -1
         };
     });
 
-    let processedPageInfo:ReadTopSectionPageInfoResponse = parseResponse(pageInfo.Items[0],true);
     let response = [];
     for(let x = 0; x<processedMetrics.length; x++){
         let metric = processedMetrics[x];
@@ -144,7 +216,7 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
             engagemet_rate: ((metric.page_post_engagements / metric.page_fans) / 100).toFixed(20).match(/^-?\d*\.?0*\d{0,2}/)[0],
             affinity_rate: rand(9).toFixed(20).match(/^-?\d*\.?0*\d{0,2}/)[0],
             page_fans: metric.page_fans,
-            total_fans: processedPageInfo.global_account.fans===null ? processedPageInfo.fan_count : processedPageInfo.global_account.fans,
+            total_fans: metric.page_global_fans,
             engaged_users: metric.page_engaged_users,
             interactions: metric.page_post_engagements,
             row_date: metric.metric_timestamp,
