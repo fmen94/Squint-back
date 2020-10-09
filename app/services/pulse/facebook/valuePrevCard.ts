@@ -20,7 +20,10 @@ export const valuePrevCardService = async (
     cardId == "communityValuePrev01" ||
     cardId == "communityValuePrev04"
   ) {
-    let data = await ctx.myCache.getItem(`${ctx.id}_readDetails`);
+    let data = await readDetailsCall(dateRange.date, ctx);
+    logger.info(`Successfully obtained: ${cardId}`);
+    return data[cardId];
+    /*let data = await ctx.myCache.getItem(`${ctx.id}_readDetails`);
     if (data) {
       logger.info(`Successfully obtained of cache: ${cardId}`);
       return data[cardId];
@@ -28,9 +31,12 @@ export const valuePrevCardService = async (
       data = await readDetailsCall(dateRange.date, ctx);
       logger.info(`Successfully obtained: ${cardId}`);
       return data[cardId];
-    }
+    }*/
   } else {
-    let data = await ctx.myCache.getItem(`${ctx.id}_readTop`);
+    let data = await readTopCall(dateRange, ctx);
+    logger.info(`Successfully obtained: ${cardId}`);
+    return data[cardId];
+    /*let data = await ctx.myCache.getItem(`${ctx.id}_readTop`);
     if (data) {
       logger.info(`Successfully obtained of cache: ${cardId}`);
       return data[cardId];
@@ -38,7 +44,7 @@ export const valuePrevCardService = async (
       data = await readTopCall(dateRange, ctx);
       logger.info(`Successfully obtained: ${cardId}`);
       return data[cardId];
-    }
+    }*/
   }
 
   /**
