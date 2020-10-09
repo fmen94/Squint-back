@@ -189,10 +189,10 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
     }
     return response.sort((a:any,b:any)=> {
         if(a.row_date > b.row_date){
-            return -1;   
+            return 1;   
         }
         if(a.row_date < b.row_date){
-            return 1;   
+            return -1;   
         }
         return 0;
     });
