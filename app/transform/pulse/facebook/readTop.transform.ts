@@ -277,86 +277,86 @@ export const readTopTrans = (data) => {
     }
   );
   return {
-    generalInt01: data[0].engagemet_rate,
-    generalInt02: data[0].affinity_rate,
+    generalInt01: data[(data.length-1)].engagemet_rate,
+    generalInt02: data[(data.length-1)].affinity_rate,
     generalValuePrev01: {
-      value: data[0].page_fans,
+      value: data[(data.length-1)].page_fans,
       diff: diffCalc(data[0].page_fans, data[7].page_fans),
     },
     generalValuePrev02: {
-      value: data[0].reach,
+      value: data[(data.length-1)].reach,
       diff: diffCalc(data[0].reach, data[7].reach),
     },
     generalValuePrev03: {
-      value: data[0].engaged_users,
+      value: data[(data.length-1)].engaged_users,
       diff: diffCalc(data[0].engaged_users, data[7].engaged_users),
     },
     generalValuePrev04: {
-      value: data[0].interactions,
+      value: data[(data.length-1)].interactions,
       diff: diffCalc(data[0].interactions, data[7].interactions),
     },
     communitySmall01: {
-      valueInt: data[0].total_fans,
+      valueInt: data[(data.length-1)].total_fans,
       diff: diffCalc(data[0].total_fans, data[7].total_fans),
       valuesArray: dateValue.total_fans,
     },
     communitySmall02: {
-      valueInt: data[0].page_fans,
+      valueInt: data[(data.length-1)].page_fans,
       diff: diffCalc(data[0].page_fans, data[7].page_fans),
       valuesArray: dateValue.page_fans,
     },
     communityValuePrev02: {
-      value: data[0].organic_fans,
+      value: data[(data.length-1)].organic_fans,
       diff: diffCalc(data[0].organic_fans, data[7].organic_fans),
     },
     communityValuePrev03: {
-      value: data[0].paid_fans,
+      value: data[(data.length-1)].paid_fans,
       diff: diffCalc(data[0].paid_fans, data[7].paid_fans),
     },
     comparation: dateValue.comp,
     activitySmall01: {
-      valueInt: data[0].investment,
+      valueInt: data[(data.length-1)].investment,
       diff: diffCalc(data[0].investment, data[7].investment),
       valuesArray: dateValue.investment,
     },
     activitySmall02: {
-      valueInt: data[0].ad_impressions,
+      valueInt: data[(data.length-1)].ad_impressions,
       diff: diffCalc(data[0].ad_impressions, data[7].ad_impressions),
       valuesArray: dateValue.ad_impressions,
     },
 
     activitySmall03: {
-      valueInt: data[0].ad_reach,
+      valueInt: data[(data.length-1)].ad_reach,
       diff: diffCalc(data[0].ad_reach, data[7].ad_reach),
       valuesArray: dateValue.ad_reach,
     },
     activitySmall04: {
-      valueInt: data[0].ad_interactions,
+      valueInt: data[(data.length-1)].ad_interactions,
       diff: diffCalc(data[0].ad_interactions, data[7].ad_interactions),
       valuesArray: dateValue.ad_interactions,
     },
     activitySmall05: {
-      valueInt: data[0].ad_frecuency,
+      valueInt: data[(data.length-1)].ad_frecuency,
       diff: diffCalc(data[0].ad_frecuency, data[7].ad_frecuency),
       valuesArray: dateValue.ad_frecuency,
     },
     activitySmall06: {
-      valueInt: data[0].relevance_score,
+      valueInt: data[(data.length-1)].relevance_score,
       diff: diffCalc(data[0].relevance_score, data[7].relevance_score),
       valuesArray: dateValue.relevance_score,
     },
     activitySmall07: {
-      valueInt: data[0].ctr,
+      valueInt: data[(data.length-1)].ctr,
       diff: diffCalc(data[0].ctr, data[7].ctr),
       valuesArray: dateValue.ctr,
     },
     activitySmall08: {
-      valueInt: data[0].cpc,
+      valueInt: data[(data.length-1)].cpc,
       diff: diffCalc(data[0].cpc, data[7].cpc),
       valuesArray: dateValue.cpc,
     },
     affinitySmall01: {
-      valueInt: (data[0].total_engagement / data[0].reach) * 100,
+      valueInt: (data[(data.length-1)].total_engagement / data[0].reach) * 100,
       diff:
         (diffCalc(data[0].total_engagement, data[7].total_engagement) /
           diffCalc(data[0].reach, data[7].reach)) *
@@ -364,17 +364,17 @@ export const readTopTrans = (data) => {
       valuesArray: dateValue.engagemet_rate,
     },
     affinitySmall02: {
-      valueInt: data[0].engaged_users,
+      valueInt: data[(data.length-1)].engaged_users,
       diff: diffCalc(data[0].engaged_users, data[7].engaged_users),
       valuesArray: dateValue.engaged_users,
     },
     affinitySmall03: {
-      valueInt: data[0].stories,
+      valueInt: data[(data.length-1)].stories,
       diff: diffCalc(data[0].stories, data[7].stories),
       valuesArray: dateValue.stories,
     },
     affinitySmall04: {
-      valueInt: data[0].post_performance_ratio,
+      valueInt: data[(data.length-1)].post_performance_ratio,
       diff: diffCalc(
         data[0].post_performance_ratio,
         data[7].post_performance_ratio
@@ -382,33 +382,33 @@ export const readTopTrans = (data) => {
       valuesArray: dateValue.post_performance_ratio,
     },
     affinitySmall05: {
-      valueInt: data[0].reactions,
+      valueInt: data[(data.length-1)].reactions,
       diff: diffCalc(data[0].reactions, data[7].reactions),
       valuesArray: dateValue.reactions,
     },
     affinitySmall06: {
-      valueInt: data[0].shares,
+      valueInt: data[(data.length-1)].shares,
       diff: diffCalc(data[0].shares, data[7].shares),
       valuesArray: dateValue.shares,
     },
     affinitySmall07: {
-      valueInt: data[0].comments,
+      valueInt: data[(data.length-1)].comments,
       diff: diffCalc(data[0].comments, data[7].comments),
       valuesArray: dateValue.comments,
     },
     affinitySmall08: {
-      valueInt: data[0].clicks,
+      valueInt: data[(data.length-1)].clicks,
       diff: diffCalc(data[0].clicks, data[7].clicks),
       valuesArray: dateValue.clicks,
     },
     conversationSmall01: {
-      valueInt: data[0].comments,
+      valueInt: data[(data.length-1)].comments,
       diff: diffCalc(data[0].comments, data[7].comments),
       valuesArray: dateValue.comments,
     },
     conversationSmall02: {
-      valueInt: data[0].inbox_messages,
-      diff: diffCalc(data[0].inbox_messages, data[7].inbox_messages),
+      valueInt: data[(data.length-1)].inbox_messages,
+      diff: diffCalc(data[(data.length-1)].inbox_messages, data[7].inbox_messages),
       valuesArray: dateValue.inbox_messages,
     },
     affinityBar02: dateValue.inter,
