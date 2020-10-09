@@ -73,17 +73,27 @@ export const readDetailsSection = async (ctx:CONTEXT) => {
         }
     });
 
+    processedMetrics = processedMetrics.sort((a:any,b:any)=> {
+        if(a.row_date > b.row_date){
+            return 1;   
+        }
+        if(a.row_date < b.row_date){
+            return -1;   
+        }
+        return 0;
+    });
+
     let processedPageInfo = parseResponse(pageInfo.Items[0],true);
 
     let result = {
         name: processedPageInfo.page_name,
         country: 'MX',
-        today_reach: processedMetrics[0].page_impressions_unique,
-        yesterday_reach: processedMetrics[1].page_impressions_unique,
-        today_news_fans: processedMetrics[0].page_fan_adds,
-        yesterday_news_fans: processedMetrics[1].page_fan_adds,
-        today_lost_fans: processedMetrics[0].page_fan_removes,
-        yesterday_lost_fans: processedMetrics[1].page_fan_removes
+        today_reach: processedMetrics[1].page_impressions_unique,
+        yesterday_reach: processedMetrics[0].page_impressions_unique,
+        today_news_fans: processedMetrics[1].page_fan_adds,
+        yesterday_news_fans: processedMetrics[0].page_fan_adds,
+        today_lost_fans: processedMetrics[1].page_fan_removes,
+        yesterday_lost_fans: processedMetrics[0].page_fan_removes
     };
 
     return [ result ];
