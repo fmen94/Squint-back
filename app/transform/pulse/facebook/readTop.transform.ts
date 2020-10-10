@@ -33,8 +33,17 @@ export const readTopTrans = (data) => {
   ];
   let dateValue = data.reduce(
     (obj, e, index) => {
+      if(!obj.post_by_spend) obj.post_by_spend = [];
       let date = moment(e.row_date, "X").format("DD-MM-YYYYThh:mm:ss");
       if (index < 7) {
+        obj.post_by_spend.push({
+          kind:'organic',
+          value: e.organic_post,
+        });
+        obj.post_by_spend.push({
+          kind:'paid',
+          value: e.paid_post,
+        });
         obj.total_fans.push({
           date,
           value: e.total_fans,
@@ -320,7 +329,6 @@ export const readTopTrans = (data) => {
       diff: diffCalc(data[0].ad_impressions, data[7].ad_impressions),
       valuesArray: dateValue.ad_impressions,
     },
-
     activitySmall03: {
       valueInt: data[0].ad_reach,
       diff: diffCalc(data[0].ad_reach, data[7].ad_reach),
@@ -411,5 +419,11 @@ export const readTopTrans = (data) => {
       dateValue.sentimentTotal[0].value >= dateValue.sentimentTotal[1].value
         ? "Good"
         : "Bad",
+    affinityDonutDetail02: {
+      title:'dummy',
+      subtitle:'dummy',
+      text:'dummy',
+      valuesArray:dateValue.post_by_spend
+    }
   };
 };

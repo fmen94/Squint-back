@@ -222,6 +222,7 @@ registerEnumType(CardIdBarFbType, {
 export enum CardIdDonutFbType {
   communityDonutDetail01 = "communityDonutDetail01",
   affinityDonutDetail01 = "affinityDonutDetail01",
+  affinityDonutDetail02 = "affinityDonutDetail02",
 }
 registerEnumType(CardIdDonutFbType, {
   name: "CardIdDonut",

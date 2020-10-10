@@ -5,6 +5,7 @@ import { donutDetailIn, kindValueIn } from "../../../interfaces/common";
 import logger from "../../../helpers/logins/login.helper";
 import { CardIdDonutFbType } from "../../../schema/common/Enums";
 import { sourseValueCall } from "./sourseValue";
+import { readTopCall } from "./readTopCall";
 
 //El uso de Faker es temportal hasta conectar a base de datos
 export const donutDetailCardService = async (
@@ -13,12 +14,22 @@ export const donutDetailCardService = async (
   cardId: CardIdDonutFbType
 ): Promise<donutDetailIn> => {
   logger.info(`Getting values ​​for: ${cardId}`);
-  let data = await ctx.myCache.getItem(`${ctx.id}_sourseValue`);
+  /*let data = await ctx.myCache.getItem(`${ctx.id}_sourseValue`);
   if (data) {
     logger.info(`Successfully obtained of cache: ${cardId}`);
     return data[cardId];
   } else {
     data = await sourseValueCall(dateRange, ctx);
+    logger.info(`Successfully obtained: ${cardId}`);
+    return data[cardId];
+  }*/
+  if(cardId=='affinityDonutDetail02'){
+    let data = await readTopCall(dateRange,ctx);
+    console.log(data);
+    logger.info(`Successfully obtained: ${cardId}`);
+    return data[cardId];
+  }else{
+    let data = await sourseValueCall(dateRange, ctx);
     logger.info(`Successfully obtained: ${cardId}`);
     return data[cardId];
   }
