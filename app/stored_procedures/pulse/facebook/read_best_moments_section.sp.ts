@@ -10,7 +10,7 @@ function rand(maxLimit = 100) {
 }
 export const readBestMomentsSection = async (ctx:CONTEXT,start:string,period:PERIODS) => {
     //start = moment(start,'X').subtract(2,'days').unix();
-    let end = moment(start,'X').subtract(2,'days').unix();
+    let end = moment(start,'X').subtract(2,'days').utc().hour(0).minute(0).second(0).unix();
     //console.log(moment(start,'X'),moment(end,'X'));
 
     const dynamo:DynamoDB = ctx.dynamodb;

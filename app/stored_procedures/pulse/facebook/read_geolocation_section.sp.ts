@@ -9,7 +9,7 @@ function rand(maxLimit = 100) {
     return Math.floor(rand);
 }
 export const readGeoLocationSection = async (ctx:CONTEXT,start:number,period:PERIODS) => {
-    let end = moment(start,'X').subtract(2,'days').unix();
+    let end = moment(start,'X').subtract(2,'days').utc().hour(0).minute(0).second(0).unix();
 
     const dynamo:DynamoDB = ctx.dynamodb;
 
