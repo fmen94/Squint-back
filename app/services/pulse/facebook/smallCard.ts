@@ -12,7 +12,7 @@ export const smallCardService = async (
   cardId: CardIdSmallFbType
 ): Promise<smailCardIn> => {
   logger.info(`Getting values ​​for: ${cardId}`);
-  let data = await readTopCall(dateRange, ctx);
+  let data:any = await readTopCall(dateRange, ctx);
   logger.info(`Successfully obtained: ${cardId}`);
   return data[cardId];
   /*let data = await ctx.myCache.getItem(`${ctx.id}_readTop`);

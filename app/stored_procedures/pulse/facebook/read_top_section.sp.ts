@@ -213,9 +213,10 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
                 return s;
             }
         });
+        //.toFixed(20).match(/^-?\d*\.?0*\d{0,2}/)[0]
         response.push({
-            engagemet_rate: ((metric.page_post_engagements / metric.page_fans) / 100).toFixed(20).match(/^-?\d*\.?0*\d{0,2}/)[0],
-            affinity_rate: rand(9).toFixed(20).match(/^-?\d*\.?0*\d{0,2}/)[0],
+            engagemet_rate: ((metric.page_post_engagements / metric.page_fans) / 100),
+            affinity_rate: rand(9).toFixed(20),
             page_fans: metric.page_fans,
             total_fans: metric.page_global_fans,
             engaged_users: metric.page_engaged_users,

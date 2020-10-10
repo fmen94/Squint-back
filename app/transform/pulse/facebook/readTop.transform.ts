@@ -177,11 +177,8 @@ export const readTopTrans = (data) => {
         });
         obj.comp.engagemet_rate.push({
           name: date,
-          value: (e.total_engagement / e.reach) * 100,
-          diff:
-            (diffCalc(e.total_engagement, data[index + 1].total_engagement) /
-              diffCalc(e.reach, data[index + 1].reach)) *
-            100,
+          value: e.engagemet_rate,
+          diff: diffCalc(e.engagemet_rate,data[index + 1].engagemet_rate),
         });
         obj.comp.total_engagement.push({
           name: date,
@@ -355,11 +352,8 @@ export const readTopTrans = (data) => {
       valuesArray: dateValue.cpc,
     },
     affinitySmall01: {
-      valueInt: (data[0].total_engagement / data[0].reach) * 100,
-      diff:
-        (diffCalc(data[0].total_engagement, data[7].total_engagement) /
-          diffCalc(data[0].reach, data[7].reach)) *
-        100,
+      valueInt: data[0].engagemet_rate,
+      diff: diffCalc(data[0].engagemet_rate,data[7].engagemet_rate),
       valuesArray: dateValue.engagemet_rate,
     },
     affinitySmall02: {

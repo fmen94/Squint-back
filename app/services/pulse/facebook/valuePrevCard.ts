@@ -20,7 +20,7 @@ export const valuePrevCardService = async (
     cardId == "communityValuePrev01" ||
     cardId == "communityValuePrev04"
   ) {
-    let data = await readDetailsCall(dateRange.date, ctx);
+    let data:any = await readDetailsCall(dateRange.date, ctx);
     logger.info(`Successfully obtained: ${cardId}`);
     return data[cardId];
     /*let data = await ctx.myCache.getItem(`${ctx.id}_readDetails`);
@@ -33,7 +33,7 @@ export const valuePrevCardService = async (
       return data[cardId];
     }*/
   } else {
-    let data = await readTopCall(dateRange, ctx);
+    let data:any = await readTopCall(dateRange, ctx);
     logger.info(`Successfully obtained: ${cardId}`);
     return data[cardId];
     /*let data = await ctx.myCache.getItem(`${ctx.id}_readTop`);
