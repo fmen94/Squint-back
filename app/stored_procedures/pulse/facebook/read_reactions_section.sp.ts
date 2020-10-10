@@ -10,7 +10,7 @@ function rand(maxLimit = 100) {
 }
 export const readReactionSection = async (ctx:CONTEXT,start:number,period:PERIODS) => {
     
-    let end = moment(start,'X').subtract(8,'days').unix();
+    let end = moment(start,'X').subtract(8,'days').utc().hour(0).minute(0).second(0).unix();
 
     const dynamo:DynamoDB = ctx.dynamodb;
 
