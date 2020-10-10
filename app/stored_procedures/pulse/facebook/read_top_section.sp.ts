@@ -197,67 +197,75 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
                 return vpi;
             }
         });
+        console.log(mDate,pageInfo ? pageInfo.global_account.fans : -1);
         return {
             ...vme,
             ...marketing,
             page_global_fans: pageInfo ? pageInfo.global_account.fans : -1
         };
     });
+    processedMetrics = processedMetrics.filter(m=>{
+        if(m){
+            return m;
+        }
+    })
 
     let response = [];
     for(let x = 0; x<processedMetrics.length; x++){
         let metric = processedMetrics[x];
-        let viral_fans = metric.page_fans_by_like_source===null ? [] : metric.page_fans_by_like_source.filter(s=>{
-            if(s.key == 'News Feed' || s.key == 'Page Suggestions'){
-                return s;
-            }
-        });
-        response.push({
-            engagemet_rate: ((metric.page_post_engagements / metric.page_fans) / 100).toFixed(20).match(/^-?\d*\.?0*\d{0,2}/)[0],
-            affinity_rate: rand(9).toFixed(20).match(/^-?\d*\.?0*\d{0,2}/)[0],
-            page_fans: metric.page_fans,
-            total_fans: metric.page_global_fans,
-            engaged_users: metric.page_engaged_users,
-            interactions: metric.page_post_engagements,
-            row_date: metric.metric_timestamp,
-            fans_page: metric.page_fans,
-            organic_fans: metric.page_fans_organic,
-            paid_fans: metric.page_fans_organic,
-            viral_fans: !viral_fans.length ? 0 : viral_fans.reduce((accumulator, currentValue)=>{
-                return {key:'total', value: accumulator.value + currentValue.value }
-            }).value,
-            investment: metric.spend||0,
-            total_impressions: metric.page_impressions,
-            paid_impressions: metric.page_impressions_paid,
-            organic_impressions: metric.page_impressions_organic,
-            viral_impressions: metric.page_impressions_viral,
-            total_engagement: metric.page_post_engagements,
-            paid_engagement: ((metric.page_impressions_paid / metric.page_post_engagements) * 100),
-            organic_engagement: ((metric.page_impressions_organic / metric.page_post_engagements) * 100),
-            viral_engagement: ((metric.page_impressions_viral / metric.page_post_engagements) * 100),
-            ad_impressions: metric.impressions||0,
-            ad_reach: metric.reach||0,
-            ad_interactions: metric.actions && metric.actions.length ? metric.actions.reduce((accumulator, currentValue)=>{
-                return { action_type:'total', value: accumulator.value + currentValue.value }
-            }).value : 0,
-            ad_frecuency: metric.frequency||0,
-            relevance_score: metric.impressions && metric.spend ? ((metric.spend / metric.impressions) * 100) : 0,
-            ctr: metric.ctr||0,
-            cpc: metric.cpc||0,
-            stories: metric.page_content_activity,
-            post_performance_ratio: ((metric.page_post_engagements / metric.page_impressions_unique) * 100),
-            reactions: metric.page_reactions_total.reduce((accumulator, currentValue)=>{
-                return {key:'total', value: accumulator.value + currentValue.value }
-            }).value,
-            shares: metric.page_positive_feedback_by_type.find(el => el.key == 'link').value,
-            comments: metric.page_positive_feedback_by_type.find(el => el.key == 'comment').value,
-            clicks: metric.page_clics,
-            organic_post: rand(999999),
-            paid_post: rand(999999),
-            video_viwes: metric.page_video_views,
-            inbox_messages: metric.page_message_count,
-            reach: metric.page_impressions_unique
-        })
+        if(metric){
+            let viral_fans = metric.page_fans_by_like_source===null ? [] : metric.page_fans_by_like_source.filter(s=>{
+                if(s.key == 'News Feed' || s.key == 'Page Suggestions'){
+                    return s;
+                }
+            });
+            response.push({
+                engagemet_rate: ((metric.page_post_engagements / metric.page_fans) / 100).toFixed(20).match(/^-?\d*\.?0*\d{0,2}/)[0],
+                affinity_rate: rand(9).toFixed(20).match(/^-?\d*\.?0*\d{0,2}/)[0],
+                page_fans: metric.page_fans,
+                total_fans: metric.page_global_fans,
+                engaged_users: metric.page_engaged_users,
+                interactions: metric.page_post_engagements,
+                row_date: metric.metric_timestamp,
+                fans_page: metric.page_fans,
+                organic_fans: metric.page_fans_organic,
+                paid_fans: metric.page_fans_organic,
+                viral_fans: !viral_fans.length ? 0 : viral_fans.reduce((accumulator, currentValue)=>{
+                    return {key:'total', value: accumulator.value + currentValue.value }
+                }).value,
+                investment: metric.spend||0,
+                total_impressions: metric.page_impressions,
+                paid_impressions: metric.page_impressions_paid,
+                organic_impressions: metric.page_impressions_organic,
+                viral_impressions: metric.page_impressions_viral,
+                total_engagement: metric.page_post_engagements,
+                paid_engagement: ((metric.page_impressions_paid / metric.page_post_engagements) * 100),
+                organic_engagement: ((metric.page_impressions_organic / metric.page_post_engagements) * 100),
+                viral_engagement: ((metric.page_impressions_viral / metric.page_post_engagements) * 100),
+                ad_impressions: metric.impressions||0,
+                ad_reach: metric.reach||0,
+                ad_interactions: metric.actions && metric.actions.length ? metric.actions.reduce((accumulator, currentValue)=>{
+                    return { action_type:'total', value: accumulator.value + currentValue.value }
+                }).value : 0,
+                ad_frecuency: metric.frequency||0,
+                relevance_score: metric.impressions && metric.spend ? ((metric.spend / metric.impressions) * 100) : 0,
+                ctr: metric.ctr||0,
+                cpc: metric.cpc||0,
+                stories: metric.page_content_activity,
+                post_performance_ratio: ((metric.page_post_engagements / metric.page_impressions_unique) * 100),
+                reactions: metric.page_reactions_total.reduce((accumulator, currentValue)=>{
+                    return {key:'total', value: accumulator.value + currentValue.value }
+                }).value,
+                shares: metric.page_positive_feedback_by_type.find(el => el.key == 'link').value,
+                comments: metric.page_positive_feedback_by_type.find(el => el.key == 'comment').value,
+                clicks: metric.page_clics,
+                organic_post: rand(999999),
+                paid_post: rand(999999),
+                video_viwes: metric.page_video_views,
+                inbox_messages: metric.page_message_count,
+                reach: metric.page_impressions_unique
+            })
+        }
     }
     let data = response.sort((a:any,b:any)=> {
         if(a.row_date > b.row_date){
