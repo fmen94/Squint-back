@@ -197,7 +197,6 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
                 return vpi;
             }
         });
-        console.log(mDate,pageInfo ? pageInfo.global_account.fans : -1);
         return {
             ...vme,
             ...marketing,
@@ -258,7 +257,9 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
             paid_post: rand(999999),
             video_viwes: metric.page_video_views,
             inbox_messages: metric.page_message_count,
-            reach: metric.page_impressions_unique
+            reach: metric.page_impressions_unique,
+            sentiment_good: rand(999),
+            sentiment_bad: rand(999)
         })
     }
     let data = response.sort((a:any,b:any)=> {

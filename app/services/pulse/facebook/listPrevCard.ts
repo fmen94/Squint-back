@@ -31,7 +31,7 @@ export const listPrevCardService = async (
     logger.info(`Successfully obtained of cache: ${cardId}`);
     console.log(data[cardId]);
 
-    response = data[cardId];
+    response = data[cardId]; 
   } else {
     console.log("entra aqui ");
 

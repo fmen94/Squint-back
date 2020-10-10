@@ -137,7 +137,8 @@ export const readReactionSection = async (ctx:CONTEXT,start:number,period:PERIOD
                 hide_all_post_from_this_page: hide_all_clicks ? hide_all_clicks.value : 0,
                 report_an_object_as_a_spam: report_spam_clicks ? report_spam_clicks.value : 0,
                 unlike_a_page: unlike_page ? unlike_page.value : 0,
-                fecha: metric.metric_timestamp  }
+                fecha: metric.metric_timestamp
+            }
         )
     }
     /* fin del matcheo */

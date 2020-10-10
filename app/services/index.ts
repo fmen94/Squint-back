@@ -30,7 +30,10 @@ export const masterService = async (
   params: Array<string> = []
 ) => {
   logger.info(`Getting values ${network} ${chanel} ​​for: ${cardId}`);
-  let data: Object = await ctx.myCache.getItem(
+  let data = await serviceControler[chanel][network][cardId].sp(dateRange, ctx);
+  logger.info(`Successfully obtained  ${network} ${chanel} ​​: ${cardId}`);
+  return serviceControler[chanel][network][cardId].returnType(data, params);
+  /*let data: Object = await ctx.myCache.getItem(
     `${ctx.id}${serviceControler[chanel][network][cardId].cacheName}`
   );
   if (data) {
@@ -42,7 +45,7 @@ export const masterService = async (
     data = await serviceControler[chanel][network][cardId].sp(dateRange, ctx);
     logger.info(`Successfully obtained  ${network} ${chanel} ​​: ${cardId}`);
     return serviceControler[chanel][network][cardId].returnType(data, params);
-  }
+  }*/
 };
 const serviceControler = {
   pulse: {

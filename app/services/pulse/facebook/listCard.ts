@@ -18,7 +18,7 @@ export const listCardService = async (
   logger.info(`Getting values ​​for: ${cardId}`);
   let response;
   if (cardId === "conversationList02") {
-    let data = await ctx.myCache.getItem(`${ctx.id}_reactionsSections`);
+    /*let data = await ctx.myCache.getItem(`${ctx.id}_reactionsSections`);
     let dataSent = await ctx.myCache.getItem(`${ctx.id}_readTop`);
     if (!dataSent) {
       dataSent = await readTopCall(dateRange, ctx);
@@ -30,7 +30,11 @@ export const listCardService = async (
       data = await reactionsSectionsCall(dateRange, ctx);
       logger.info(`Successfully obtained: ${cardId}`);
       return dataSent[cardId].concat(data[cardId]);
-    }
+    }*/
+    let data = await reactionsSectionsCall(dateRange, ctx);
+    let dataSent = await readTopCall(dateRange, ctx);
+    logger.info(`Successfully obtained: ${cardId}`);
+    return dataSent[cardId].concat(data[cardId]);
   } else {
     let data = await ctx.myCache.getItem(`${ctx.id}_sourseValue`);
     if (data) {
