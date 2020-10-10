@@ -102,6 +102,7 @@ export interface PostResponse{
   system_timestamp: number;
   page_id: string;
   post_id: string;
+  post_url: string;
   post_image: string;
   post_promotion_status: string;
   post_content: string;

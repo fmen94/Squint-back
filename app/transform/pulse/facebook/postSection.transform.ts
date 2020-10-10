@@ -1,9 +1,7 @@
 import moment from "moment";
 
 export const postSectionTrans = (data) => {
-  //console.log(data);
-
-  return data.reduce(
+  let result = data.reduce(
     (obj, e, index) => {
       obj.contentPost01.push({
         performance: "Good",
@@ -90,4 +88,8 @@ export const postSectionTrans = (data) => {
       contentTable01: [],
     }
   );
+  /*result.contentTable01.forEach(element => {
+    console.log(element);
+  });*/
+  return result;
 };

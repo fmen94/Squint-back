@@ -14,7 +14,7 @@ export const tableCardService = async (
   cardId: CardIdTableFbType
 ): Promise<kindNameValueIn[][][]> => {
   logger.info(`Getting values ​​for: ${cardId}`);
-  let data = await ctx.myCache.getItem(`${ctx.id}_postSection`);
+  /*let data = await ctx.myCache.getItem(`${ctx.id}_postSection`);
   if (data) {
     logger.info(`Successfully obtained of cache: ${cardId}`);
     return data[cardId];
@@ -22,5 +22,8 @@ export const tableCardService = async (
     data = await postSectionCall(1, ctx);
     logger.info(`Successfully obtained: ${cardId}`);
     return data[cardId];
-  }
+  }*/
+  let data = await postSectionCall(1, ctx);
+  logger.info(`Successfully obtained: ${cardId}`);
+  return data[cardId];
 };

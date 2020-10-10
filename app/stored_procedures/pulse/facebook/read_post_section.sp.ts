@@ -97,6 +97,7 @@ export const readPostSection = async (ctx:CONTEXT,limit:number) => {
         
         result.push({
             publication_date: moment(post.post_timestamp,'X').format('DD-MM-YYYYTHH:mm:ss'),
+            url: post.post_url,
             image: post.post_image,
             promotion_status: post.post_promotion_status,
             text: post.post_content,
@@ -114,17 +115,18 @@ export const readPostSection = async (ctx:CONTEXT,limit:number) => {
             type: post.post_type,
             page_name: post.post_author_name,
             page_image: post.post_author_picture,
-            like: post.post_reactions_like_total,
-            love: post.post_reactions_love_total,
-            haha: post.post_reactions_haha_total,
-            woow: post.post_reactions_wow_total,
-            sad: post.post_reactions_sorry_total,
-            angry: post.post_reactions_anger_total,
+            like: post.post_reactions_like_total||0,
+            love: post.post_reactions_love_total||0,
+            haha: post.post_reactions_haha_total||0,
+            woow: post.post_reactions_wow_total||0,
+            sad: post.post_reactions_sorry_total||0,
+            angry: post.post_reactions_anger_total||0,
+            care: rand(99),
             comments: post.post_comments_count,
             negative_feedbacks: post.post_negative_feedback||0,
             shared: post.post_shares_count,
             engaged_users: post.post_engaged_users,
-            engagemet_rate: ((post.post_impressions / post.post_engaged_users) * 100),
+            engagemet_rate: ((post.post_impressions / post.post_engaged_users) * 100)||0,
             reactions: post.post_reactions_count,
             performance: 'Good performance'
         });

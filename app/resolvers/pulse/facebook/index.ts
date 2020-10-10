@@ -232,8 +232,8 @@ export class PulseFacebookResolver {
   tableCard(
     @Ctx() ctx: any,
     @Arg("dateRange", DateEndOptions) dateRange?: DateRange,
-    @Arg("cardId", (type) => CardIdTableFbType, CardIdTableOptions)
-    cardId?: CardIdTableFbType
+    @Arg("cardId", (type) => CardIdTableFbType, CardIdTableOptions) cardId?: CardIdTableFbType,
+    @Arg("order", (type) => OrderType, {nullable:true,defaultValue:'ASC'}) order?: OrderType,
   ): Promise<kindNameValueIn[][][]> {
     return tableCardService(ctx, dateRange, cardId);
   }
