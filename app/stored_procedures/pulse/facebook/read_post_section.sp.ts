@@ -48,50 +48,53 @@ export const readPostSection = async (ctx:CONTEXT,limit:number) => {
     for(let x=0; x<10; x++){
         let post = processedposts[x];
         if(!post) break;
-        let ad = await dynamo.query({
-            TableName: 'FB_MARKETING_ADS',
-            IndexName: 'pageidIndex',
-            ScanIndexForward: false,
-            KeyConditionExpression: '#pi = :pi AND #st <= :st',
-            FilterExpression: '#cr = :cr',
-            ExpressionAttributeNames: {
-                '#pi': 'page_id',
-                '#st': 'system_timestamp',
-                '#cr': 'creative.effective_object_story_id'
-            },
-            ExpressionAttributeValues: {
-                ':pi': { 'S': ctx.id },
-                ':st': {'N': moment().unix().toString() },
-                ':cr': { 'S': post.post_promotable_id },
-            },
-            Limit: 1
-        }).promise();
         let insData:any = {};
-        if(ad.Items.length){
-            let adInfo = parseResponse(ad.Items[0],true);
-            let ad_id = adInfo.ad_id;
-            let insights = await dynamo.query({
-                TableName: 'FB_MARKETING_INSIGHTS',
-                IndexName: 'pageidSIndex',
+        if(post.post_promotable_id){
+            let ad = await dynamo.query({
+                TableName: 'FB_MARKETING_ADS',
+                IndexName: 'pageidIndex',
                 ScanIndexForward: false,
                 KeyConditionExpression: '#pi = :pi AND #st <= :st',
-                FilterExpression: '#src = :src AND #srcid = :srcid',
+                FilterExpression: '#cr = :cr',
                 ExpressionAttributeNames: {
                     '#pi': 'page_id',
                     '#st': 'system_timestamp',
-                    '#src': 'source',
-                    '#srcid': 'source_id'
+                    '#cr': 'creative.effective_object_story_id'
                 },
                 ExpressionAttributeValues: {
                     ':pi': { 'S': ctx.id },
                     ':st': {'N': moment().unix().toString() },
-                    ':src': { 'S': 'ADS' },
-                    ':srcid': {'S': ad_id.toString() }
+                    ':cr': { 'S': post.post_promotable_id },
                 },
                 Limit: 1
             }).promise();
-            insData = parseResponse(insights.Items[0],true);
+            if(ad.Items.length){
+                let adInfo = parseResponse(ad.Items[0],true);
+                let ad_id = adInfo.ad_id;
+                let insights = await dynamo.query({
+                    TableName: 'FB_MARKETING_INSIGHTS',
+                    IndexName: 'pageidSIndex',
+                    ScanIndexForward: false,
+                    KeyConditionExpression: '#pi = :pi AND #st <= :st',
+                    FilterExpression: '#src = :src AND #srcid = :srcid',
+                    ExpressionAttributeNames: {
+                        '#pi': 'page_id',
+                        '#st': 'system_timestamp',
+                        '#src': 'source',
+                        '#srcid': 'source_id'
+                    },
+                    ExpressionAttributeValues: {
+                        ':pi': { 'S': ctx.id },
+                        ':st': {'N': moment().unix().toString() },
+                        ':src': { 'S': 'ADS' },
+                        ':srcid': {'S': ad_id.toString() }
+                    },
+                    Limit: 1
+                }).promise();
+                insData = parseResponse(insights.Items[0],true);
+            }
         }
+        
         result.push({
             publication_date: moment(post.post_timestamp,'X').format('DD-MM-YYYYTHH:mm:ss'),
             image: post.post_image,

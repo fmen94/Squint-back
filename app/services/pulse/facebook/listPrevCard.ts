@@ -16,7 +16,17 @@ export const listPrevCardService = async (
 ): Promise<nameValueDiffIn[]> => {
   logger.info(`Getting values ​​for: ${cardId}`);
   let response;
-  let data = await ctx.myCache.getItem(`${ctx.id}_communityGeo`);
+  let data = await communityGeoCall(dateRange, ctx)
+    .then((e) => {
+      console.log("esta es la respusta", e);
+      return e;
+    })
+    .catch((e) => {
+      console.log("Error", e);
+    });
+  logger.info(`Successfully obtained: ${cardId}`);
+  response = data[cardId];
+  /*let data = await ctx.myCache.getItem(`${ctx.id}_communityGeo`);
   if (data) {
     logger.info(`Successfully obtained of cache: ${cardId}`);
     console.log(data[cardId]);
@@ -34,7 +44,7 @@ export const listPrevCardService = async (
       });
     logger.info(`Successfully obtained: ${cardId}`);
     response = data[cardId];
-  }
+  }*/
   if (order == "DESC") {
     response = response.sort((a, b) => (a.value > b.value ? -1 : 1));
   } else if (order == "ASC") {
