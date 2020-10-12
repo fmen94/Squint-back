@@ -1,5 +1,5 @@
 import express from 'express';
-import { ApolloServer } from "apollo-server-express";
+import { ApolloServer, ForbiddenError, UserInputError } from "apollo-server-express";
 import cors from 'cors';
 import { buildSchema, Int } from "type-graphql";
 import logger from "./helpers/logins/login.helper";
@@ -46,10 +46,9 @@ const init = async (port: any) => {
     playground: true,
     //Se crea el context
     context: ({ req }):CONTEXT => {
-      //Esta validacion esta pendiente para cuando este en produccion
-      // if (!req.headers.page_id) {
-      //   throw new BadRequestException("Page_id is Invalid");
-      // }
+      if (!req.headers.page_id) {
+         throw new UserInputError("header - page_id");
+      }
       const page_id:any = req.headers.page_id;
       return { id: page_id, pool, myCache, dynamodb, lambda };
     },
