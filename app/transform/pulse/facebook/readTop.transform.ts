@@ -283,14 +283,16 @@ export const readTopTrans = (data) => {
   );
   let post_paid = 0;
   let post_organic = 0;
-  dateValue.post_by_spend.forEach(element => {
-    if(element.kind=='organic'){
-      post_organic = post_organic+element.value;
-    }
-    if(element.kind=='paid'){
-      post_paid = post_paid+element.value;
-    }
-  });
+  if(dateValue.post_by_spend){
+    dateValue.post_by_spend.forEach(element => {
+      if(element.kind=='organic'){
+        post_organic = post_organic+element.value;
+      }
+      if(element.kind=='paid'){
+        post_paid = post_paid+element.value;
+      }
+    });
+  }
   return {
     generalInt01: data[0].engagemet_rate,
     generalInt02: data[0].affinity_rate,
