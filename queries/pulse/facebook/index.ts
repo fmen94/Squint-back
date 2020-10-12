@@ -8,6 +8,7 @@ import { readPostSection } from "../../../app/readers/pulse/facebook/read_post_s
 import { readReactionSection } from "../../../app/readers/pulse/facebook/read_reactions_section.reader";
 import { readBestMomentsSection } from "../../../app/readers/pulse/facebook/read_best_moments_section.reader";
 import { readBenchTopSection } from "../../../app/readers/bench/facebook/read_bench_top_section.reader";
+import { readBenchPostsSection } from "../../../app/readers/bench/facebook/read_bench_post_section.reader";
 
 /**
  * Función para generar el query de llamada a los SP, retorna sólo un string con el query.
@@ -55,14 +56,10 @@ export const fbQuerys = {
   postSection: (ctx, limit)                     => readPostSection(ctx, limit),
   bestMomnets: (ctx, startDate, period)         => readBestMomentsSection(ctx, startDate, period),
   resctionsSection: (ctx,startDate,period)      => readReactionSection(ctx, startDate, period),
+  generalBench: (ctx, date, period)             => readBenchTopSection(ctx,date,period),
   /*MANTEN LA MISMA ESTRUCTURA USADA AQUÍ ARRIBA PARA LOS SIGUIENTES SP, PORFI :c*/
   /*FIN: SI QUIERES CONSERVAR TUS PIERNAS, NO CAMBIES ESTA ESTRUCTURA*/
-  generalBench: (ctx, date, period)             => readBenchTopSection(ctx,date,period),
-  postBench: (ctx, limit) =>
-    getCursor(ctx.pool, "read_bench_post_section", [
-      { value: ctx.id, type: "string" },
-      { value: limit, type: "number" },
-    ]),
+  postBench: (ctx, limit) => readBenchPostsSection(ctx,limit),
   keywordsBench: (ctx, date, period) =>
     getCursor(ctx.pool, "read_bench_fan_source_section", [
       { value: ctx.id, type: "string" },
