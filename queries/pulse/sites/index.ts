@@ -1,15 +1,15 @@
 import { Pool } from "pg";
-import { readSitesPulseAudienceSection } from "../../../app/stored_procedures/pulse/sites/read_sites_pulse_audience_section.sp";
-import { readSitesPulseFansCountrySection } from "../../../app/stored_procedures/pulse/sites/read_sites_pulse_fans_country_section";
-import { readSitesPulseGenderSection } from "../../../app/stored_procedures/pulse/sites/read_sites_pulse_gender_section.sp";
-import { ReadSitesPulsePostSection } from "../../../app/stored_procedures/pulse/sites/read_sites_pulse_post_section.sp";
-import { readSitesPulseSourceSection } from "../../../app/stored_procedures/pulse/sites/read_sites_pulse_source_section.sp";
-import { readSitesPulseSubdomainsSection } from "../../../app/stored_procedures/pulse/sites/read_sites_pulse_subdomains_section.sp";
-import { ReadSitesTopSectionSection } from "../../../app/stored_procedures/pulse/sites/read_sites_pulse_top_section.sp";
-import { readSitesPulseTrafficByCountrySection } from "../../../app/stored_procedures/pulse/sites/read_sites_pulse_traffic_by_country_section.sp";
-import { readSitesPulseDomainsTrafficHistorySection } from "../../../app/stored_procedures/pulse/sites/read_sites_pulse_traffic_history_section.sp";
-import { readTrafficPerformanceSection } from "../../../app/stored_procedures/pulse/sites/read_sites_pulse_traffic_performance_section.sp";
-import { readSitesPulseTrafficSection } from "../../../app/stored_procedures/pulse/sites/read_sites_pulse_traffic_section.sp";
+import { readSitesPulseAudienceSection } from "../../../app/readers/pulse/sites/read_sites_pulse_audience_section.sp";
+import { readSitesPulseFansCountrySection } from "../../../app/readers/pulse/sites/read_sites_pulse_fans_country_section";
+import { readSitesPulseGenderSection } from "../../../app/readers/pulse/sites/read_sites_pulse_gender_section.sp";
+import { ReadSitesPulsePostSection } from "../../../app/readers/pulse/sites/read_sites_pulse_post_section.sp";
+import { readSitesPulseSourceSection } from "../../../app/readers/pulse/sites/read_sites_pulse_source_section.sp";
+import { readSitesPulseSubdomainsSection } from "../../../app/readers/pulse/sites/read_sites_pulse_subdomains_section.sp";
+import { ReadSitesTopSectionSection } from "../../../app/readers/pulse/sites/read_sites_pulse_top_section.sp";
+import { readSitesPulseTrafficByCountrySection } from "../../../app/readers/pulse/sites/read_sites_pulse_traffic_by_country_section.sp";
+import { readSitesPulseDomainsTrafficHistorySection } from "../../../app/readers/pulse/sites/read_sites_pulse_traffic_history_section.sp";
+import { readTrafficPerformanceSection } from "../../../app/readers/pulse/sites/read_sites_pulse_traffic_performance_section.sp";
+import { readSitesPulseTrafficSection } from "../../../app/readers/pulse/sites/read_sites_pulse_traffic_section.sp";
 
 /**
  * Función para generar el query de llamada a los SP, retorna sólo un string con el query.

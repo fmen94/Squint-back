@@ -1,12 +1,12 @@
 import { Pool } from "pg";
-import { readCommunityGender } from "../../../app/stored_procedures/pulse/facebook/read_community_gender.sp";
-import { readDetailsSection } from "../../../app/stored_procedures/pulse/facebook/read_details_section.sp";
-import { readGeoLocationSection } from "../../../app/stored_procedures/pulse/facebook/read_geolocation_section.sp";
-import { readTopSection } from "../../../app/stored_procedures/pulse/facebook/read_top_section.sp";
-import { readFanSourceSection } from "../../../app/stored_procedures/pulse/facebook/read_fan_source_section.sp";
-import { readPostSection } from "../../../app/stored_procedures/pulse/facebook/read_post_section.sp";
-import { readReactionSection } from "../../../app/stored_procedures/pulse/facebook/read_reactions_section.sp";
-import { readBestMomentsSection } from "../../../app/stored_procedures/pulse/facebook/read_best_moments_section.sp";
+import { readCommunityGender } from "../../../app/readers/pulse/facebook/read_community_gender.reader";
+import { readDetailsSection } from "../../../app/readers/pulse/facebook/read_details_section.reader";
+import { readGeoLocationSection } from "../../../app/readers/pulse/facebook/read_geolocation_section.reader";
+import { readTopSection } from "../../../app/readers/pulse/facebook/read_top_section.reader";
+import { readFanSourceSection } from "../../../app/readers/pulse/facebook/read_fan_source_section.reader";
+import { readPostSection } from "../../../app/readers/pulse/facebook/read_post_section.reader";
+import { readReactionSection } from "../../../app/readers/pulse/facebook/read_reactions_section.reader";
+import { readBestMomentsSection } from "../../../app/readers/pulse/facebook/read_best_moments_section.reader";
 
 /**
  * Función para generar el query de llamada a los SP, retorna sólo un string con el query.
