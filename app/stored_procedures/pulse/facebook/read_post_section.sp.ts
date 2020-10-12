@@ -9,41 +9,26 @@ function rand(maxLimit = 100) {
     return Math.floor(rand);
 }
 export const readPostSection = async (ctx:CONTEXT,limit:number) => {
-    const dynamo:DynamoDB = ctx.dynamodb;
-
-    let posts = await dynamo.query({
-        TableName: 'FB_FEED',
-        IndexName: 'pageidPIndex',
-        ScanIndexForward: false,
-        KeyConditionExpression: '#pi = :pi AND #pt <= :pt',
-        FilterExpression: '#ai = :ai',
-        ExpressionAttributeNames: {
-            '#pi': 'page_id',
-            '#pt': 'post_timestamp',
-            '#ai': 'post_author_id'
-        },
-        ExpressionAttributeValues: {
-            ':pi': { 'S': ctx.id },
-            ':pt': { 'N': moment().unix().toString() },
-            ':ai': { 'S': ctx.id }
-        }
-    }).promise();
-    console.log('ENTRA AQUI',posts);
-
-    let processedposts:PostResponse[] = [];
-    for(let index in posts.Items){
-        let post:PostResponse = parseResponse(posts.Items[index],true);
-        processedposts.push(post);
-    }
-
-    processedposts = processedposts.filter((elem,index,self)=>{
-        let find = self.findIndex(e=>e.post_id == elem.post_id);
-        if(index == find){
-            return elem;
-        }
+    const start = moment().unix();
+    const lambda = ctx.lambda;
+    let feedPromise = lambda.invoke({
+        FunctionName: 'squint_reader_fb_page_feed',
+        Payload: JSON.stringify({
+            page_id: ctx.id,
+            start: start,
+            daysBefore: 30
+        })
+    }).promise().then((data:any)=>{
+        return JSON.parse(JSON.parse(data.Payload).body)
     });
 
-
+    let processedposts:any[] = [];
+    await Promise.all([feedPromise]).then(r=>{
+        processedposts = r[0];
+    }).catch(err=>{
+        console.log(err);
+    });
+    const dynamo = ctx.dynamodb;
     let result = [];
     for(let x=0; x<10; x++){
         let post = processedposts[x];

@@ -1,4 +1,4 @@
-import { DynamoDB } from "aws-sdk";
+import { DynamoDB, Lambda } from "aws-sdk";
 import { Pool } from "pg";
 import { ExpirationStrategy } from "node-ts-cache";
 
@@ -9,6 +9,7 @@ export interface CONTEXT {
   pool: Pool;
   myCache:ExpirationStrategy;
   dynamodb: DynamoDB;
+  lambda: Lambda;
 }
 
 export interface valueDiffIn {

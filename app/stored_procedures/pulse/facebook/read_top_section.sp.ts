@@ -9,8 +9,6 @@ function rand(maxLimit = 100) {
     return Math.floor(rand);
 }
 export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) => {
-    let end = moment(start,'X').subtract(8,'days').utc().hour(0).minute(0).second(0).unix();
-
     /*let years:Array<any> = [moment(end,'X').format('YYYY')];
     let months:Array<any> = [moment(end,'X').format('MM')];
     let days:Array<any> = [moment(end,'X').format('DD')];
@@ -69,139 +67,51 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
         }
     }*/
 
-    const dynamo:DynamoDB = ctx.dynamodb;
+    const lambda = ctx.lambda;
 
-    let metrics = await dynamo.query({
-        TableName: 'FB_PAGE_INSIGHTS',
-        IndexName: 'pageidSIndex',
-        ScanIndexForward: false,
-        KeyConditionExpression: '#pi = :pi AND #st <= :st',
-        FilterExpression: '#mt BETWEEN :end and :start',
-        ExpressionAttributeNames: {
-            '#pi': 'page_id',
-            '#st': 'system_timestamp',
-            '#mt': 'metric_timestamp'
-        },
-        ExpressionAttributeValues: {
-            ':pi': { 'S': ctx.id },
-            ':st': { 'N': moment().unix().toString() },
-            ':end': { 'N': end.toString() },
-            ':start': { 'N': start.toString() },
-        }
-    }).promise();
-    let pageInfo = await dynamo.query({
-        TableName: 'FB_PAGE_INFO',
-        IndexName: 'pageidIndex',
-        ScanIndexForward: false,
-        KeyConditionExpression: '#pi = :pi AND #st BETWEEN :end and :start',
-        ExpressionAttributeNames: {
-            '#pi': 'page_id',
-            '#st': 'system_timestamp'
-        },
-        ExpressionAttributeValues: {
-            ':pi': { 'S': ctx.id },
-            ':end': { 'N': end.toString() },
-            ':start': { 'N': start.toString() }
-        }
-    }).promise();
-
-    let marketing = await dynamo.query({
-        TableName: 'FB_MARKETING_INSIGHTS',
-        IndexName: 'pageidSIndex',
-        ScanIndexForward: false,
-        KeyConditionExpression: '#pi = :pi AND #st <= :st',
-        FilterExpression: '#src = :src AND #mt BETWEEN :end and :start',
-        ExpressionAttributeNames: {
-            '#pi': 'page_id',
-            '#st': 'system_timestamp',
-            '#mt': 'metric_timestamp',
-            '#src': 'source',
-        },
-        ExpressionAttributeValues: {
-            ':pi': { 'S': ctx.id },
-            ':st': {'N': moment().unix().toString() },
-            ':start': {'N': start.toString() },
-            ':end': {'N': end.toString() },
-            ':src': {'S': 'ADACCOUNTS' },
-        }
-    }).promise();
-    let processedMarketing:MarketingResponse[] = [];
-    for(let index in marketing.Items){
-        let metric:any = parseResponse(marketing.Items[index],true);
-        processedMarketing.push(metric)
-    }
-    processedMarketing = processedMarketing.filter((elem,index,self)=>{
-        let find = self.findIndex(e=>e.metric_timestamp == elem.metric_timestamp);
-        if(index == find){
-            return elem;
-        }
+    let metricsPromise = lambda.invoke({
+        FunctionName: 'squint_reader_fb_page_insights',
+        Payload: JSON.stringify({
+            page_id: ctx.id,
+            start: start,
+            daysBefore: 10
+        })
+    }).promise().then((data:any)=>{
+        return JSON.parse(JSON.parse(data.Payload).body)
     });
 
-    let processedMetrics:ReadTopSectionResponse[] = [];
-    for(let index in metrics.Items){
-        let metric:any = parseResponse(metrics.Items[index],true);
-        processedMetrics.push(metric)
-    }
-    processedMetrics = processedMetrics.filter((elem,index,self)=>{
-        let find = self.findIndex(e=>e.metric_timestamp == elem.metric_timestamp);
-        if(index == find){
-            return elem;
-        }
+    let pageInfoPromise = lambda.invoke({
+        FunctionName: 'squint_reader_fb_page_info',
+        Payload: JSON.stringify({
+            page_id: ctx.id,
+            start: start,
+            daysBefore: 10
+        })
+    }).promise().then((data:any)=>{
+        return JSON.parse(JSON.parse(data.Payload).body)
     });
 
-    let pageInfoArray: Array<ReadTopSectionPageInfoResponse> = [];
-    for(let x=0; x<pageInfo.Items.length; x++){
-        let processedPageInfo:ReadTopSectionPageInfoResponse = parseResponse(pageInfo.Items[x],true);
-        pageInfoArray.push(processedPageInfo);
-    }
-    pageInfoArray = pageInfoArray.sort((a:any,b:any)=> {
-        if(a.system_timestamp > b.system_timestamp){
-            return -1;   
-        }
-        if(a.system_timestamp < b.system_timestamp){
-            return 1;   
-        }
-        return 0;
+    let pageMarketingPromise = lambda.invoke({
+        FunctionName: 'squint_reader_fb_marketing_insights',
+        Payload: JSON.stringify({
+            page_id: ctx.id,
+            start: start,
+            daysBefore: 10
+        })
+    }).promise().then((data:any)=>{
+        return JSON.parse(JSON.parse(data.Payload).body)
     });
-    pageInfoArray = pageInfoArray.map((v,i,s)=>{
-        let currDate = moment(v.system_timestamp,'X').format('YYYYMMDD');
-        let indexPrev = i-1;
-        if(indexPrev<0){
-            return v;
-        }else{
-            while(!s[indexPrev]){
-                indexPrev = indexPrev + 1;
-            }
-            let prev = s[indexPrev];
-            let prevDate = moment(prev.system_timestamp,'X').format('YYYYMMDD');
-            if(prevDate==currDate){
-                return null;
-            }else{
-                return v;
-            }
-        }
-        return v;
-    }).filter(pi=>pi!=null);
-
-    processedMetrics = processedMetrics.filter(pm=>pm.metric_timestamp>9999999).map((vme,i,s)=>{
-        let mDate = moment(vme.metric_timestamp,'X').format('YYYYMMDD');
-        let marketing = processedMarketing.find((vmk,i,s)=>{
-            let markDate = moment(vmk.metric_timestamp,'X').format('YYYYMMDD');
-            if(markDate===mDate){
-                return vmk;
-            }
-        });
-        let pageInfo = pageInfoArray.find((vpi,i,s)=>{
-            let piDate = moment(vpi.system_timestamp,'X').format('YYYYMMDD');
-            if(piDate===mDate){
-                return vpi;
-            }
-        });
-        return {
-            ...vme,
-            ...marketing,
-            page_global_fans: pageInfo ? pageInfo.global_account.fans : -1
-        };
+    
+    let processedMetrics: any = [];
+    let pageInfoArray: any = [];
+    let processedMarketing: any = [];
+    await Promise.all([metricsPromise,pageInfoPromise,pageMarketingPromise]).then(r=>{
+        processedMetrics = r[0];
+        pageInfoArray = r[1];
+        processedMarketing = r[2];
+        console.log(processedMetrics.length,pageInfoArray.length,processedMarketing.length);
+    }).catch(err=>{
+        console.log(err);
     });
 
     let response = [];

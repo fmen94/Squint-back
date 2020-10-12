@@ -9,69 +9,40 @@ function rand(maxLimit = 100) {
     return Math.floor(rand);
 }
 export const readFanSourceSection = async (ctx:CONTEXT,start:number,period:PERIODS) => {
-    //start = moment(start,'X').subtract(2,'days').unix();
-    let end = moment(start,'X').subtract(5,'days').utc().hour(0).minute(0).second(0).unix();
-    //console.log(moment(start,'X'),moment(end,'X'));
+    
+    const lambda = ctx.lambda;
 
-    const dynamo:DynamoDB = ctx.dynamodb;
-
-    let metrics = await dynamo.query({
-        TableName: 'FB_PAGE_INSIGHTS',
-        IndexName: 'pageidSIndex',
-        ScanIndexForward: false,
-        KeyConditionExpression: '#pi = :pi AND #st <= :st',
-        FilterExpression: '#mt BETWEEN :end and :start',
-        ExpressionAttributeNames: {
-            '#pi': 'page_id',
-            '#st': 'system_timestamp',
-            '#mt': 'metric_timestamp'
-        },
-        ExpressionAttributeValues: {
-            ':pi': { 'S': ctx.id },
-            ':st': {'N': moment().unix().toString() },
-            ':start': {'N': start.toString() },
-            ':end': {'N': end.toString() }
-        }/*,
-        AttributesToGet: [
-            'metric_timestamp',
-            'system_timestamp',
-            'page_views_external_referrals',
-            'page_fans_by_like_source'
-        ]*/
-    }).promise();
-
-    end = moment(start,'X').subtract(7,'days').unix();
-    let posts = await dynamo.query({
-        TableName: 'FB_FEED',
-        IndexName: 'pageidIndex',
-        ScanIndexForward: false,
-        KeyConditionExpression: '#pi = :pi AND #st <= :st',
-        FilterExpression: '#pt BETWEEN :end and :start',
-        ExpressionAttributeNames: {
-            '#pi': 'page_id',
-            '#st': 'system_timestamp',
-            '#pt': 'post_timestamp'
-        },
-        ExpressionAttributeValues: {
-            ':pi': { 'S': ctx.id },
-            ':st': {'N': moment().unix().toString() },
-            ':start': {'N': start.toString() },
-            ':end': {'N': end.toString() }
-        }
-    }).promise();
-
-    let processedposts:any[] = [];
-    for(let index in posts.Items){
-        let post:any = parseResponse(posts.Items[index],true);
-        processedposts.push(post)
-    }
-
-    processedposts = processedposts.filter((elem,index,self)=>{
-        let find = self.findIndex(e=>e.post_id == elem.post_id);
-        if(index == find){
-            return elem;
-        }
+    let metricsPromise = lambda.invoke({
+        FunctionName: 'squint_reader_fb_page_insights',
+        Payload: JSON.stringify({
+            page_id: ctx.id,
+            start: start,
+            daysBefore: 10
+        })
+    }).promise().then((data:any)=>{
+        return JSON.parse(JSON.parse(data.Payload).body)
     });
+
+    let feedPromise = lambda.invoke({
+        FunctionName: 'squint_reader_fb_page_feed',
+        Payload: JSON.stringify({
+            page_id: ctx.id,
+            start: start,
+            daysBefore: 8
+        })
+    }).promise().then((data:any)=>{
+        return JSON.parse(JSON.parse(data.Payload).body)
+    });
+
+    let processedMetrics: any = [];
+    let processedposts:any[] = [];
+    await Promise.all([metricsPromise,feedPromise]).then(r=>{
+        processedMetrics = r[0];
+        processedposts = r[1];
+    }).catch(err=>{
+        console.log(err);
+    });
+
     let arr = {};
     for(let index in processedposts){
         let type = processedposts[index].post_type;
@@ -82,17 +53,6 @@ export const readFanSourceSection = async (ctx:CONTEXT,start:number,period:PERIO
         formats.push({ origen: type, cantidad: arr[type], tipo: 'post_format' });
     }
 
-    let processedMetrics:ReadFanSourceSection[] = [];
-    for(let index in metrics.Items){
-        let metric:any = parseResponse(metrics.Items[index],true);
-        processedMetrics.push(metric)
-    }
-    processedMetrics = processedMetrics.filter((elem,index,self)=>{
-        let find = self.findIndex(e=>e.metric_timestamp == elem.metric_timestamp);
-        if(index == find){
-            return elem;
-        }
-    });
     let sourcesMetrics = processedMetrics.filter(el => el.page_views_external_referrals != null);
     let externalSources = sourcesMetrics[0] ? sourcesMetrics[0].page_views_external_referrals.map(s=>{
         return { origen: s.key, cantidad: s.value, tipo: 'External' };

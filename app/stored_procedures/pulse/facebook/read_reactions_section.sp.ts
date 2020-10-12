@@ -10,71 +10,24 @@ function rand(maxLimit = 100) {
 }
 export const readReactionSection = async (ctx:CONTEXT,start:number,period:PERIODS) => {
     
-    let end = moment(start,'X').subtract(8,'days').utc().hour(0).minute(0).second(0).unix();
+    const lambda = ctx.lambda;
 
-    const dynamo:DynamoDB = ctx.dynamodb;
-
-    let metrics = await dynamo.query({
-        TableName: 'FB_PAGE_INSIGHTS',
-        IndexName: 'pageidSIndex',
-        ScanIndexForward: false,
-        KeyConditionExpression: '#pi = :pi AND #st <= :st',
-        FilterExpression: '#mt BETWEEN :end and :start',
-        ExpressionAttributeNames: {
-            '#pi': 'page_id',
-            '#st': 'system_timestamp',
-            '#mt': 'metric_timestamp'
-        },
-        ExpressionAttributeValues: {
-            ':pi': { 'S': ctx.id },
-            ':st': {'N': moment().unix().toString() },
-            ':start': {'N': start.toString() },
-            ':end': {'N': end.toString() }
-        }/*,
-        AttributesToGet: [
-            'metric_timestamp',
-            'system_timestamp',
-            'page_reactions_like',
-            'page_reactions_love',
-            'page_reactions_haha',
-            'page_reactions_wow',
-            'page_reactions_sorry',
-            'page_reactions_anger',
-            'page_message_count',
-            'page_clics',
-            'page_positive_feedback_by_type',
-            'page_negative_feedback_by_type'
-        ]*/
-    }).promise();
-
-    /*let pageInfo = await dynamo.query({
-        TableName: 'FB_PAGE_INFO',
-        IndexName: 'pageidIndex',
-        ScanIndexForward: false,
-        KeyConditions: {
-            'page_id': {
-                ComparisonOperator: 'EQ',
-                AttributeValueList: [{ 'S': ctx.id }]
-            }
-        },
-        AttributesToGet: [
-            'system_timestamp',
-            'fan_count',
-            'global_account'
-        ],
-        Limit: 1
-    }).promise();*/
-
-    let processedMetrics:ReadReactionsSectionResponse[] = [];
-    for(let index in metrics.Items){
-        let metric:any = parseResponse(metrics.Items[index],true);
-        processedMetrics.push(metric)
-    }
-    processedMetrics = processedMetrics.filter((elem,index,self)=>{
-        let find = self.findIndex(e=>e.metric_timestamp == elem.metric_timestamp);
-        if(index == find){
-            return elem;
-        }
+    let metricsPromise = lambda.invoke({
+        FunctionName: 'squint_reader_fb_page_insights',
+        Payload: JSON.stringify({
+            page_id: ctx.id,
+            start: start,
+            daysBefore: 10
+        })
+    }).promise().then((data:any)=>{
+        return JSON.parse(JSON.parse(data.Payload).body)
+    });
+    
+    let processedMetrics: any = [];
+    await Promise.all([metricsPromise]).then(r=>{
+        processedMetrics = r[0];
+    }).catch(err=>{
+        console.log(err);
     });
 
     /* inicio del matcheo */

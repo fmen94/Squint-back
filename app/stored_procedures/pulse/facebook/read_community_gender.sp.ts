@@ -9,45 +9,27 @@ function rand(maxLimit = 100) {
     return Math.floor(rand);
 }
 export const readCommunityGender = async (ctx:CONTEXT,start:number,period:PERIODS) => {
-    let end = moment(start,'X').subtract(2,'days').utc().hour(0).minute(0).second(0).unix();
+    const lambda = ctx.lambda;
 
-    const dynamo:DynamoDB = ctx.dynamodb;
+    let metricsPromise = lambda.invoke({
+        FunctionName: 'squint_reader_fb_page_insights',
+        Payload: JSON.stringify({
+            page_id: ctx.id,
+            start: start,
+            daysBefore: 10
+        })
+    }).promise().then((data:any)=>{
+        return JSON.parse(JSON.parse(data.Payload).body)
+    });
 
-    let metrics = await dynamo.query({
-        TableName: 'FB_PAGE_INSIGHTS',
-        IndexName: 'pageidSIndex',
-        ScanIndexForward: false,
-        KeyConditionExpression: '#pi = :pi AND #st <= :st',
-        FilterExpression: '#mt BETWEEN :end and :start',
-        ExpressionAttributeNames: {
-            '#pi': 'page_id',
-            '#st': 'system_timestamp',
-            '#mt': 'metric_timestamp'
-        },
-        ExpressionAttributeValues: {
-            ':pi': { 'S': ctx.id },
-            ':st': {'N': moment().unix().toString() },
-            ':start': {'N': start.toString() },
-            ':end': {'N': end.toString() }
-        }/*,
-        AttributesToGet: [
-            'metric_timestamp',
-            'system_timestamp',
-            'page_fans_gender_age'
-        ]*/
-    }).promise();
+    let processedMetrics: any = [];
+    await Promise.all([metricsPromise]).then(r=>{
+        processedMetrics = r[0];
+    }).catch(err=>{
+        console.log(err);
+    });
 
-    let processedMetrics:ReadCommunityGender[] = [];
-    for(let index in metrics.Items){
-        let metric:any = parseResponse(metrics.Items[index],true);
-        processedMetrics.push(metric)
-    }
-    processedMetrics = processedMetrics.filter((elem,index,self)=>{
-        let find = self.findIndex(e=>e.metric_timestamp == elem.metric_timestamp);
-        if(index == find){
-            return elem;
-        }
-    }).filter(el => el.page_fans_gender_age != null);
+    processedMetrics = processedMetrics.filter(el => el.page_fans_gender_age != null);
     let genders = processedMetrics[0].page_fans_gender_age;
     let mappedGenders:ProcessedGender[] = genders.map(g=>{
         let genderAge = g.key.split('.');

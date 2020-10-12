@@ -5,7 +5,7 @@ import BadRequestException from "./exceptions/bad-request.exception";
 import { SchemaOptions } from "./resolvers";
 import { Pool } from "pg";
 import { ExpirationStrategy, MemoryStorage } from "node-ts-cache";
-import { DynamoDB } from 'aws-sdk';
+import { DynamoDB, Lambda } from 'aws-sdk';
 import { CONTEXT } from "./interfaces/common";
 
 const pool = new Pool({
@@ -27,6 +27,9 @@ const init = async (port: any) => {
     accessKeyId: "fakeMyKeyId",
     secretAccessKey: "fakeSecretAccessKey"*/
   });
+  let lambda = new Lambda({
+    region: 'us-west-2'
+  });
 
   logger.info(`Loading schemas`);
   //lee todos los schemas importados de ./resolvers/index.ts
@@ -46,7 +49,7 @@ const init = async (port: any) => {
       //   throw new BadRequestException("Page_id is Invalid");
       // }
       const page_id:any = req.headers.page_id;
-      return { id: page_id, pool, myCache, dynamodb };
+      return { id: page_id, pool, myCache, dynamodb, lambda };
     },
   });
 

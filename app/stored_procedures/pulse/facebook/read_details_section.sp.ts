@@ -10,80 +10,41 @@ function rand(maxLimit = 100) {
 }
 export const readDetailsSection = async (ctx:CONTEXT) => {
     let start = moment().unix();
-    let end = moment(start,'X').subtract(2,'days').utc().hour(0).minute(0).second(0).unix();
+    
+    const lambda = ctx.lambda;
 
-    const dynamo:DynamoDB = ctx.dynamodb;
-
-    let metrics = await dynamo.query({
-        TableName: 'FB_PAGE_INSIGHTS',
-        IndexName: 'pageidSIndex',
-        ScanIndexForward: false,
-        KeyConditionExpression: '#pi = :pi AND #st <= :st',
-        FilterExpression: '#mt BETWEEN :end and :start',
-        ExpressionAttributeNames: {
-            '#pi': 'page_id',
-            '#st': 'system_timestamp',
-            '#mt': 'metric_timestamp'
-        },
-        ExpressionAttributeValues: {
-            ':pi': { 'S': ctx.id },
-            ':st': {'N': moment().unix().toString() },
-            ':start': {'N': start.toString() },
-            ':end': {'N': end.toString() }
-        }/*,
-        AttributesToGet: [
-            'metric_timestamp',
-            'system_timestamp',
-            'page_impressions_unique',
-            'page_fan_adds',
-            'page_fan_removes'
-        ]*/
-    }).promise();
-
-    let pageInfo = await dynamo.query({
-        TableName: 'FB_PAGE_INFO',
-        IndexName: 'pageidIndex',
-        ScanIndexForward: false,
-        KeyConditionExpression: '#pi = :pi AND #st <= :st',
-        ExpressionAttributeNames: {
-            '#pi': 'page_id',
-            '#st': 'system_timestamp'
-        },
-        ExpressionAttributeValues: {
-            ':pi': { 'S': ctx.id },
-            ':st': {'N': moment().unix().toString() }
-        }/*,
-        AttributesToGet: [
-            'system_timestamp',
-            'fan_count',
-            'global_account'
-        ]*/,
-        Limit: 1
-    }).promise();
-
-    let processedMetrics:ReadDetailsSectionResponse[] = [];
-    for(let index in metrics.Items){
-        let metric:any = parseResponse(metrics.Items[index],true);
-        processedMetrics.push(metric)
-    }
-    processedMetrics = processedMetrics.filter((elem,index,self)=>{
-        let find = self.findIndex(e=>e.metric_timestamp == elem.metric_timestamp);
-        if(index == find){
-            return elem;
-        }
+    let metricsPromise = lambda.invoke({
+        FunctionName: 'squint_reader_fb_page_insights',
+        Payload: JSON.stringify({
+            page_id: ctx.id,
+            start: start,
+            daysBefore: 10
+        })
+    }).promise().then((data:any)=>{
+        return JSON.parse(JSON.parse(data.Payload).body)
     });
 
-    processedMetrics = processedMetrics.sort((a:any,b:any)=> {
-        if(a.row_date > b.row_date){
-            return -1;   
-        }
-        if(a.row_date < b.row_date){
-            return 1;   
-        }
-        return 0;
+    let pageInfoPromise = lambda.invoke({
+        FunctionName: 'squint_reader_fb_page_info',
+        Payload: JSON.stringify({
+            page_id: ctx.id,
+            start: start,
+            daysBefore: 10
+        })
+    }).promise().then((data:any)=>{
+        return JSON.parse(JSON.parse(data.Payload).body)
     });
 
-    let processedPageInfo = parseResponse(pageInfo.Items[0],true);
+    let processedMetrics: any = [];
+    let pageInfoArray: any = [];
+    await Promise.all([metricsPromise,pageInfoPromise]).then(r=>{
+        processedMetrics = r[0];
+        pageInfoArray = r[1];
+    }).catch(err=>{
+        console.log(err);
+    });
+
+    let processedPageInfo = pageInfoArray[0];
 
     let result = {
         name: processedPageInfo.page_name,
