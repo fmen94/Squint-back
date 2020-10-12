@@ -3,12 +3,16 @@ import moment from 'moment';
 import { DynamoDB } from "aws-sdk";
 import { PostResponse, ReadTopSectionPageInfoResponse, ReadTopSectionResponse } from "../../../interfaces/pulse/facebook";
 import { parseResponse } from "../../../helpers/common/parseResults.helper";
+import { UserInputError } from "apollo-server-express";
 
 function rand(maxLimit = 100) {
     let rand = Math.random() * maxLimit;
     return Math.floor(rand);
 }
 export const readPostSection = async (ctx:CONTEXT,limit:number) => {
+    if(!ctx.id){
+        throw new UserInputError("header - page_id");
+    }
     const start = moment().unix();
     const lambda = ctx.lambda;
     let feedPromise = lambda.invoke({

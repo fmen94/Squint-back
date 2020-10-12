@@ -3,12 +3,16 @@ import moment from 'moment';
 import { DynamoDB } from "aws-sdk";
 import { MarketingResponse, ReadTopSectionPageInfoResponse, ReadTopSectionResponse } from "../../../interfaces/pulse/facebook";
 import { parseResponse } from "../../../helpers/common/parseResults.helper";
+import { UserInputError } from "apollo-server-express";
 
 function rand(maxLimit = 100) {
     let rand = Math.random() * maxLimit;
     return Math.floor(rand);
 }
 export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) => {
+    if(!ctx.id){
+        throw new UserInputError("header - page_id");
+    }
     /*let years:Array<any> = [moment(end,'X').format('YYYY')];
     let months:Array<any> = [moment(end,'X').format('MM')];
     let days:Array<any> = [moment(end,'X').format('DD')];

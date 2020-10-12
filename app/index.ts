@@ -46,9 +46,9 @@ const init = async (port: any) => {
     playground: true,
     //Se crea el context
     context: ({ req }):CONTEXT => {
-      if (!req.headers.page_id) {
+      /*if (!req.headers.page_id) {
          throw new UserInputError("header - page_id");
-      }
+      }*/
       const page_id:any = req.headers.page_id;
       return { id: page_id, pool, myCache, dynamodb, lambda };
     },
@@ -60,9 +60,10 @@ const init = async (port: any) => {
   }));
   server.applyMiddleware({ app, path:'/intellAPI' });
   
-  app.listen({ port }, () =>
+  const appServer = app.listen({ port }, () =>
     console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`)
   );
+  appServer.setTimeout(180000);
   //const { url } = await server.listen(port);
   //logger.info(`Server is running, GraphQL Playground available at ${url}`);
   return server;

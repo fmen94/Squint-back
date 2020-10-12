@@ -3,12 +3,16 @@ import moment from 'moment';
 import { DynamoDB } from "aws-sdk";
 import { ReadDetailsSectionResponse } from "../../../interfaces/pulse/facebook";
 import { parseResponse } from "../../../helpers/common/parseResults.helper";
+import { UserInputError } from "apollo-server-express";
 
 function rand(maxLimit = 100) {
     let rand = Math.random() * maxLimit;
     return Math.floor(rand);
 }
 export const readDetailsSection = async (ctx:CONTEXT) => {
+    if(!ctx.id){
+        throw new UserInputError("header - page_id");
+    }
     let start = moment().unix();
     
     const lambda = ctx.lambda;
