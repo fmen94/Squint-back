@@ -1,4 +1,6 @@
-import { ApolloServer } from "apollo-server";
+import express from 'express';
+import { ApolloServer } from "apollo-server-express";
+import cors from 'cors';
 import { buildSchema, Int } from "type-graphql";
 import logger from "./helpers/logins/login.helper";
 import BadRequestException from "./exceptions/bad-request.exception";
@@ -52,9 +54,15 @@ const init = async (port: any) => {
       return { id: page_id, pool, myCache, dynamodb, lambda };
     },
   });
-
-  const { url } = await server.listen(port);
-  logger.info(`Server is running, GraphQL Playground available at ${url}`);
+  const app = express();
+  app.use(cors());
+  server.applyMiddleware({ app });
+  
+  app.listen({ port }, () =>
+    console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`)
+  );
+  //const { url } = await server.listen(port);
+  //logger.info(`Server is running, GraphQL Playground available at ${url}`);
   return server;
 };
 

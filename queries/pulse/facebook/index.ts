@@ -56,7 +56,7 @@ export const fbQuerys = {
   resctionsSection: (ctx,startDate,period)      => readReactionSection(ctx, startDate, period),
   /*MANTEN LA MISMA ESTRUCTURA USADA AQUÍ ARRIBA PARA LOS SIGUIENTES SP, PORFI :c*/
   /*FIN: SI QUIERES CONSERVAR TUS PIERNAS, NO CAMBIES ESTA ESTRUCTURA*/
-  geenralBench: (ctx, date, period) =>
+  generalBench: (ctx, date, period) =>
     getCursor(ctx.pool, "read_bench_top_section", [
       { value: ctx.id, type: "string" },
       { value: date, type: "date" },
@@ -95,7 +95,7 @@ export const fbQuerys = {
       { value: startDate, type: "date" },
       { value: endDate, type: "date" },
     ]),
-  geenralBenchIg: (ctx, date, period) =>
+  generalBenchIg: (ctx, date, period) =>
     getCursor(ctx.pool, "read_instagram_bench_top_section", [
       { value: ctx.id, type: "string" },
       { value: date, type: "date" },

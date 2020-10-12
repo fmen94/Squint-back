@@ -4,7 +4,7 @@ import { generalTrans } from "../../../transform/bench/facebook/general.transfor
 import { DateRange } from "../../../schema/common/Arguments";
 export const GeneralBenchCall = async (dateRange: DateRange, ctx) => {
   let date = moment(dateRange.date, "X").format("YYYY-MM-DD");
-  let res = await fbQuerys.geenralBench(ctx, date, dateRange.period);
+  let res = await fbQuerys.generalBench(ctx, date, dateRange.period);
   let data = generalTrans(res);
   await ctx.myCache.setItem(`${ctx.id}_generalBench`, data, {
     ttl: parseInt(process.env.cache_ttl),
