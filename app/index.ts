@@ -55,7 +55,10 @@ const init = async (port: any) => {
     },
   });
   const app = express();
-  app.use(cors());
+  app.use(cors({
+    origin: '*',
+    optionsSuccessStatus: 200
+  }));
   server.applyMiddleware({ app, path:'/intellAPI' });
   
   app.listen({ port }, () =>
