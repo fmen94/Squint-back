@@ -114,6 +114,27 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
         console.log(err);
     });
 
+    processedMetrics = processedMetrics.filter(pm=>pm.metric_timestamp>9999999).map((vme,i,s)=>{
+        let mDate = moment(vme.metric_timestamp,'X').format('YYYYMMDD');
+        let marketing = processedMarketing.find((vmk,i,s)=>{
+            let markDate = moment(vmk.metric_timestamp,'X').format('YYYYMMDD');
+            if(markDate===mDate){
+                return vmk;
+            }
+        });
+        let pageInfo = pageInfoArray.find((vpi,i,s)=>{
+            let piDate = moment(vpi.system_timestamp,'X').format('YYYYMMDD');
+            if(piDate===mDate){
+                return vpi;
+            }
+        });
+        return {
+            ...vme,
+            ...marketing,
+            page_global_fans: pageInfo ? pageInfo.global_account.fans : -1
+        };
+    });
+
     let response = [];
     for(let x = 0; x<processedMetrics.length; x++){
         let metric = processedMetrics[x];
