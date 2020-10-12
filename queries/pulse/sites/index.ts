@@ -1,4 +1,7 @@
 import { Pool } from "pg";
+import { readSitesBenchAudienceSection } from "../../../app/readers/pulse/sites/read_sites_bench_audience_section.reader";
+import { readSitesBenchGlobalRankSection } from "../../../app/readers/pulse/sites/read_sites_bench_global_rank_section.reader";
+import { readSitesBenchTrafficRankSection } from "../../../app/readers/pulse/sites/read_sites_bench_traffic_rank_section.reader";
 import { readSitesPulseAudienceSection } from "../../../app/readers/pulse/sites/read_sites_pulse_audience_section.reader";
 import { readSitesPulseFansCountrySection } from "../../../app/readers/pulse/sites/read_sites_pulse_fans_country_section.reader";
 import { readSitesPulseGenderSection } from "../../../app/readers/pulse/sites/read_sites_pulse_gender_section.reader";
@@ -59,5 +62,8 @@ export const fbQuerys = {
   sitesPulseTrafficHistory: (ctx, startDate, period)		  => readSitesPulseDomainsTrafficHistorySection(ctx, startDate, period),
   sitesPulseTrafficPerformance: (ctx, startDate, period)	=> readTrafficPerformanceSection(ctx, startDate, period),
   sitesPulseTraffic: (ctx, startDate, period)				      => readSitesPulseTrafficSection(ctx, startDate, period),
+  SitesBenchTrafficRankSection: (ctx, startDate, period)	=> readSitesBenchTrafficRankSection(ctx, startDate, period),
+  SitesBenchGlobalRankSection: (ctx, startDate, period)	  => readSitesBenchGlobalRankSection(ctx, startDate, period),
+  SitesBenchAudienceSection: (ctx, startDate, period)			=> readSitesBenchAudienceSection(ctx, startDate, period),
   /*FIN: SI QUIERES CONSERVAR TUS PIERNAS, NO CAMBIES ESTA ESTRUCTURA*/
 };

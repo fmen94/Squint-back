@@ -120,3 +120,34 @@ export interface ReadTrafficPerformanceSectionResponse {
   Traffic_Performance_CPC: Number;
 }
 
+
+export interface ReadSitesBenchTrafficRankSectionResponse {
+	Nombre: String,
+	Global_Ranking: Number,
+	Local_Ranking: Number,
+	Category_Ranking: Number,
+	Load_Time: Number,
+	Reach: Number,
+	Rank: Number,
+	Page_Views: Number,
+	Page_Views_Per_User: Number,
+	Pais: String
+}
+
+
+export interface ReadSitesBenchGlobalRankSectionResponse {
+	Marca: String,
+	Global_Ranking_Audience: Number,
+	Global_Ranking_Comparision: Number,
+	Rank_Global: Number,
+	Reach_Per_Millon: Number,
+	Page_Views_Per_User: Number,
+	Metric_timestamp: Number
+}
+
+
+export interface ReadSitesBenchAudienceSectionResponse {
+	Country: String,
+	Cantidad: Number,
+	Metric_timestamp: Number
+}
