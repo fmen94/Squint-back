@@ -1,7 +1,7 @@
 import { Pool } from "pg";
-import { readSitesBenchAudienceSection } from "../../../app/readers/pulse/sites/read_sites_bench_audience_section.reader";
-import { readSitesBenchGlobalRankSection } from "../../../app/readers/pulse/sites/read_sites_bench_global_rank_section.reader";
-import { readSitesBenchTrafficRankSection } from "../../../app/readers/pulse/sites/read_sites_bench_traffic_rank_section.reader";
+import { readSitesBenchAudienceSection } from "../../../app/readers/bench/sites/read_sites_bench_audience_section.reader";
+import { readSitesBenchGlobalRankSection } from "../../../app/readers/bench/sites/read_sites_bench_global_rank_section.reader";
+import { readSitesBenchTrafficRankSection } from "../../../app/readers/bench/sites/read_sites_bench_traffic_rank_section.reader";
 import { readSitesPulseAudienceSection } from "../../../app/readers/pulse/sites/read_sites_pulse_audience_section.reader";
 import { readSitesPulseFansCountrySection } from "../../../app/readers/pulse/sites/read_sites_pulse_fans_country_section.reader";
 import { readSitesPulseGenderSection } from "../../../app/readers/pulse/sites/read_sites_pulse_gender_section.reader";
