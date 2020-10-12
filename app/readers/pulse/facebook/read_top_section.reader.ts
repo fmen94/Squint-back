@@ -82,7 +82,12 @@ export const readTopSection = async (ctx:CONTEXT,start:number,period:PERIODS) =>
         })
     }).promise().then((data:any)=>{
         return JSON.parse(JSON.parse(data.Payload).body)
+    }).catch(err=>{
+        console.log(err);
+        return null;
     });
+
+    console.log(metricsPromise);
 
     let pageInfoPromise = lambda.invoke({
         FunctionName: 'squint_reader_fb_page_info',
