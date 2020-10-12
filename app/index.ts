@@ -56,7 +56,7 @@ const init = async (port: any) => {
   });
   const app = express();
   app.use(cors());
-  server.applyMiddleware({ app });
+  server.applyMiddleware({ app, path:'/intellAPI' });
   
   app.listen({ port }, () =>
     console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`)
