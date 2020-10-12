@@ -1,7 +1,7 @@
 import { CONTEXT, PERIODS } from "../../../interfaces/common";
 import moment from 'moment';
 import { DynamoDB } from "aws-sdk";
-import { ReadSitesTopSectionSectionResponse } from "../../../interfaces/pulse/Sites";
+import { ReadSitesTopSectionSectionResponse } from "../../../interfaces/pulse/sites";
 import { parseResponse } from "../../../helpers/common/parseResults.helper";
 
 function rand(maxLimit = 100) {
