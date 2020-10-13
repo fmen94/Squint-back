@@ -1,5 +1,5 @@
 export const postTrans = (data) => {
-  console.log(data);
+  //console.log(data);
   return data.reduce(
     (obj, e, index) => {
       obj.contentTable01.push([
