@@ -57,69 +57,71 @@ export const readBenchTopSection = async (ctx:CONTEXT,start:number,period:PERIOD
         console.log(err);
     });
 
-    //console.log(processedMetrics,processedMarketing);
+    console.log(pageInfoArray);
     let pages = ctx.id.split(',');
     let result = [];
     let types = {};
     for(let index in pages){
         let page_id = pages[index];
         let pageInfo = pageInfoArray.filter(pi=>pi.page_id==page_id);
-        let metrics = processedMetrics.filter(m=>m.page_id==page_id);
-        let feed = feedArray.filter(m=>m.page_id==page_id);
-        let video = 0;
-        let image = 0;
-        let text = 0;
-        let bench_others = 0;
-        let post_day = feed.length / 7;
+        if(pageInfo.length){
+            let metrics = processedMetrics.filter(m=>m.page_id==page_id);
+            let feed = feedArray.filter(m=>m.page_id==page_id);
+            let video = 0;
+            let image = 0;
+            let text = 0;
+            let bench_others = 0;
+            let post_day = feed.length / 7;
 
-        feed.forEach(post => {
-            if(post.post_type=='video'){
-                video = video + 1;
-            }else if(post.post_type=='text_type'){
-                text = text + 1;
-            }else if(post.post_type=='photo'){
-                image = image + 1;
-            }else { 
-                bench_others = bench_others + 1;
+            feed.forEach(post => {
+                if(post.post_type=='video'){
+                    video = video + 1;
+                }else if(post.post_type=='text_type'){
+                    text = text + 1;
+                }else if(post.post_type=='photo'){
+                    image = image + 1;
+                }else { 
+                    bench_others = bench_others + 1;
+                }
+            });
+
+            types = {
+                live: rand(9),
+                video,
+                image,
+                text,
+                bench_others,
+                post_day,
+                sentiment_good: rand(999),
+                sentiment_bad: rand(999)
             }
-        });
 
-        types = {
-            live: rand(9),
-            video,
-            image,
-            text,
-            bench_others,
-            post_day,
-            sentiment_good: rand(999),
-            sentiment_bad: rand(999)
+            let date = moment(pageInfo[0].system_timestamp,'X').utc().format('YYYYMMDD');
+            result.push({
+                ...pageInfo.find(p=>{
+                    let dt = moment(p.system_timestamp,'X').utc().format('YYYYMMDD');
+                    if(dt===date){
+                        return p;
+                    }
+                }),
+                ...metrics.find(m=>{
+                    let dt = moment(m.metric_timestamp,'X').utc().format('YYYYMMDD');
+                    if(dt===date){
+                        delete m.system_timestamp;
+                        delete m.metric_timestamp;
+                        return m;
+                    }
+                }),
+                /*...marketing.find(m=>{
+                    let dt = moment(m.metric_timestamp,'X').utc().format('YYYYMMDD');
+                    if(dt===date){
+                        delete m.system_timestamp;
+                        delete m.metric_timestamp;
+                        return m;
+                    }
+                })*/
+            });
         }
-
-        let date = moment(pageInfo[0].system_timestamp,'X').utc().format('YYYYMMDD');
-        result.push({
-            ...pageInfo.find(p=>{
-                let dt = moment(p.system_timestamp,'X').utc().format('YYYYMMDD');
-                if(dt===date){
-                    return p;
-                }
-            }),
-            ...metrics.find(m=>{
-                let dt = moment(m.metric_timestamp,'X').utc().format('YYYYMMDD');
-                if(dt===date){
-                    delete m.system_timestamp;
-                    delete m.metric_timestamp;
-                    return m;
-                }
-            }),
-            /*...marketing.find(m=>{
-                let dt = moment(m.metric_timestamp,'X').utc().format('YYYYMMDD');
-                if(dt===date){
-                    delete m.system_timestamp;
-                    delete m.metric_timestamp;
-                    return m;
-                }
-            })*/
-        });
     }
     return result.map(r=>{
         return { 
