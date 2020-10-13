@@ -57,7 +57,6 @@ export const readBenchTopSection = async (ctx:CONTEXT,start:number,period:PERIOD
         console.log(err);
     });
 
-    console.log(pageInfoArray);
     let pages = ctx.id.split(',');
     let result = [];
     let types = {};
@@ -111,15 +110,7 @@ export const readBenchTopSection = async (ctx:CONTEXT,start:number,period:PERIOD
                         delete m.metric_timestamp;
                         return m;
                     }
-                }),
-                /*...marketing.find(m=>{
-                    let dt = moment(m.metric_timestamp,'X').utc().format('YYYYMMDD');
-                    if(dt===date){
-                        delete m.system_timestamp;
-                        delete m.metric_timestamp;
-                        return m;
-                    }
-                })*/
+                })
             });
         }
     }

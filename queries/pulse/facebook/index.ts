@@ -57,9 +57,9 @@ export const fbQuerys = {
   bestMomnets: (ctx, startDate, period)         => readBestMomentsSection(ctx, startDate, period),
   resctionsSection: (ctx,startDate,period)      => readReactionSection(ctx, startDate, period),
   generalBench: (ctx, date, period)             => readBenchTopSection(ctx,date,period),
+  postBench: (ctx, limit)                       => readBenchPostsSection(ctx,limit),
   /*MANTEN LA MISMA ESTRUCTURA USADA AQUÍ ARRIBA PARA LOS SIGUIENTES SP, PORFI :c*/
   /*FIN: SI QUIERES CONSERVAR TUS PIERNAS, NO CAMBIES ESTA ESTRUCTURA*/
-  postBench: (ctx, limit) => readBenchPostsSection(ctx,limit),
   keywordsBench: (ctx, date, period) =>
     getCursor(ctx.pool, "read_bench_fan_source_section", [
       { value: ctx.id, type: "string" },
